@@ -34,12 +34,15 @@ function Navigation() {
       )}
 
       {isMenuOpen && (
-        <div className="flex">
+        <div className="fixed top-0 right-0 
+        h-screen w-screen bg-gray-800 
+        opacity-70 
+        flex flex-col items-center">
           {menuItems.map((item, index) => (
             <Link
               key={index}
               to={item.path}
-              className="px-4 py-2"
+              className="text-white text-xl py-4"
               onClick={toggleMenu}
             >
               {item.title}
