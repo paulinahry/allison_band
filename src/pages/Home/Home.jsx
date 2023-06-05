@@ -1,7 +1,7 @@
 import React from 'react'
 import Navigation from '../../components/Navigation'
 import Hero from '../../components/Hero'
-import Tours from '../Tour/Tour'
+import Tour from '../Tour/Tour'
 
 
 function Home() {
