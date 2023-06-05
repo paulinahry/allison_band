@@ -12,11 +12,15 @@ function Hero() {
                 className=" 
                 text-red-800
                  font-semibold tracking-wider 
-                flex flex-col  md:justify-self-end 
+<
+
+                flex flex-col  justify-self-end 
+
                 m-4"
             >
                 <p className="text-7xl">allison</p>
                 <p className="text-5xl">Mermaid calling</p>
+
                 <p className="text-xl tracking-tight text-yellow-300">
                     new album out now
                 </p>
