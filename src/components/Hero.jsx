@@ -1,5 +1,5 @@
 import React from 'react'
-import heroPic from '/public/images/pexels-brett-sayles-2479312.jpg'
+import heroPic from '/src/assets/images/pexels-brett-sayles-2479312.jpg'
 
 function Hero() {
     return (
@@ -12,12 +12,14 @@ function Hero() {
                 className=" 
                 text-red-800
                  font-semibold tracking-wider 
-                flex flex-col  justify-self-end 
+                flex flex-col  md:justify-self-end 
                 m-4"
             >
                 <p className="text-7xl">allison</p>
                 <p className="text-5xl">Mermaid calling</p>
-                <p className="text-xl tracking-tight">new album out now</p>
+                <p className="text-xl tracking-tight text-yellow-300">
+                    new album out now
+                </p>
             </div>
         </div>
     )
