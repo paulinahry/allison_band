@@ -1,12 +1,34 @@
-import { useState } from 'react'
-import Home from './pages/Home/Home'
+import React from 'react';
+import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
+
+import Navigation from './components/Navigation';
+import Home from './pages/Home';
+import Tour from './pages/Tour';
+import Store from './pages/Store';
 
 function App() {
-    return (
-        <>
-            <Home />
-        </>
-    )
+  return (
+    <Router>
+      <Navigation />
+      <ul>
+        <li>
+          <Link to="/">Home</Link>
+        </li>
+        <li>
+          <Link to="/tour">Tour</Link>
+        </li>
+        <li>
+          <Link to="/store">Store</Link>
+        </li>
+      </ul>
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/tour" element={<Tour />} />
+        <Route path="/store" element={<Store />} />
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;

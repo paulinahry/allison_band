@@ -1,12 +1,17 @@
 import React from 'react';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 // ICONS
 import { RxHamburgerMenu } from 'react-icons/rx';
 import { AiOutlineClose } from 'react-icons/ai';
 
 function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [menuItems] = useState(['tour', 'about', 'store']);
+  const [menuItems] = useState([
+    { title: 'Home', path: '/' },
+    { title: 'Tour', path: '/tour' },
+    { title: 'Store', path: '/store' }
+  ]);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -31,9 +36,14 @@ function Navigation() {
       {isMenuOpen && (
         <div className="flex">
           {menuItems.map((item, index) => (
-            <span key={index} className="px-4 py-2">
-              {item}
-            </span>
+            <Link
+              key={index}
+              to={item.path}
+              className="px-4 py-2"
+              onClick={toggleMenu}
+            >
+              {item.title}
+            </Link>
           ))}
         </div>
       )}
