@@ -7,7 +7,7 @@ import { SiApplemusic } from 'react-icons/si'
 import { FaDeezer } from 'react-icons/fa'
 
 const divStyle = {
-    border: '0.5px solid black',
+    borderBottom: '0.5px solid black',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -32,12 +32,13 @@ function Music() {
                 style={bgImage}
             ></div>
             {/* MEDIA */}
-            <div className="w-[40%] relative bottom-[900px] left-[30%]">
+            <div className="w-[40%] relative bottom-[900px] left-[30%]  text-center">
                 <img src={heroPic} alt="allison band" />
                 <div className="bg-black">
-                    <h1 className=" text-2xl sm:text-3xl p-1 fon-">
+                    <h1 className=" text-2xl sm:text-3xl p-1 ">
                         Allison - <span>play new album</span>
                     </h1>
+                    <p>choose your music player</p>
                 </div>
                 <div className="bg-white text-black">
                     <Wrapper>
@@ -58,7 +59,7 @@ function Music() {
                     </Wrapper>
                     <Wrapper>
                         <FaDeezer size={30} />
-                        <p>Deezer</p>
+                        <p>deezer</p>
                     </Wrapper>
                 </div>
             </div>
