@@ -8,6 +8,7 @@ module.exports = {
                 transparent: 'transparent',
                 detailsRed: '#ca5534',
             },
+            fonts: {},
         },
         plugins: [],
     },
