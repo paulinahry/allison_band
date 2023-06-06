@@ -14,7 +14,7 @@ function CardTour({ item: tourItem }) {
     }
 
     return (
-        <div key={tourItem.id}>
+        <div>
             <div className="m-6">
                 <h3 className="text-xl font-bold">
                     {tourItem.town}, {tourItem.country}

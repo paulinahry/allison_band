@@ -11,23 +11,25 @@ function Home() {
         navigate('/tour')
     }
 
-    return (
-        <div>
-            <Hero />
-
-            {/* UPCOMING EVENTS */}
-            {showUpcomingEvents ? (
-                <div>
-                    <UpcomingEvents />
-                    <button className=" underline " onClick={navigateToTour}>
-                        Show all upcoming events
-                    </button>
-                </div>
-            ) : (
+    if (!showUpcomingEvents) {
+        return (
+            <>
+                <Hero />
                 <p className="italic text-sm">Current Tour is already over</p>
-            )}
-            {/*  UPCOMING EVENTS END */}
-        </div>
+            </>
+        )
+    }
+
+    return (
+        <>
+            <Hero />
+            <div>
+                <UpcomingEvents />
+                <button className=" underline " onClick={navigateToTour}>
+                    Show all upcoming events
+                </button>
+            </div>
+        </>
     )
 }
 

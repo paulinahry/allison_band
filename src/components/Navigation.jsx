@@ -11,14 +11,15 @@ function Navigation() {
         { title: 'Home', path: '/' },
         { title: 'Tour', path: '/tour' },
         { title: 'Store', path: '/store' },
+        { title: 'Music', path: '/music' },
     ])
 
     const toggleMenu = () => {
-        setIsMenuOpen(!isMenuOpen)
+        setIsMenuOpen((state) => !state)
     }
 
     return (
-        <nav className="w-full h-20 md:h-[100] fixed flex justify-between items-center text-detailsRed bg-black">
+        <nav className="w-full h-20 md:h-[100] fixed flex justify-between items-center text-detailsRed bg-black z-50">
             {isMenuOpen ? (
                 <AiOutlineClose
                     className="cursor-pointer"
