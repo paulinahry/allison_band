@@ -38,7 +38,7 @@ function Navigation() {
                     className="fixed top-20 right-0 
                     flex flex-col justify-center align-center
         h-screen w-screen bg-black 
-        opacity-70 
+        opacity-90 
         items-center"
                 >
                     {menuItems.map((item, index) => (
