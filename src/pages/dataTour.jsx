@@ -64,8 +64,8 @@ const tour = [
     },
     {
         id: 9,
-        town: 'Lille',
-        country: 'France',
+        town: 'Hamburg',
+        country: 'Germany',
         date: new Date(2023, 7, 1),
         place: 'Amour',
     },

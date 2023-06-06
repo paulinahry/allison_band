@@ -11,7 +11,7 @@ function UpcomingEvents() {
 
     return (
         <div className="flex justify-center align-center text-center">
-            <div className="py-10 text-detailsRed md:w-[80%]">
+            <div className="py-10 text-detailsRed ">
                 <h2 className="uppercase font-bold text-3xl">Upcoming Tours</h2>
 
                 {upcomingEvents.length > 0 ? (

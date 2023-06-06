@@ -1,10 +1,15 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Hero from '../components/Hero'
 import UpcomingEvents from '../components/UpcomingEvents'
 
 function Home() {
     const [showUpcomingEvents, setShowUpcomingEvents] = useState(true)
-    function showAllConcerts() {}
+    const navigate = useNavigate()
+
+    function navigateToTour() {
+        navigate('/tour')
+    }
 
     return (
         <div>
@@ -14,8 +19,8 @@ function Home() {
             {showUpcomingEvents ? (
                 <div>
                     <UpcomingEvents />
-                    <button className=" underline " onClick={showAllConcerts}>
-                        Show All Upcoming Events
+                    <button className=" underline " onClick={navigateToTour}>
+                        Show all upcoming events
                     </button>
                 </div>
             ) : (
