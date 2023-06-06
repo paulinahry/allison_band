@@ -3,16 +3,14 @@ import Hero from '../components/Hero'
 import UpcomingEvents from '../components/UpcomingEvents'
 
 function Home() {
-    const [showDates, setShowDates] = useState(true)
-
-    function showAllConcerts() {
-        // Logic for showing all upcoming tours
-    }
+    const [showUpcomingEvents, setShowUpcomingEvents] = useState(true)
 
     return (
         <div>
             <Hero />
-            {showDates ? (
+
+            {/* UPCOMING EVENTS */}
+            {showUpcomingEvents ? (
                 <div>
                     <UpcomingEvents />
                     <button
@@ -25,6 +23,7 @@ function Home() {
             ) : (
                 <p>Current Tour is already over</p>
             )}
+            {/*  UPCOMING EVENTS END */}
         </div>
     )
 }
