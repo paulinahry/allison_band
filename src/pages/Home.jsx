@@ -4,6 +4,7 @@ import UpcomingEvents from '../components/UpcomingEvents'
 
 function Home() {
     const [showUpcomingEvents, setShowUpcomingEvents] = useState(true)
+    function showAllConcerts() {}
 
     return (
         <div>
@@ -13,15 +14,12 @@ function Home() {
             {showUpcomingEvents ? (
                 <div>
                     <UpcomingEvents />
-                    <button
-                        className=" border-solid border-2"
-                        onClick={showAllConcerts}
-                    >
-                        Show All Upcoming
+                    <button className=" underline " onClick={showAllConcerts}>
+                        Show All Upcoming Events
                     </button>
                 </div>
             ) : (
-                <p>Current Tour is already over</p>
+                <p className="italic text-sm">Current Tour is already over</p>
             )}
             {/*  UPCOMING EVENTS END */}
         </div>
