@@ -1,13 +1,11 @@
-import Hero from '../components/Hero';
-import Tour from './Tour';
+import Hero from '../components/Hero'
 
 function Home() {
-  return (
-    <div>
-      <Hero />
-      <Tour />
-    </div>
-  );
+    return (
+        <div>
+            <Hero />
+        </div>
+    )
 }
 
-export default Home;
+export default Home
