@@ -18,7 +18,7 @@ function Navigation() {
     }
 
     return (
-        <nav className="w-full h-20 md:h-[100] fixed flex justify-between items-center text-red-800 bg-black">
+        <nav className="w-full h-20 md:h-[100] fixed flex justify-between items-center text-detailsRed bg-black">
             {isMenuOpen ? (
                 <AiOutlineClose
                     className="cursor-pointer"
@@ -36,15 +36,16 @@ function Navigation() {
             {isMenuOpen && (
                 <div
                     className="fixed top-20 right-0 
-        h-screen w-screen bg-gray-800 
+                    flex flex-col justify-center align-center
+        h-screen w-screen bg-black 
         opacity-70 
-        flex flex-col items-center"
+        items-center"
                 >
                     {menuItems.map((item, index) => (
                         <Link
                             key={index}
                             to={item.path}
-                            className="text-white text-xl py-4"
+                            className=" text-detailsRed uppercase text-4xl font-extrabold py-8"
                             onClick={toggleMenu}
                         >
                             {item.title}
