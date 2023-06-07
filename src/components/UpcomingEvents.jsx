@@ -1,6 +1,7 @@
 import React from 'react'
 import CardTour from './CardTour'
 import tour from '../pages/dataTour'
+import { useNavigate } from 'react-router-dom'
 
 function UpcomingEvents() {
     const currentDate = new Date()
@@ -9,10 +10,26 @@ function UpcomingEvents() {
         .filter((item) => item.date >= currentDate)
         .slice(0, 3)
 
+    const navigate = useNavigate()
+
+    function navigateToTour() {
+        navigate('/tour')
+    }
+
     return (
         <div className="flex justify-center align-center text-center">
             <div className="py-10 text-detailsRed ">
-                <h2 className="uppercase font-bold text-3xl">Upcoming Tours</h2>
+                <h2 className="uppercase font-bold text-3xl">
+                    Upcoming events
+                </h2>
+                <div className="flex justify-end ">
+                    <button
+                        className=" underline  cursor-pointer"
+                        onClick={navigateToTour}
+                    >
+                        Show all
+                    </button>
+                </div>
 
                 {upcomingEvents.length > 0 ? (
                     upcomingEvents.map((item) => (
