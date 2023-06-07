@@ -11,4 +11,4 @@ const orderSchema = new Schema({
     finalPrice: { type: Number },
 })
 
-export default mongoose.model('Order', orderSchema)
+export default mongoose.model('Order', orderSchema, 'orders')

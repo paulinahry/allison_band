@@ -1,45 +1,22 @@
 import express from 'express'
 import mongoose from 'mongoose'
-import productSchema from './models/Product.js'
 import dotenv from 'dotenv'
+import productRouter from './routes/productRouter.js'
 
 dotenv.config()
 const app = express()
 const port = 3000
 
-// Connect to the MongoDB database
+// Connect DB
+// ensures that values passed to our model constructor that were not specified in our schema do not get saved to the db
+mongoose.set('strictQuery', false)
 mongoose
     .connect(process.env.DB_CONNECT)
     .then(() => console.log('DB connection created'))
     .catch((error) => console.log('Error - database connection:', error))
 
-app.get('/products', (req, res) => {
-    productSchema
-        .find()
-        .then((products) => res.send(products))
-        .catch((error) => {
-            console.log('Error', error)
-            res.status(500).send('Internal Server Error')
-        })
-})
-
-// app.get('/products/:id', (req, res) => {
-//     const productId = parseInt(req.params.id)
-
-//     productSchema
-//         .findOne({ _id: productId })
-//         .then((product) => {
-//             if (!product) {
-//                 res.status(404).send('Product not found')
-//             } else {
-//                 res.send(product)
-//             }
-//         })
-//         .catch((error) => {
-//             console.log('Error - retrieving product:', error)
-//             res.status(500).send('Internal Server Error')
-//         })
-// })
+// Mount the product router
+app.use('/products', productRouter)
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
