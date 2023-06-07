@@ -1,5 +1,6 @@
 import React from 'react'
 import heroPic from '/src/assets/images/pexels-brett-sayles-2479312.jpg'
+import { useImage } from 'react-image'
 import { BsSpotify } from 'react-icons/bs'
 import { SiTidal } from 'react-icons/si'
 import { ImSoundcloud } from 'react-icons/im'
@@ -26,9 +27,9 @@ const Wrapper = ({ children, onClick }) => {
 }
 
 function Music() {
-    const bgImage = {
-        backgroundImage: `url(${heroPic})`,
-    }
+    const { src } = useImage({
+        srcList: heroPic,
+    })
 
     const handleLinkClick = (url) => {
         window.location.href = url
@@ -66,7 +67,7 @@ function Music() {
         <>
             <div
                 className="h-screen w-full bg-cover blur-lg flex flex-col justify-end items-end"
-                style={bgImage}
+                style={{ backgroundImage: `url(${src})` }}
             ></div>
             <div className="w-[50%] relative bottom-[700px] left-[30%] text-center">
                 <img src={heroPic} alt="allison band" />

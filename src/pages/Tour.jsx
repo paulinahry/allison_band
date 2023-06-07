@@ -9,11 +9,11 @@ function Tour() {
     }, [])
 
     return (
-        <div className="flex justify-center align-center text-center">
-            <div className="py-10 text-detailsRed">
-                <h2 className="uppercase font-bold text-3xl ">
+        <div className=" flex justify-center align-center text-center">
+            <div className="py-10 text-detailsRed ">
+                <h1 className="uppercase font-bold text-3xl mt-20 ">
                     Mermaid calling tour 2023
-                </h2>
+                </h1>
 
                 {tour.map((item) => (
                     <CardTour item={item} key={item.id} />
