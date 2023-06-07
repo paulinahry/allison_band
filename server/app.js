@@ -1,6 +1,14 @@
 const express = require('express')
+const { default: mongoose } = require('mongoose')
 const app = express()
 const port = 3000
+
+// allows queries with undefined fields to be executed without throwing an error
+mongoose.set('strictQuery', false)
+mongoose
+    .connect(process.env.DB_CONNECT)
+    .then(() => console.log('DB connection created'))
+    .catch(() => console.log('Error - database connection broken'))
 
 const products = [
     { id: 1, title: 'Product 1', price: '100', quantity: 1 },
@@ -31,3 +39,5 @@ app.get('/products/:id', (req, res) => {
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })
+
+// Routers
