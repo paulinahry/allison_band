@@ -17,9 +17,7 @@ function Home() {
     return (
         <>
             <Hero />
-            <div>
-                <UpcomingEvents />
-            </div>
+            <UpcomingEvents />
         </>
     )
 }
