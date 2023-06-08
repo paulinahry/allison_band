@@ -1,5 +1,10 @@
-const UniButton = () => {
-    return <div>uni button </div>
-}
 
-export default UniButton
+// function UniButton({ buttonText, buttonStyles }) {
+//   return (
+//     <button className={buttonStyles}>
+//       {buttonText}
+//     </button>
+//   );
+// }
+
+// export default UniButton;
