@@ -1,10 +1,12 @@
-import Product from '../models/Product.js'
+import Product from '../models/productModel.js'
 
 // GET all products
-const getAllProducts = (req, res) => {
-    Product.find({})
-        .then((products) => {
-            res.send(products)
+const getAllProducts = async (req, res) => {
+    const allProducts = await Product.find()
+
+        .then((allProducts) => {
+            console.log('products', allProducts)
+            res.send(allProducts)
         })
         .catch((error) => {
             console.log('Error:', error)
@@ -12,24 +14,23 @@ const getAllProducts = (req, res) => {
         })
 }
 
-export default {
-    getAllProducts,
+// GET products by ID
+const getProductById = async (req, res) => {
+    const prod = await Product.findById(req.params.id)
+        .then((product) => {
+            if (!product) {
+                res.status(404).send('Product not found')
+            } else {
+                res.send(product)
+            }
+        })
+        .catch((error) => {
+            console.log('Error', error)
+            res.status(500).send('Server Error')
+        })
 }
 
-// app.get('/products/:id', (req, res) => {
-//     const productId = parseInt(req.params.id)
-
-//     productSchema
-//         .findOne({ _id: productId })
-//         .then((product) => {
-//             if (!product) {
-//                 res.status(404).send('not found')
-//             } else {
-//                 res.send(product)
-//             }
-//         })
-//         .catch((error) => {
-//             console.log('Error', error)
-//             res.status(500).send('Server Error')
-//         })
-// })
+export default {
+    getAllProducts,
+    getProductById,
+}

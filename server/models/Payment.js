@@ -7,10 +7,10 @@ const paymenstSchema = new Schema({
     card: [
         {
             typeOfCard: { type: String },
-            cardNumber: { type: String }, // last numbers
+            cardNumber: { type: String }, // only last numbers
             expiryMonth: { type: Number },
             expiryYear: { type: Number },
-            cvv: { type: Number }, // later status e.g : verified
+            cvv: { type: Number }, // later status e.g : verified // bcrypt ??
         },
     ],
 })
