@@ -1,4 +1,3 @@
-import React from 'react'
 import CardTour from './CardTour'
 import tour from '../pages/dataTour'
 import { useNavigate } from 'react-router-dom'

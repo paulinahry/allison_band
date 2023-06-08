@@ -1,11 +1,18 @@
-import React from 'react'
+import { useProduct } from './useProduct';
+import CardProduct from '../components/CardProduct'
 
-function Store() {
+const Store = () => {
+    const { products } = useProduct();
+  
     return (
-        <>
-            <h1>this is store </h1>
-        </>
-    )
-}
-
-export default Store
+      <div className="store">
+        <h2>Products</h2>
+        {products.map((product) => (
+          <CardProduct key={product._id} product={product} />
+        ))}
+      </div>
+    );
+  };
+  
+  export default Store;
+  
