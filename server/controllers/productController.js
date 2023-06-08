@@ -2,7 +2,7 @@ import Product from '../models/productModel.js'
 
 // GET all products
 const getAllProducts = async (req, res) => {
-    const allProducts = await Product.find()
+     await Product.find()
 
         .then((allProducts) => {
             console.log('products', allProducts)
@@ -16,12 +16,12 @@ const getAllProducts = async (req, res) => {
 
 // GET products by ID
 const getProductById = async (req, res) => {
-    const prod = await Product.findById(req.params.id)
-        .then((product) => {
-            if (!product) {
+     await Product.findById(req.params.id)
+        .then((prod) => {
+            if (!prod) {
                 res.status(404).send('Product not found')
             } else {
-                res.send(product)
+                res.send(prod)
             }
         })
         .catch((error) => {
