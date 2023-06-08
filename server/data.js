@@ -6,42 +6,23 @@ const data = {
             userName: 'Sam Small',
             email: 'samsmall@gmail.com',
             password: 'samsmall',
-            shippingAdress: [{ street: 'Green Street' }],
-            orders: [{}],
         },
 
         {
             userName: 'Allison Crane',
             email: 'sallison@gmail.com',
             password: 'samsmall',
-            shippingAdress: [{ street: 'Orange Street' }],
-            orders: [{}],
         },
         {
             userName: 'Amanda Cole',
             email: 'cole@gmail.com',
             password: 'samsmall',
-            shippingAdress: [{ street: 'Blue Street' }],
-            orders: [{}],
         },
         {
             userName: 'Arizona Flam',
             email: 'flamari@gmail.com',
             password: 'samsmall',
             shippingAdress: [{ street: 'Yellow Street' }],
-            orders: [
-                {
-                    items: {
-                        ttitle: 'CD Mermaid Calling',
-                        image: '../src/assets/images/pexels-brett-sayles-2479312.jpg',
-                        description: 'CD Description',
-                        stock: '100',
-                        price: '10.99',
-                    },
-
-                    finalPrice: '10.99',
-                },
-            ],
         },
     ],
 

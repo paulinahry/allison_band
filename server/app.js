@@ -2,6 +2,8 @@ import express from 'express'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import productRouter from './routes/productRouter.js'
+import userRouter from './routes/userRouter.js'
+import ordersRouter from './routes/ordersRouter.js'
 import seed from './routes/seed.js'
 
 dotenv.config()
@@ -19,6 +21,8 @@ mongoose
 // Mount the product router
 app.use('/seed', seed)
 app.use('/products', productRouter)
+app.use('/users', userRouter)
+app.use('/orders', ordersRouter)
 
 app.listen(port, () => {
     console.log(`app listening on port ${port}`)

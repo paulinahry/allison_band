@@ -69,7 +69,7 @@ function Music() {
                 className="h-screen w-full bg-cover blur-lg flex flex-col justify-end items-end"
                 style={{ backgroundImage: `url(${src})` }}
             ></div>
-            <div className="w-[50%] absolute top-[20%] left-[30%] text-center">
+            <div className="w-[50%] absolute top-[20%] left-[26%] text-center">
                 <img src={heroPic} alt="allison band" />
                 <div className="bg-black">
                     <h1 className="text-2xl sm:text-3xl p-1">
