@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import Hero from '../components/Hero'
-import UpcomingEvents from '../components/UpcomingEvents'
+import Hero from 'components/Hero'
+import UpcomingEvents from 'components/UpcomingEvents'
 
 function Home() {
     const [showUpcomingEvents, setShowUpcomingEvents] = useState(true)

@@ -1,6 +1,6 @@
 import React from 'react'
-import tour from '../pages/dataTour'
-import CardTour from '../components/CardTour'
+import tour from 'pages/dataTour'
+import CardTour from 'components/CardTour'
 import { useEffect } from 'react'
 
 function Tour() {

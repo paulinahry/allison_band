@@ -1,5 +1,5 @@
 import { productContext } from '../context/useProduct'
-import CardProduct from '../components/CardProduct'
+import CardProduct from 'components/CardProduct'
 
 const Product = () => {
     const { products } = productContext()
