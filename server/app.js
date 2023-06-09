@@ -20,7 +20,7 @@ mongoose
     .catch((error) => console.log('Error - database connection:', error))
 
 //acces
- app.use(cors());
+app.use(cors())
 // Mount the product router
 app.use('/seed', seed)
 app.use('/products', productRouter)

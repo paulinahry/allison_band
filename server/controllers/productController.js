@@ -1,8 +1,7 @@
 import Product from '../models/productModel.js'
 
-// GET all products
 const getAllProducts = async (req, res) => {
-     await Product.find()
+    await Product.find()
 
         .then((allProducts) => {
             console.log('products', allProducts)
@@ -14,9 +13,8 @@ const getAllProducts = async (req, res) => {
         })
 }
 
-// GET products by ID
 const getProductById = async (req, res) => {
-     await Product.findById(req.params.id)
+    await Product.findById(req.params.id)
         .then((prod) => {
             if (!prod) {
                 res.status(404).send('Product not found')

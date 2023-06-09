@@ -7,6 +7,8 @@ import Tour from './pages/Tour'
 import Store from './pages/Store'
 import Music from './pages/Music'
 import Footer from './components/Footer'
+import Login from './pages/Login'
+import Profil from './pages/Profil'
 
 function App() {
     return (
@@ -17,6 +19,8 @@ function App() {
                 <Route path="/tour" element={<Tour />} />
                 <Route path="/store" element={<Store />} />
                 <Route path="/music" element={<Music />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/profil" element={<Profil />} />
             </Routes>
             <Footer />
         </Router>

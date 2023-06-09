@@ -11,6 +11,7 @@ function Navigation() {
         { title: 'Tour', path: '/tour' },
         { title: 'Store', path: '/store' },
         { title: 'Music', path: '/music' },
+        { title: 'Login', path: '/login' },
     ])
 
     const toggleMenu = () => {
@@ -18,7 +19,7 @@ function Navigation() {
     }
 
     return (
-        <nav className="w-full h-20 md:h-[100] fixed flex justify-between items-center text-detailsRed bg-black z-50">
+        <nav className="w-full fixed flex justify-between items-center text-detailsRed bg-black z-50">
             {isMenuOpen ? (
                 <AiOutlineClose
                     className="cursor-pointer"

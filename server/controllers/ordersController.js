@@ -1,10 +1,13 @@
+import { query } from 'express'
 import Order from '../models/orderModel.js'
-import bcrypt from 'bcrypt'
 
-//populete the items from user and user
 const getOrders = async (req, res) => {
     const orders = await Order.find().populate('items.product').populate('user')
     res.status(200).send(orders)
 }
 
-export default { getOrders }
+const getUsersOrders = async (req, res) => {
+    const order = await Order.findById(req.params.id).populate('user')
+    res.status(200).send(order)
+}
+export default { getOrders, getUsersOrders }
