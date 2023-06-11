@@ -12,17 +12,21 @@ import Login from './pages/Login'
 function App() {
     return (
         <Router>
-            <Navigation />
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/tour" element={<Tour />} />
-                <Route path="/store" element={<Store />} />
-                <Route path="/music" element={<Music />} />
-                <Route path="/login" element={<Login />} />
-            </Routes>
-            <Footer />
+            <div id="root">
+                <Navigation />
+                <div className="content">
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/tour" element={<Tour />} />
+                        <Route path="/store" element={<Store />} />
+                        <Route path="/music" element={<Music />} />
+                        <Route path="/login" element={<Login />} />
+                    </Routes>
+                </div>
+                <Footer />
+            </div>
         </Router>
     )
 }
 
-export default App
+export default App;
