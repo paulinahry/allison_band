@@ -3,7 +3,7 @@ import Hero from 'components/Hero'
 import UpcomingEvents from 'components/UpcomingEvents'
 
 function Home() {
-    const [showUpcomingEvents, setShowUpcomingEvents] = useState(true)
+    const [showUpcomingEvents] = useState(true)
 
     if (!showUpcomingEvents) {
         return (

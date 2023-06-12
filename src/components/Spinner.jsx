@@ -1,12 +1,12 @@
 import React from 'react'
 import { Oval } from 'react-loader-spinner'
 
-function Spinner() {
+function Spinner({ size = 50 }) {
     return (
         <div className="text-center">
             <Oval
-                height={50}
-                width={50}
+                height={size}
+                width={size}
                 color="#ca5534"
                 wrapperStyle={{}}
                 wrapperClass=""

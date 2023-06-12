@@ -36,7 +36,7 @@ function Navigation() {
 
             {isMenuOpen && (
                 <div
-                    className="fixed top-20 right-0 
+                    className="fixed top-10 right-0 
                     flex flex-col justify-center align-center
         h-screen w-screen bg-black 
         opacity-90 
