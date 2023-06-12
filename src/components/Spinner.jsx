@@ -8,8 +8,7 @@ function Spinner({ size = 50 }) {
                 height={size}
                 width={size}
                 color="#ca5534"
-                wrapperStyle={{}}
-                wrapperClass=""
+       
                 visible={true}
                 ariaLabel="oval-loading"
                 secondaryColor="#ca5534"

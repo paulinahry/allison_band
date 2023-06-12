@@ -1,31 +1,10 @@
-import React from 'react'
 import heroPic from '/src/assets/images/pexels-brett-sayles-2479312.jpg'
 
-// import {
-//     loadImage,
-//     applyTransforms,
-//     builtins,
-//     generateTransforms,
-//     parseURL,
-//     resolveConfigs,
-// } from 'imagetools-core'
+
+
 
 function Hero() {
-    // const src = loadImage(`${heroPic}`)
-    // const config = {
-    //     width: '100%',
-    //     height: '100vh',
-    //     format: 'webp',
-    // }
 
-    // const { transforms, warnings } = generateTransforms(config, builtins)
-    // const { src: transformedImage, metadata } = applyTransforms(transforms, src)
-
-    // const src = new URL(
-    //     `/src/assets/images/pexels-brett-sayles-2479312.jpg?w=100vw&format=webp`
-    // )
-    // const parameters = parseURL(src)
-    // const configs = resolveConfigs(parameters)
 
     return (
         <div
