@@ -25,12 +25,28 @@ const CardProduct = ({ product }) => {
     }
 
     return (
-        <div className="card">
-            <img src={product.image} alt={product.title} />
-            <h3>{product.title}</h3>
-            <p>{product.description}</p>
-            <p>Price: ${product.price}</p>
-            <p>Stock: {product.stock}</p>
+        <div className="flex flex-wrap justify-center">
+            <div className="card bg-white m-2 p-2 rounded">
+                <img
+                    className="h-[250px] w-[250px]"
+                    src={product.image}
+                    alt={product.title}
+                />
+                <h3 className="text-xl font-extrabold">{product.title}</h3>
+                <p>{product.description}</p>
+
+                {product.stock > 0 ? (
+                    <p className="text-green-500"> Available</p>
+                ) : (
+                    'Out of stock'
+                )}
+                <div className="flex justify-between">
+                    <p> ${product.price}</p>
+                    <button className="text-white cursor-pointer rounded  bg-detailsRed p-1 px-4">
+                        add to cart
+                    </button>
+                </div>
+            </div>
         </div>
     )
 }

@@ -7,7 +7,7 @@ const Store = () => {
     const { products, loading } = useData()
 
     return (
-        <div className="store h-screen">
+        <div className="store h-screen  bg-gray-100 text-black">
             <h2 className="uppercase text-xxl">Products</h2>
             {products.map((product) => (
                 <CardProduct key={product._id} product={product} />
