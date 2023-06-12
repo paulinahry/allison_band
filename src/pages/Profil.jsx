@@ -3,19 +3,19 @@ import { useData } from '../context/UseContext'
 import CardOrders from '../components/CardOrders'
 
 const Profil = () => {
-    const { orders, user } = useData()
+    const { userOrders, user } = useData()
 
     if (!user) {
         return <p>User not logged in</p>
     }
 
-    if (!orders) {
+    if (!userOrders) {
         return <p>No orders</p>
     }
 
     return (
         <div className="profil h-screen">
-            {orders.map((order) => (
+            {userOrders.map((order) => (
                 <CardOrders key={order._id} orders={order} />
             ))}
         </div>

@@ -7,7 +7,7 @@ export const useData = () => useContext(DataContextProvider)
 
 export const DataProvider = ({ children }) => {
     const [products, setProducts] = useState([])
-    const [orders, setOrders] = useState([])
+    const [userOrders, setUserOrders] = useState([])
     const [user, setUser] = useState()
 
     useEffect(() => {
@@ -17,7 +17,7 @@ export const DataProvider = ({ children }) => {
                 const ordersData = await getUserOrders()
                 const userData = await getUserData()
                 setProducts(productsData)
-                setOrders(ordersData)
+                setUserOrders(ordersData)
                 setUser(userData)
             } catch (error) {
                 console.log('Error:', error)
@@ -29,7 +29,7 @@ export const DataProvider = ({ children }) => {
 
     const contextValue = {
         products,
-        orders,
+        userOrders,
         user,
     }
 

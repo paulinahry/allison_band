@@ -1,11 +1,17 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 // ICONS
 import { RxHamburgerMenu } from 'react-icons/rx'
 import { AiOutlineClose } from 'react-icons/ai'
+import { CgProfile } from 'react-icons/cg'
+import { BsCart2 } from 'react-icons/bs'
+import { useData } from '../context/UseContext'
 
 function Navigation() {
+    const { user } = useData
     const [isMenuOpen, setIsMenuOpen] = useState(false)
+    const navigate = useNavigate()
+
     const [menuItems] = useState([
         { title: 'Home', path: '/' },
         { title: 'Tour', path: '/tour' },
@@ -18,43 +24,61 @@ function Navigation() {
         setIsMenuOpen((state) => !state)
     }
 
-    return (
-        <nav className="w-full fixed flex justify-between items-center text-detailsRed bg-black z-50">
-            {isMenuOpen ? (
-                <AiOutlineClose
-                    className="cursor-pointer"
-                    size={45}
-                    onClick={toggleMenu}
-                />
-            ) : (
-                <RxHamburgerMenu
-                    className="cursor-pointer"
-                    size={45}
-                    onClick={toggleMenu}
-                />
-            )}
+    const handleUserNavigate = () => {
+        if (user) navigate('/profil')
+        else navigate('/login')
+    }
+    const showCart = () => {
+        console.log(user.userName)
+    }
 
-            {isMenuOpen && (
-                <div
-                    className="fixed top-10 right-0 
+    return (
+        <div className="flex fixed w-full  justify-between text-detailsRed  bg-black p-2">
+            <nav className=" flex justify-between items-center z-50">
+                {isMenuOpen ? (
+                    <AiOutlineClose
+                        className="cursor-pointer"
+                        size={45}
+                        onClick={toggleMenu}
+                    />
+                ) : (
+                    <RxHamburgerMenu
+                        className="cursor-pointer"
+                        size={45}
+                        onClick={toggleMenu}
+                    />
+                )}
+
+                {isMenuOpen && (
+                    <div
+                        className="fixed top-12 right-0 
                     flex flex-col justify-center align-center
-        h-screen w-screen bg-black 
-        opacity-90 
-        items-center"
-                >
-                    {menuItems.map((item, index) => (
-                        <Link
-                            key={index}
-                            to={item.path}
-                            className=" text-detailsRed uppercase text-4xl font-extrabold py-8"
-                            onClick={toggleMenu}
-                        >
-                            {item.title}
-                        </Link>
-                    ))}
-                </div>
-            )}
-        </nav>
+                    h-screen w-screen bg-black 
+                    opacity-90 
+                    items-center"
+                    >
+                        {menuItems.map((item, index) => (
+                            <Link
+                                key={index}
+                                to={item.path}
+                                className=" text-detailsRed uppercase text-4xl font-extrabold py-8"
+                                onClick={toggleMenu}
+                            >
+                                {item.title}
+                            </Link>
+                        ))}
+                    </div>
+                )}
+            </nav>
+            <div className="panel flex mt-1 cursor-pointer">
+                <CgProfile
+                    className="mr-4  "
+                    size={32}
+                    onClick={handleUserNavigate}
+                />
+                <BsCart2 size={32} onClick={showCart} />
+            </div>
+        </div>
     )
 }
 
