@@ -12,12 +12,22 @@ export const getAllProducts = async () => {
     }
 }
 
-// export const getProductById = async (productId) => {
-//     try {
-//         const response = await axios.get(`${API_URL}/products/${productId}`)
-//         return response.data
-//     } catch (error) {
-//         console.log('Error:', error)
-//         throw error
-//     }
-// }
+export const getUserOrders = async () => {
+    try {
+        const response = await axios.get(`${API_URL}/orders`)
+        return response.data
+    } catch (error) {
+        console.log('Error:', error)
+        throw error
+    }
+}
+
+export const getUserData = async () => {
+    try {
+        const response = await axios.get(`${API_URL}/user`)
+        return response.data
+    } catch (error) {
+        console.log('Error:', error)
+        throw error
+    }
+}

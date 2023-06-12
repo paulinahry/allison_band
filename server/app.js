@@ -21,10 +21,11 @@ mongoose
 
 //acces
 app.use(cors())
+
 // Mount the product router
 app.use('/seed', seed)
 app.use('/products', productRouter)
-app.use('/users', userRouter)
+app.use('/user', userRouter)
 app.use('/orders', ordersRouter)
 
 app.listen(port, () => {

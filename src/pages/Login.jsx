@@ -18,8 +18,8 @@ function Login() {
 
     const submitLogin = (e) => {
         e.preventDefault()
-        console.log('user logged in', email, ':' , password)
-        navigate('/store')
+        console.log('user logged in', email, ':', password)
+        navigate('/profil')
     }
 
     const handleEmail = (e) => {

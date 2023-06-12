@@ -11,7 +11,7 @@ function Tour() {
     return (
         <div className=" flex justify-center align-center text-center">
             <div className="py-10 text-detailsRed ">
-                <h1 className="uppercase font-bold text-3xl mt-20 ">
+                <h1 className="uppercase font-bold text-3xl">
                     Mermaid calling tour 2023
                 </h1>
 
