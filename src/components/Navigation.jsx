@@ -33,7 +33,7 @@ function Navigation() {
     }
 
     return (
-        <div className="flex fixed w-full  justify-between text-detailsRed  bg-black p-2">
+        <div className="flex fixed w-full  justify-between text-details  bg-main p-2 z-50">
             <nav className=" flex justify-between items-center z-50 mt-4 ">
                 {isMenuOpen ? (
                     <AiOutlineClose
@@ -51,9 +51,9 @@ function Navigation() {
 
                 {isMenuOpen && (
                     <div
-                        className="fixed top-20 right-0 
+                        className=" fixed top-[72px] right-0 
                     flex flex-col justify-center align-center
-                    h-screen w-screen bg-black 
+                    h-screen w-screen bg-main
                     opacity-90 
                     items-center"
                     >
@@ -61,7 +61,7 @@ function Navigation() {
                             <Link
                                 key={index}
                                 to={item.path}
-                                className=" text-detailsRed uppercase text-4xl font-extrabold py-8"
+                                className=" text-details uppercase text-4xl font-extrabold py-8"
                                 onClick={toggleMenu}
                             >
                                 {item.title}

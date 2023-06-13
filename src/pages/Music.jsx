@@ -61,20 +61,20 @@ function Music() {
     return (
         <>
             <div
-                className="h-screen w-full bg-cover blur-lg flex flex-col justify-end items-end"
+                className="h-screen w-full bg-cover blur-lg flex flex-col justify-end items-end "
                 style={{ backgroundImage: `url(${heroPic})` }}
             ></div>
 
             <div className="w-[50%] absolute top-[20%] left-[26%] text-center">
-                <img src={heroPic} alt="allison band" />
-                <div className="bg-black">
+                <img src={heroPic} alt="allison band" className="sepia" />
+                <div className="bg-black text-details">
                     <h1 className="text-2xl sm:text-3xl p-1">
                         Allison - <span>play new album</span>
                     </h1>
                     <p>choose your music player</p>
                 </div>
 
-                <div className="bg-white text-black">
+                <div className="bg-white text-main">
                     {musicPlayers.map((player) => (
                         <Wrapper
                             key={player.name}

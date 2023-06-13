@@ -26,8 +26,8 @@ function CardTour({ item: tourItem }) {
                     <button
                         onClick={() => gotoTickets(tourItem.tickets)}
                         className="uppercase tracking-widest
-                         border-solid border-2 border-detailsRed
-                         hover:bg-detailsRed hover:text-black 
+                         border-solid border-2 border-details
+                         hover:bg-details hover:text-black 
                          rounded 
                          mt-2 p-1 m-1 w-[150px]"
                     >
@@ -40,7 +40,7 @@ function CardTour({ item: tourItem }) {
                     </div>
                 )}
             </div>
-            <div className="flex items-center justify-center bg-gray-500 border-1 ">
+            <div className="flex items-center justify-center bg-details border-1 ">
                 <hr />
             </div>
         </div>

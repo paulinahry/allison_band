@@ -30,10 +30,10 @@ function Hero() {
             className="h-screen bg-cover bg-center flex flex-col justify-end items-end"
             style={{ backgroundImage: `url(${heroPic})` }}
         >
-            <div className="text-detailsRed font-semibold tracking-wider flex flex-col justify-self-end m-4">
+            <div className="text-details font-semibold tracking-wider flex flex-col justify-self-end m-4">
                 <p className="text-7xl sm:text-9xl">allison</p>
                 <p className="text-5xl sm:text-7xl">Mermaid calling</p>
-                <p className="text-3xl sm:text-5xl tracking-tight text-yellow-300">
+                <p className="text-3xl sm:text-5xl tracking-tight text-yellowish">
                     new album out now
                 </p>
             </div>

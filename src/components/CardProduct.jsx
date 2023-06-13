@@ -42,7 +42,7 @@ const CardProduct = ({ product }) => {
                 )}
                 <div className="flex justify-between">
                     <p> ${product.price}</p>
-                    <button className="text-white cursor-pointer rounded  bg-detailsRed p-1 px-4">
+                    <button className="text-main font-bold cursor-pointer rounded  bg-details p-1 px-4">
                         add to cart
                     </button>
                 </div>

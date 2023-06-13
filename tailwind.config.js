@@ -6,7 +6,11 @@ module.exports = {
         extend: {
             colors: {
                 transparent: 'transparent',
-                detailsRed: '#ca5534',
+                details: '#f7d5b1',
+                main: '#2C3139',
+                yellowish: '#F4B860',
+                pinkish: '#FEC0CE',
+                greenish: '#87BAAB',
             },
             fonts: {},
         },

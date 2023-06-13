@@ -49,7 +49,7 @@ function CardOrders({ orders }) {
                     </div>
 
                     <div className="text-right">
-                        <hr className="text-gray-500 " />
+                        <hr className="text-main " />
                         <span className="text-black underline-offset-0 ">
                             Total:
                         </span>{' '}

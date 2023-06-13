@@ -7,11 +7,10 @@ function Spinner({ size = 50 }) {
             <Oval
                 height={size}
                 width={size}
-                color="#ca5534"
-       
+                color="#f7d5b1"
                 visible={true}
                 ariaLabel="oval-loading"
-                secondaryColor="#ca5534"
+                secondaryColor="#f7d5b1"
                 strokeWidth={2}
                 strokeWidthSecondary={2}
             />

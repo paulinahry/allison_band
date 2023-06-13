@@ -7,7 +7,7 @@ function Login() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const navigate = useNavigate()
-    const {user} = useData
+    const { user } = useData
 
     const inputStyle = {
         border: '0.5px solid black',
@@ -34,7 +34,7 @@ function Login() {
     return (
         <div className="flex flex-col justify-center items-center bg-white h-screen">
             <form
-                className="  w-[300px] h-[300px] bg-black flex flex-col justify-center items-center rounded "
+                className="  w-[300px] h-[300px] bg-main flex flex-col justify-center items-center rounded "
                 onSubmit={submitLogin}
             >
                 <h2>Log in to your account</h2>
@@ -63,7 +63,7 @@ function Login() {
                     <input
                         type="submit"
                         value="Log in"
-                        className=" bg-detailsRed w-[150px] h-8 rounded"
+                        className=" bg-details text-main w-[150px] h-8 rounded"
                     />
                 </div>
             </form>
