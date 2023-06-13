@@ -35,12 +35,20 @@ const CardProduct = ({ product }) => {
                 <h3 className="text-xl font-extrabold">{product.title}</h3>
                 <p>{product.description}</p>
 
-                {product.stock > 0 ? (
-                    <p className="text-green-500"> Available</p>
+                {product.stock === 0 ? (
+                    <p className="text-main">Out of Stock</p>
                 ) : (
-                    'Out of stock'
+                    <>
+                        {product.stock < 10 ? (
+                            <p className="text-red-400">
+                                Hurry up! Last Pieces
+                            </p>
+                        ) : (
+                            <p className="text-greenish">Available</p>
+                        )}
+                    </>
                 )}
-                <div className="flex justify-between">
+                <div className="flex justify-between mt-1">
                     <p> ${product.price}</p>
                     <button className="text-main font-bold cursor-pointer rounded  bg-details p-1 px-4">
                         add to cart
