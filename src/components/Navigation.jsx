@@ -34,7 +34,7 @@ function Navigation() {
 
     return (
         <div className="flex fixed w-full  justify-between text-detailsRed  bg-black p-2">
-            <nav className=" flex justify-between items-center z-50">
+            <nav className=" flex justify-between items-center z-50 mt-4 ">
                 {isMenuOpen ? (
                     <AiOutlineClose
                         className="cursor-pointer"
@@ -70,13 +70,13 @@ function Navigation() {
                     </div>
                 )}
             </nav>
-            <div className="panel flex mt-1 cursor-pointer">
+            <div className="panel flex mt-4 cursor-pointer">
                 <CgProfile
-                    className="mr-4  "
+                    className="mr-3  "
                     size={32}
                     onClick={handleUserNavigate}
                 />
-                <BsCart2 size={32} onClick={showCart} />
+                <BsCart2 className="mr-2" size={32} onClick={showCart} />
             </div>
         </div>
     )

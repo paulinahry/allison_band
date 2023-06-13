@@ -25,7 +25,7 @@ const CardProduct = ({ product }) => {
     }
 
     return (
-        <div className="flex flex-wrap justify-center">
+        <>
             <div className="card bg-white m-2 p-2 rounded">
                 <img
                     className="h-[250px] w-[250px]"
@@ -47,7 +47,7 @@ const CardProduct = ({ product }) => {
                     </button>
                 </div>
             </div>
-        </div>
+        </>
     )
 }
 
