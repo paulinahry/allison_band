@@ -9,6 +9,7 @@ export const DataProvider = ({ children }) => {
     const [products, setProducts] = useState([])
     const [userOrders, setUserOrders] = useState([])
     const [user, setUser] = useState()
+    const [cart, setCart] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -26,6 +27,7 @@ export const DataProvider = ({ children }) => {
 
         fetchData()
     }, [])
+    
 
     const contextValue = {
         products,
