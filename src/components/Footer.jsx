@@ -1,4 +1,5 @@
 import React from 'react'
+import SocialMedia from './SocialMedia'
 
 function Footer() {
     return (
@@ -6,6 +7,7 @@ function Footer() {
             <p className="text-details">
                 &copy; 2023 Allison Band. All rights reserved.
             </p>
+            <SocialMedia />
         </div>
     )
 }
