@@ -14,7 +14,7 @@ function CardTour({ item: tourItem }) {
     }
 
     return (
-        <div className="sm:w-[90%] sm:m-auto text-center ">
+        <div className="sm:w-[90%] sm:m-auto text-center  ">
             <div className="my-6  sm:flex sm:justify-around text-details">
                 <div className="text-xl font-bold sm:min-w-[150px]">
                     <p>{tourItem.town},</p>
