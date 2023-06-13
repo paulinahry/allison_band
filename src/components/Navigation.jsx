@@ -51,7 +51,7 @@ function Navigation() {
 
                 {isMenuOpen && (
                     <div
-                        className="fixed top-12 right-0 
+                        className="fixed top-20 right-0 
                     flex flex-col justify-center align-center
                     h-screen w-screen bg-black 
                     opacity-90 
@@ -70,13 +70,13 @@ function Navigation() {
                     </div>
                 )}
             </nav>
-            <div className="panel flex mt-4 cursor-pointer">
+            <div className="panel flex mt-6 cursor-pointer">
                 <CgProfile
                     className="mr-3  "
                     size={32}
                     onClick={handleUserNavigate}
                 />
-                <BsCart2 className="mr-2" size={32} onClick={showCart} />
+                <BsCart2 className="ml-2" size={32} onClick={showCart} />
             </div>
         </div>
     )
