@@ -1,5 +1,6 @@
 import React from 'react'
 import heroPic from '/src/assets/images/pexels-brett-sayles-2479312.jpg'
+import concert from '/src/assets/images/concert.jpeg'
 import { BsSpotify } from 'react-icons/bs'
 import { SiTidal } from 'react-icons/si'
 import { ImSoundcloud } from 'react-icons/im'
@@ -59,14 +60,24 @@ function Music() {
     ]
 
     return (
-        <>
-            <div
-                className="h-screen w-full bg-cover blur-lg flex flex-col justify-end items-end "
-                style={{ backgroundImage: `url(${heroPic})` }}
-            ></div>
+        <div className="m-auto flex flex-col justify-center items-center ">
+            <img
+                className=" h-screen w-full 
+                bg-cover bg-center blur sepia "
+                src={heroPic}
+                alt="allison band"
+            ></img>
 
-            <div className="w-[50%] absolute top-[20%] left-[26%] text-center">
-                <img src={heroPic} alt="allison band" className="sepia" />
+            <div
+                className="absolute  top-[12%] 
+                            w-[600px]
+                            text-center m-auto"
+            >
+                <img
+                    src={concert}
+                    alt="allison band"
+                    className=" bg-contain  h-[400px] "
+                />
                 <div className="bg-black text-details">
                     <h1 className="text-2xl sm:text-3xl p-1">
                         Allison - <span>play new album</span>
@@ -86,7 +97,7 @@ function Music() {
                     ))}
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 

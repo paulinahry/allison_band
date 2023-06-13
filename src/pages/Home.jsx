@@ -9,7 +9,9 @@ function Home() {
         return (
             <>
                 <Hero />
-                <p className="italic text-sm">Current Tour is already over</p>
+                <p className="italic text-details">
+                    Current Tour is already over
+                </p>
             </>
         )
     }

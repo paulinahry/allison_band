@@ -17,18 +17,20 @@ function UpcomingEvents() {
 
     return (
         <div className="flex justify-center align-center text-center">
-            <div className="py-10 text-details ">
-                <h2 className="uppercase font-bold text-3xl">
+            <div className="py-10 text-details w-full ">
+                <h2
+                    className="uppercase font-thin font-mono 
+                text-3xl sm:text-4xl "
+                >
                     Upcoming events
                 </h2>
-                <div className="flex justify-end ">
-                    <button
-                        className=" underline  cursor-pointer"
-                        onClick={navigateToTour}
-                    >
-                        Show all
-                    </button>
-                </div>
+
+                <a
+                    className=" underline  cursor-pointer "
+                    onClick={navigateToTour}
+                >
+                    Show all
+                </a>
 
                 {upcomingEvents.length > 0 ? (
                     upcomingEvents.map((item) => (
