@@ -11,9 +11,8 @@ function Tour() {
 
     return (
         <>
-            <img className="h-40 w-full bg-cover bg-center " src={concert} />{' '}
             <div
-                className="  text-details 
+                className="  text-details
                     flex flex-col justify-center align-center text-center"
             >
                 <div
@@ -38,7 +37,10 @@ function Tour() {
                         tour 2023
                     </span>
                 </div>
-                <div className="absolute  border-b-white border-b-2 top-32 right-0 w-[60%]"></div>
+                <div
+                    className="absolute  border-b-white border-b-4 top-[194px]
+                 right-0 w-[50%]"
+                ></div>
             </div>
             {tour.map((item) => (
                 <CardTour item={item} key={item.id} />

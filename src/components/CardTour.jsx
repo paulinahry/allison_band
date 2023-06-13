@@ -3,9 +3,9 @@ import { TbTicketOff } from 'react-icons/tb'
 
 function CardTour({ item: tourItem }) {
     const format = {
-        month: 'short',
         weekday: 'long',
         year: 'numeric',
+        month: 'short',
         day: 'numeric',
     }
 
@@ -14,8 +14,8 @@ function CardTour({ item: tourItem }) {
     }
 
     return (
-        <div className="sm:w-[90%] sm:m-auto">
-            <div className="my-6  sm:flex sm:justify-around ">
+        <div className="sm:w-[90%] sm:m-auto text-center ">
+            <div className="my-6  sm:flex sm:justify-around text-details">
                 <div className="text-xl font-bold sm:min-w-[150px]">
                     <p>{tourItem.town},</p>
                     <p>{tourItem.country}</p>
@@ -29,9 +29,9 @@ function CardTour({ item: tourItem }) {
                     <button
                         onClick={() => gotoTickets(tourItem.tickets)}
                         className="uppercase tracking-widest
-                         border-solid border-2 border-details
+                         border-solid border border-details
                          hover:bg-details hover:text-black 
-                         rounded 
+                         rounded-full
                          mt-2 p-1 m-1 
                          w-[150px] sm:w-[30%] sm:min-w-[200px] sm:max-w-[250px]"
                     >

@@ -6,7 +6,7 @@ const Store = () => {
     const { products } = useData()
 
     return (
-        <div className="store pb-10  bg-gray-200 text-main  ">
+        <div className="store pb-10  bg-gray-200 text-main h-screen ">
             <div className="flex justi flex-col justify-center items-cente relative mb-20">
                 <div
                     style={{ backgroundImage: `url(${vinyl})` }}
@@ -26,7 +26,7 @@ const Store = () => {
                     </h1>
 
                     <div
-                        className="  p-3  
+                        className="  p-5  
                          w-[50%] rounded-full bg-yellowish/50  
                 text-center
                 absolute top-56 right-[24%]"

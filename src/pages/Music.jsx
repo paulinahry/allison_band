@@ -60,7 +60,7 @@ function Music() {
     ]
 
     return (
-        <div className="m-auto flex flex-col justify-center items-center ">
+        <div className=" flex flex-col justify-center items-center ">
             <img
                 className=" h-screen w-full 
                 bg-cover bg-center blur sepia "
