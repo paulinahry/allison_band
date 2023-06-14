@@ -7,8 +7,10 @@ import { imagetools } from 'vite-imagetools'
 export default defineConfig({
     resolve: {
         alias: {
+            src: path.resolve(__dirname, './src'),
             components: path.resolve(__dirname, './src/components'),
             pages: path.resolve(__dirname, './src/pages'),
+            slices: path.resolve(__dirname, './src/redux/slices'),
         },
     },
     plugins: [react(), imagetools()],
