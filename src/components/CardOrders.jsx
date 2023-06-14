@@ -22,11 +22,10 @@ function CardOrders({ orders }) {
 
     return (
         <div className=" w-full ">
-            <h2>Your orders:</h2>
             {orders.items.map((order) => (
                 <div
                     key={order._id}
-                    className="border 1px   bg-white text-black mt-5 p-3
+                    className="border 1px   bg-white text-black  p-3
                     "
                 >
                     <div className="flex ">
