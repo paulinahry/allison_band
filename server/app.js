@@ -9,6 +9,7 @@ import seed from './routes/seed.js'
 
 dotenv.config()
 const app = express()
+app.use(express.json())
 const port = 3000
 
 // Connect DB
@@ -27,7 +28,7 @@ app.use('/seed', seed)
 app.use('/products', productRouter)
 app.use('/user', userRouter)
 app.use('/orders', ordersRouter)
-app.use('/login', userRouter) // kein logik noch 
+app.use('/api', userRouter) // kein logik noch
 
 app.listen(port, () => {
     console.log(`app listening on port ${port}`)
