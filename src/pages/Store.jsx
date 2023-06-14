@@ -1,9 +1,14 @@
 import React from 'react'
 import { useData } from '../context/UseContext'
 import CardProduct from '../components/CardProduct'
+import { useEffect } from 'react'
 import vinyl from '../assets/images/vinyl.jpg'
 const Store = () => {
     const { products } = useData()
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
 
     return (
         <div className="store pb-10  bg-gray-200 text-main h-screen ">
