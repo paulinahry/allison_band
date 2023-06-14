@@ -164,13 +164,14 @@ function extraReducers(builder) {
             state.user = user
 
             const { from } = history.location.state || {
-                from: { pathname: '/profil' },
+                from: { pathname: '/store' },
             }
             history.navigate(from)
         })
         .addCase(register.rejected, (state, action) => {
             state.error = action.payload
         })
+
     //logout
     builder.addCase(logout.fulfilled, (state, action) => {
         state.user = null
@@ -187,5 +188,4 @@ function extraReducers(builder) {
 }
 
 export const authActions = { ...slice.actions, ...extraActions }
-
 export default slice.reducer

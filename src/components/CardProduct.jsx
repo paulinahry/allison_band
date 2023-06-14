@@ -1,25 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import Spinner from './Spinner'
-import { getAllProducts } from '../api/apiFetch'
-import { useSelector, useDispatch, createDispatchHook } from 'react-redux'
-import products, { prodActions } from '../redux/slices/products'
+import { useDispatch } from 'react-redux'
+import { prodActions } from '../redux/slices/products'
 
 const CardProduct = ({ product }) => {
-    const [isLoading, setIsLoading] = useState(true)
-    const [loaded, setLoadedProduct] = useState(null)
     const dispatch = useDispatch()
-    const prod = useSelector((s) => s.auth.user)
-    const prodError = useSelector((s) => s.auth.error)
 
-    useEffect(() => {
-        const fetchProduct = async () => {
-            dispatch(prodActions.getProducts({}))
-            console.log(products)
-        }
-        fetchProduct()
-    }, [])
-
-    if (isLoading) {
+    if (!product) {
         return <Spinner size={20} />
     }
 
@@ -48,9 +35,12 @@ const CardProduct = ({ product }) => {
                     </>
                 )}
                 <div className="flex justify-between mt-1">
-                    <p> ${product.price}</p>
-                    <button className="text-main font-bold cursor-pointer rounded  bg-details p-1 px-4">
-                        add to cart
+                    <p>${product.price}</p>
+                    <button
+                        className="text-main font-bold cursor-pointer rounded bg-details p-1 px-4"
+                        onClick={handleAddToCart}
+                    >
+                        Add to Cart
                     </button>
                 </div>
             </div>

@@ -6,11 +6,11 @@ const initialState = createInitialState()
 const reducers = createReducers()
 const extraActions = createExtraAction()
 const slice = createSlice({ name, initialState, reducers, extraReducers })
-const baseUrl = 'http://localhost:3000/api'
+const baseUrl = 'http://localhost:3000/'
 
 function createInitialState() {
-    let products = []
-    return { products, loaded: false }
+    let products
+    return { products: [], loaded: false }
 }
 
 function createReducers() {
@@ -26,7 +26,7 @@ function createExtraAction() {
                     const response = await axios.get(`${baseUrl}/products`, {
                         products,
                     })
-                    return response.data
+                    console.log(response.data)
                 } catch (error) {
                     return rejectWithValue(error.response?.data)
                 }
@@ -40,9 +40,20 @@ function createExtraAction() {
 function extraReducers(builder) {
     const { getProducts } = extraActions
 
-    builder.addCase(getProducts.pending, (state) => {
-        const products = action.payload.product
-    })
+    builder
+        .addCase(getProducts.pending, (state) => {
+            // false before fetching products
+            state.loaded = false
+        })
+        .addCase(getProducts.fulfilled, (state, action) => {
+            // new with fetched products
+            state.products = action.payload
+            state.loaded = true
+        })
+        .addCase(getProducts.rejected, (state, action) => {
+            // state true if the request is rejected
+            state.loaded = true
+        })
 }
 
 export const prodActions = { ...slice.actions, ...extraActions }
