@@ -12,21 +12,26 @@ const getUserById = async (req, res) => {
 }
 
 const login = async (req, res) => {
-    const { email, password } = req.body
-  
-    try {
-      const user = await User.findOne({ email })
-  
-      if (!user) {  // oder password is not correct
-        return res.status(401).json({ error: 'Invalid email or password' })
-      }
-  
-      res.status(200).json({ message: 'Login successful' })
-    } catch (error) {
-      console.error(error)
-      res.status(500).json({ error: 'An error occurred during login' })
-    }
-  }
-  
+    const { email, password } = req.body ?? {}
 
-export default { getUser, getUserById ,login}
+    try {
+        const user = await User.findOne({ email }).populate('orders').lean()
+
+        if (!user) {
+            return res.status(401).json({ error: 'Login incorrect' })
+        }
+
+        if (user.password !== password) {
+            return res.status(401).json({ error: 'Login incorrect' })
+        }
+
+        delete user.password
+
+        res.status(200).json({ message: 'Login successful', user })
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({ error: 'An error occurred during login' })
+    }
+}
+
+export default { getUser, getUserById, login }

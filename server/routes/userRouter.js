@@ -4,6 +4,6 @@ const app = express.Router()
 
 app.get('/', userController.getUser)
 app.get('/:id', userController.getUserById)
-app.get('/login', userController.login)
+app.post('/login', userController.login)
 
 export default app
