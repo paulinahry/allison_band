@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { useData } from '../context/UseContext'
 
 function CardOrders({ orders }) {
-    const { userOrders } = useData()
+    const { userOrders } = {}
     const [totalSum, setTotalSum] = useState(0)
 
     useEffect(() => {

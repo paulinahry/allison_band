@@ -1,8 +1,8 @@
 import React from 'react';
-import { useData } from '../context/UseContext';
+
 
 const ShoppingCart = () => {
-  const { cart } = useData()
+  const { cart } ={}}
 
   if (cart.length === 0) {
     return <p>Your cart is empty</p>;

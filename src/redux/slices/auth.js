@@ -1,4 +1,8 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import {
+    createAsyncThunk,
+    createSlice,
+    isAsyncThunkAction,
+} from '@reduxjs/toolkit'
 import axios, { AxiosError } from 'axios'
 import { history } from 'src/helpers'
 import store, { authActions as storeActions } from 'src/redux/store'
@@ -101,16 +105,34 @@ function createExtraActions() {
         )
     }
 
+    function register() {
+        return createAsyncThunk(
+            `${name}/register`,
+            async ({ email, password }, { rejectWithValue }) => {
+                try {
+                    const response = await axios.post(`${baseUrl}/register`, {
+                        email,
+                        password,
+                    })
+                    return response.data
+                } catch (error) {
+                    return rejectWithValue(error.response?.data)
+                }
+            }
+        )
+    }
+
     return {
         login: login(),
         logout: logout(),
         ping: ping(),
+        register: register(),
     }
 }
 
 function extraReducers(builder) {
-    const { login, logout, ping } = extraActions
-
+    const { login, logout, ping, register } = extraActions
+    //login
     builder
         .addCase(login.pending, (state) => {
             state.error = null
@@ -130,12 +152,33 @@ function extraReducers(builder) {
             state.error = action.payload
         })
 
+    //register
+    builder
+        .addCase(register.pending, (state) => {
+            state.error = null
+        })
+        .addCase(register.fulfilled, (state, action) => {
+            const user = action.payload.user
+
+            localStorage.setItem('user', JSON.stringify(user))
+            state.user = user
+
+            const { from } = history.location.state || {
+                from: { pathname: '/profil' },
+            }
+            history.navigate(from)
+        })
+        .addCase(register.rejected, (state, action) => {
+            state.error = action.payload
+        })
+    //logout
     builder.addCase(logout.fulfilled, (state, action) => {
         state.user = null
         localStorage.removeItem('user')
         history.navigate('/')
     })
 
+    //ping
     builder.addCase(ping.rejected, (state, action) => {
         state.user = null
         localStorage.removeItem('user')

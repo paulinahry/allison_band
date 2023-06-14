@@ -1,14 +1,17 @@
 import React from 'react'
-import { useState } from 'react'
-import { useData } from '../context/UseContext'
+import { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { authActions } from 'src/redux/store'
 import { Link, useNavigate } from 'react-router-dom'
 import piano from '../assets/images/piano.jpg'
 
-function Login() {
+function Register() {
+    const dispatch = useDispatch()
+    const authUser = useSelector((s) => s.auth.user)
+    const authError = useSelector((s) => s.auth.error)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const navigate = useNavigate()
-    const { user } = useData
 
     const inputStyle = {
         color: 'black ',
@@ -19,10 +22,10 @@ function Login() {
         border: '1px solid black ',
     }
 
-    const submitLogin = (e) => {
+    const submitRegister = (e) => {
         e.preventDefault()
-        console.log('user logged in', email, ':', password)
-        navigate('/profil')
+        dispatch(authActions.register({ email, password }))
+        console.log('user logged in', email)
     }
 
     const handleEmail = (e) => {
@@ -50,7 +53,7 @@ function Login() {
                 <div className="w-full sm:w-[50%] h-full  ">
                     <form
                         className="  h-full bg-wite text-main border-2 border-gray flex flex-col justify-center items-center sm: p-1  "
-                        onSubmit={submitLogin}
+                        onSubmit={submitRegister}
                     >
                         {/* <h2 className="font-mono">Welcome</h2> */}
 
@@ -92,4 +95,4 @@ function Login() {
     )
 }
 
-export default Login
+export default Register

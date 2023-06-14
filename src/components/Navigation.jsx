@@ -1,18 +1,22 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { authActions } from '../redux/store'
+
 // ICONS
 import { RxHamburgerMenu } from 'react-icons/rx'
 import { AiOutlineClose } from 'react-icons/ai'
 import { IoIosLogOut } from 'react-icons/io'
 import { CgProfile } from 'react-icons/cg'
 import { BsCart2 } from 'react-icons/bs'
-//import { useData } from '../context/UseContext'
 
 function Navigation() {
-    //const { user } = useData()
-    const user = {}
     const [isMenuOpen, setIsMenuOpen] = useState(false)
+    const [user, setUser] = useState()
+    const authUser = useSelector((s) => s.auth.user)
+
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     const [menuItems] = useState([
         { title: 'Home', path: '/' },
@@ -33,8 +37,9 @@ function Navigation() {
     const showCart = () => {
         console.log(user)
     }
-    const logout = () => {
-        console.log('bye', user)
+    const submitLogout = () => {
+        dispatch(authActions.logout())
+        console.log(' user logged out')
     }
 
     return (
@@ -82,7 +87,8 @@ function Navigation() {
                     onClick={handleUserNavigate}
                 />
                 <BsCart2 className="mx-1" size={32} onClick={showCart} />
-                <IoIosLogOut size={32} onClick={logout} />
+
+                <IoIosLogOut size={32} onClick={submitLogout} />
             </div>
         </div>
     )

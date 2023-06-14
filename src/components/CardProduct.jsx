@@ -1,22 +1,21 @@
 import React, { useState, useEffect } from 'react'
 import Spinner from './Spinner'
 import { getAllProducts } from '../api/apiFetch'
+import { useSelector, useDispatch, createDispatchHook } from 'react-redux'
+import products, { prodActions } from '../redux/slices/products'
 
 const CardProduct = ({ product }) => {
     const [isLoading, setIsLoading] = useState(true)
     const [loaded, setLoadedProduct] = useState(null)
+    const dispatch = useDispatch()
+    const prod = useSelector((s) => s.auth.user)
+    const prodError = useSelector((s) => s.auth.error)
 
     useEffect(() => {
         const fetchProduct = async () => {
-            try {
-                const data = await getAllProducts()
-                setLoadedProduct(data)
-                setIsLoading(false)
-            } catch (error) {
-                console.log('Error:', error)
-            }
+            dispatch(prodActions.getProducts({}))
+            console.log(products)
         }
-
         fetchProduct()
     }, [])
 

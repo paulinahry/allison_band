@@ -1,14 +1,24 @@
-import React from 'react'
-import { useData } from '../context/UseContext'
+import React, { useEffect } from 'react'
 import CardProduct from '../components/CardProduct'
-import { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { prodActions } from 'src/redux/store'
+
 import vinyl from '../assets/images/vinyl.jpg'
 const Store = () => {
-    const { products } = useData()
+    const { products, loaded } = useSelector((s) => s.prod)
 
     useEffect(() => {
         window.scrollTo(0, 0)
+
+        if (!loaded) {
+        }
     }, [])
+
+    useDispatch(prodActions.getProducts())
+
+    if (!loaded) {
+        return <h1>LOADING</h1>
+    }
 
     return (
         <div className="store pb-10  bg-gray-200 text-main h-screen ">
@@ -44,9 +54,9 @@ const Store = () => {
             </div>
 
             <div className="  flex flex-wrap  justify-center">
-                {products.map((product) => (
+                {/* {products.map((product) => (
                     <CardProduct key={product._id} product={product} />
-                ))}
+                ))} */}
             </div>
         </div>
     )
