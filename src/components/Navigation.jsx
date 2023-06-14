@@ -6,7 +6,7 @@ import { authActions } from '../redux/store'
 // ICONS
 import { RxHamburgerMenu } from 'react-icons/rx'
 import { AiOutlineClose } from 'react-icons/ai'
-import { IoIosLogOut } from 'react-icons/io'
+import { IoIosLogOut , IoIosLogIn} from 'react-icons/io'
 import { CgProfile } from 'react-icons/cg'
 import { BsCart2 } from 'react-icons/bs'
 
@@ -18,13 +18,19 @@ function Navigation() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    const [menuItems] = useState([
+    const menuItems = [
         { title: 'Home', path: '/' },
         { title: 'Tour', path: '/tour' },
         { title: 'Store', path: '/store' },
         { title: 'Music', path: '/music' },
-        { title: 'Login', path: '/login' },
-    ])
+      ]
+      
+      if (authUser) {
+        menuItems.push({ title: 'Logout', path: '/logout' });
+      } else {
+        menuItems.push({ title: 'Login', path: '/login' });
+      }
+      
 
     const toggleMenu = () => {
         setIsMenuOpen((state) => !state)
@@ -88,7 +94,11 @@ function Navigation() {
                 />
                 <BsCart2 className="mx-1" size={32} onClick={showCart} />
 
-                <IoIosLogOut size={32} onClick={submitLogout} />
+                {authUser ? (
+          <IoIosLogOut size={32} onClick={submitLogout} />
+        ) : (
+          <IoIosLogIn size={32} onClick={handleUserNavigate} />
+        )}
             </div>
         </div>
     )
