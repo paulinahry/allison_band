@@ -3,12 +3,14 @@ import { Link, useNavigate } from 'react-router-dom'
 // ICONS
 import { RxHamburgerMenu } from 'react-icons/rx'
 import { AiOutlineClose } from 'react-icons/ai'
+import { IoIosLogOut } from 'react-icons/io'
 import { CgProfile } from 'react-icons/cg'
 import { BsCart2 } from 'react-icons/bs'
-import { useData } from '../context/UseContext'
+//import { useData } from '../context/UseContext'
 
 function Navigation() {
-    const { user } = useData
+    //const { user } = useData()
+    const user = {}
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const navigate = useNavigate()
 
@@ -29,7 +31,10 @@ function Navigation() {
         else navigate('/login')
     }
     const showCart = () => {
-        console.log(user.userName)
+        console.log(user)
+    }
+    const logout = () => {
+        console.log('bye', user)
     }
 
     return (
@@ -70,13 +75,14 @@ function Navigation() {
                     </div>
                 )}
             </nav>
-            <div className="panel flex mt-6 cursor-pointer">
+            <div className="panel flex mt-6 cursor-pointer items-center ">
                 <CgProfile
-                    className="mr-3  "
+                    className="mx-1"
                     size={32}
                     onClick={handleUserNavigate}
                 />
-                <BsCart2 className="ml-2" size={32} onClick={showCart} />
+                <BsCart2 className="mx-1" size={32} onClick={showCart} />
+                <IoIosLogOut size={32} onClick={logout} />
             </div>
         </div>
     )
