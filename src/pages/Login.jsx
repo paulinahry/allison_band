@@ -1,14 +1,26 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react'
-import { useData } from '../context/UseContext'
+import { useSelector, useDispatch } from 'react-redux'
+import { authActions } from 'src/redux/store'
 import { useNavigate } from 'react-router-dom'
 import heroPic from '../assets/images/pexels-brett-sayles-2479312.jpg'
 
 function Login() {
+    const dispatch = useDispatch()
+    const authUser = useSelector((s) => s.auth.user)
+    const authError = useSelector((s) => s.auth.error)
+
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const navigate = useNavigate()
-    const { user } = useData
+
+    useEffect(() => {
+        if (authUser) {
+            setTimeout(() => {
+                navigate('/profil')
+            })
+        }
+    }, [])
 
     const inputStyle = {
         color: 'black ',
@@ -21,8 +33,7 @@ function Login() {
 
     const submitLogin = (e) => {
         e.preventDefault()
-        console.log('user logged in', email, ':', password)
-        navigate('/profil')
+        dispatch(authActions.login({ email, password }))
     }
 
     const handleEmail = (e) => {
@@ -31,7 +42,9 @@ function Login() {
     const handlePassword = (e) => {
         setPassword(e.target.value)
     }
-
+    const navigateToRegister = () => {
+        navigate('/register')
+    }
     return (
         <div className=" flex justify-center items-center bg-white h-screen">
             <div
@@ -46,11 +59,9 @@ function Login() {
 
                 <div className="w-full sm:w-[50%] h-full  ">
                     <form
-                        className="  h-full bg-wite text-main border border-gray flex flex-col justify-center items-center sm: p-1  "
+                        className="  h-full bg-wite text-main border-2 border-gray flex flex-col justify-center items-center sm: p-1  "
                         onSubmit={submitLogin}
                     >
-                        {/* <h2 className="font-mono">Welcome</h2> */}
-
                         <div className="w-full  flex flex-col justify-center items-center">
                             <label htmlFor="username">Email</label>
                             <input
@@ -65,6 +76,14 @@ function Login() {
                                 type="password"
                                 style={inputStyle}
                             />
+                        </div>
+                        <div className="w-full px-5 ">
+                            <p
+                                className="underline text-sm text-right cursor-pointer "
+                                onClick={navigateToRegister}
+                            >
+                                or register here
+                            </p>
                         </div>
 
                         <div className="m-2 w-[75%] sm:w-[90%]">
