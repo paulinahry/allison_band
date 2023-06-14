@@ -33,5 +33,15 @@ const login = async (req, res) => {
         res.status(500).json({ error: 'An error occurred during login' })
     }
 }
+const logout = async (req, res) => {
+    res.status(200).send()
+}
 
-export default { getUser, getUserById, login }
+const register = async (req, res) => {
+    const user = new User(req.body)
+    res.status(200).send()
+
+    await user.save()
+}
+
+export default { getUser, getUserById, login, logout, register }

@@ -28,7 +28,7 @@ app.use('/seed', seed)
 app.use('/products', productRouter)
 app.use('/user', userRouter)
 app.use('/orders', ordersRouter)
-app.use('/api', userRouter) // kein logik noch
+app.use('/api', userRouter)
 
 app.listen(port, () => {
     console.log(`app listening on port ${port}`)
