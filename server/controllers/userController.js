@@ -44,4 +44,16 @@ const register = async (req, res) => {
     await user.save()
 }
 
-export default { getUser, getUserById, login, logout, register }
+
+const getCart = async (req, res) => {
+    try {
+      const user = await User.findById(req.user._id).populate('cart.product')
+  
+      res.status(200).send(user.cart)
+    } catch (error) {
+      console.error(error)
+      res.status(500).json({ error: 'An error occurred while fetching the cart' })
+    }
+  }
+
+export default { getUser, getUserById, login, logout, register, getCart }

@@ -122,16 +122,33 @@ function createExtraActions() {
         )
     }
 
+
+
+    function getCart() {
+        return createAsyncThunk(`${name}/getCart`, async (_, { rejectWithValue, getState }) => {
+          try {
+            const { auth } = getState();
+            const response = await axios.get(`${baseUrl}/user/${auth.user?._id}/cart`);
+            return response.data;
+          } catch (error) {
+            return rejectWithValue(error.response?.data);
+          }
+        })
+    }
+
+    
+
     return {
         login: login(),
         logout: logout(),
         ping: ping(),
         register: register(),
+        getCart: getCart(),
     }
 }
 
 function extraReducers(builder) {
-    const { login, logout, ping, register } = extraActions
+    const { login, logout, ping, register , getCart} = extraActions
     //login
     builder
         .addCase(login.pending, (state) => {
@@ -185,6 +202,17 @@ function extraReducers(builder) {
         localStorage.removeItem('user')
         history.navigate('/')
     })
+
+    //getCart
+    builder
+    .addCase(getCart.fulfilled, (state, action) => {
+        state.cart = action.payload
+      })
+    .addCase(getCart.rejected, (state, action) => {
+        state.error = null
+        
+    })
+
 }
 
 export const authActions = { ...slice.actions, ...extraActions }

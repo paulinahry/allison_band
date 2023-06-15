@@ -7,5 +7,6 @@ app.get('/logout', userController.logout)
 //app.get('/:id', userController.getUserById)
 app.post('/login', userController.login)
 app.post('/register', userController.register)
+app.get('/cart', userController.getCart)
 
 export default app

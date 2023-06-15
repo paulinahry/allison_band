@@ -19,29 +19,13 @@ function createReducers() {
 }
 
 function createExtraActions() {
-    function getCart() {}
-    createAsyncThunk(
-        `${name}/getCart`,
-        async (_, { rejectWithValue, getState }) => {
-            try {
-                const { auth } = getState()
-                // const authUser = useSelector((s) => s.auth.user)
-                const response = await axios.get(
-                    `${baseUrl}/user/${auth.user._id}/cart`
-                )
-                return response.data
-            } catch (error) {
-                return rejectWithValue(error.response?.data)
-            }
-        }
-    )
+    
+     
 
-    // Todo:
-    //add to cart -> store
-    //remove
+    
 
     return {
-        getCart: getCart(),
+        //addToCart, remove
     }
 }
 
