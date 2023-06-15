@@ -14,9 +14,8 @@ const Store = () => {
         window.scrollTo(0, 0)
         if (!loaded) {
             dispatch(prodActions.getProducts())
-            console.log(dispatch, loaded)
         }
-    }, [loaded])
+    }, [])
 
     if (!loaded) {
         return <Spinner size={20} />
@@ -53,7 +52,11 @@ const Store = () => {
             <div className="flex flex-wrap justify-center">
                 <div className="flex flex-wrap justify-center">
                     {products.map((product) => (
-                        <CardProduct key={product._id} product={product} />
+                        <ul key={product._id}>
+                            <li>{product.title}</li>
+                            <li>{product.price}</li>
+                            <li>{product.image}</li>
+                        </ul>
                     ))}
                 </div>
             </div>
