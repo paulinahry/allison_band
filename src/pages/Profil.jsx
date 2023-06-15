@@ -9,22 +9,31 @@ import { useNavigate } from 'react-router-dom'
 const Profil = () => {
     const { orders, loaded } = useSelector((s) => s.ord)
     const authUser = useSelector((s) => s.auth.user)
+
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    console.log(
-        'orders in profil:',
-        orders.length,
-        Array.isArray(orders),
-        orders[0],
-        orders[1]
-    )
+    console.log('orders in profil:', orders.length, Array.isArray(orders))
 
     useEffect(() => {
         if (!loaded) {
             dispatch(orderActions.getUserOrders())
+            // dispatch(orderActions.calculateOrders())
         }
     }, [])
+
+    const calculateTotalPrice = () => {
+        let totalPrice = 0
+
+        orders.forEach((order) => {
+            order.items.forEach((item) => {
+                totalPrice += item.price * item.amount
+            })
+        })
+        return totalPrice
+    }
+
+    const totalSum = calculateTotalPrice()
 
     if (!authUser) {
         navigate('/')
@@ -34,28 +43,13 @@ const Profil = () => {
         return <Spinner size={20} />
     }
 
-    const [totalSum, setTotalSum] = useState(0)
-
-    useEffect(() => {
-        calculateTotalSum()
-    }, [])
-
-    const calculateTotalSum = () => {
-        let sum = 0
-        orders.forEach((order) => {
-            const { price, amount } = order
-            const orderSum = price * amount
-            sum += orderSum
-        })
-        console.log('orders:', orders, 'sum:', sum)
-        setTotalSum(sum)
-    }
-
     return (
         <div className="profil h-screen bg-gray-200 text-main">
             <div className="pt-10">
                 <p>Your current orders:</p>
-                {orders && orders.length > 0 ? (
+                {!orders && orders.length < 0 ? (
+                    <p>No orders available.</p>
+                ) : (
                     orders.map((order) => (
                         <ul key={order._id}>
                             {order.items.map((item) => (
@@ -98,8 +92,6 @@ const Profil = () => {
                             ))}
                         </ul>
                     ))
-                ) : (
-                    <p>No orders available.</p>
                 )}
             </div>
         </div>
