@@ -6,13 +6,12 @@ import { authActions } from '../redux/store'
 // ICONS
 import { RxHamburgerMenu } from 'react-icons/rx'
 import { AiOutlineClose } from 'react-icons/ai'
-import { IoIosLogOut , IoIosLogIn} from 'react-icons/io'
+import { IoIosLogOut } from 'react-icons/io'
 import { CgProfile } from 'react-icons/cg'
 import { BsCart2 } from 'react-icons/bs'
 
 function Navigation() {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
-    const [user, setUser] = useState()
     const authUser = useSelector((s) => s.auth.user)
 
     const navigate = useNavigate()
@@ -23,25 +22,24 @@ function Navigation() {
         { title: 'Tour', path: '/tour' },
         { title: 'Store', path: '/store' },
         { title: 'Music', path: '/music' },
-      ]
-      
-      if (authUser) {
-        menuItems.push({ title: 'Logout', path: '/logout' });
-      } else {
-        menuItems.push({ title: 'Login', path: '/login' });
-      }
-      
+    ]
+
+    if (authUser) {
+        menuItems.push({ title: 'Logout', path: '/logout' })
+    } else {
+        menuItems.push({ title: 'Login', path: '/login' })
+    }
 
     const toggleMenu = () => {
         setIsMenuOpen((state) => !state)
     }
 
     const handleUserNavigate = () => {
-        if (user) navigate('/profil')
+        if (authUser) navigate('/profil')
         else navigate('/login')
     }
     const showCart = () => {
-        console.log(user)
+        console.log(authUser)
     }
     const submitLogout = () => {
         dispatch(authActions.logout())
@@ -67,18 +65,22 @@ function Navigation() {
 
                 {isMenuOpen && (
                     <div
-                        className=" fixed top-[72px] right-0 
-                    flex flex-col justify-center align-center
-                    h-screen w-screen bg-main
-                    opacity-90 
-                    items-center"
+                        className="fixed top-[72px] right-0 
+        flex flex-col justify-center align-center
+        h-screen w-screen bg-main
+        opacity-90 
+        items-center"
                     >
                         {menuItems.map((item, index) => (
                             <Link
                                 key={index}
                                 to={item.path}
-                                className=" text-details uppercase text-4xl font-extrabold py-8"
-                                onClick={toggleMenu}
+                                className="text-details uppercase text-4xl font-extrabold py-8"
+                                onClick={
+                                    item.title === '/logout'
+                                        ? submitLogout
+                                        : toggleMenu
+                                }
                             >
                                 {item.title}
                             </Link>
@@ -92,13 +94,19 @@ function Navigation() {
                     size={32}
                     onClick={handleUserNavigate}
                 />
+
                 <BsCart2 className="mx-1" size={32} onClick={showCart} />
 
                 {authUser ? (
-          <IoIosLogOut size={32} onClick={submitLogout} />
-        ) : (
-          <IoIosLogIn size={32} onClick={handleUserNavigate} />
-        )}
+                    <IoIosLogOut size={32} onClick={submitLogout} />
+                ) : (
+                    <p
+                        className="underline uppercase"
+                        onClick={handleUserNavigate}
+                    >
+                        log in
+                    </p>
+                )}
             </div>
         </div>
     )
