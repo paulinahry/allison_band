@@ -27,7 +27,7 @@ app.use(cors())
 app.use('/seed', seed)
 app.use('/products', productRouter)
 app.use('/user', userRouter)
-app.use('/orders', ordersRouter)
+app.use('/user/orders', ordersRouter)
 app.use('/api', userRouter)
 
 app.listen(port, () => {
