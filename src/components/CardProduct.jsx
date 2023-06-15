@@ -4,8 +4,6 @@ import { useDispatch } from 'react-redux'
 import { prodActions } from '../redux/slices/products'
 
 const CardProduct = ({ product }) => {
-    const dispatch = useDispatch()
-
     if (!product) {
         return <Spinner size={20} />
     }
