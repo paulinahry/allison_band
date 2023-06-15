@@ -18,6 +18,7 @@ import Footer from 'components/Footer'
 import Login from './pages/Login'
 import Profil from './pages/Profil'
 import Register from './pages/Register'
+import Logout from './pages/Logout'
 
 function App() {
     history.navigate = useNavigate()
@@ -35,6 +36,7 @@ function App() {
                     <Route path="/login" element={<Login />} />
                     <Route path="/profil" element={<Profil />} />
                     <Route path="/register" element={<Register />} />
+                    <Route path="/logout" element={<Logout />} />
                 </Routes>
             </div>
             <Footer />
