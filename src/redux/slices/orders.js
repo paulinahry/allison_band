@@ -18,6 +18,7 @@ function createReducers() {
 }
 
 function createExtraActions() {
+    //get orders
     function getUserOrders() {
         return createAsyncThunk(
             `${name}/getUserOrders`,
@@ -31,17 +32,19 @@ function createExtraActions() {
             }
         )
     }
-    return { getUserOrders: getUserOrders() }
+
+    return {
+        getUserOrders: getUserOrders(),
+    }
 }
 
 function extraReducers(builder) {
-    const { getUserOrders } = extraActions
+    const { getUserOrders, calculateOrders } = extraActions
 
     builder
         .addCase(getUserOrders.pending, (state) => {
             state.loaded = false
         })
-
         .addCase(getUserOrders.fulfilled, (state, action) => {
             state.orders = action.payload
             state.loaded = true
