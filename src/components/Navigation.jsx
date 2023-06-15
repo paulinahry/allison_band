@@ -38,8 +38,8 @@ function Navigation() {
         if (authUser) navigate('/profil')
         else navigate('/login')
     }
-    const showCart = () => {
-        console.log(authUser)
+    const navigateToCart = () => {
+        navigate('/cart')
     }
     const submitLogout = () => {
         dispatch(authActions.logout())
@@ -77,7 +77,7 @@ function Navigation() {
                                 to={item.path}
                                 className="text-details uppercase text-4xl font-extrabold py-8"
                                 onClick={
-                                    item.title === '/logout'
+                                    item.title === 'Logout'
                                         ? submitLogout
                                         : toggleMenu
                                 }
@@ -95,7 +95,7 @@ function Navigation() {
                     onClick={handleUserNavigate}
                 />
 
-                <BsCart2 className="mx-1" size={32} onClick={showCart} />
+                <BsCart2 className="mx-1" size={32} onClick={navigateToCart} />
 
                 {authUser ? (
                     <IoIosLogOut size={32} onClick={submitLogout} />
