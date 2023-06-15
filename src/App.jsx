@@ -19,6 +19,7 @@ import Login from './pages/Login'
 import Profil from './pages/Profil'
 import Register from './pages/Register'
 import Logout from './pages/Logout'
+import ShoppingCart from './pages/ShoppingCart'
 
 function App() {
     history.navigate = useNavigate()
@@ -37,6 +38,7 @@ function App() {
                     <Route path="/profil" element={<Profil />} />
                     <Route path="/register" element={<Register />} />
                     <Route path="/logout" element={<Logout />} />
+                    <Route path="/cart" element={<ShoppingCart />} />
                 </Routes>
             </div>
             <Footer />
