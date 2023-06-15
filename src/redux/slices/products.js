@@ -6,11 +6,11 @@ const initialState = createInitialState()
 const reducers = createReducers()
 const extraActions = createExtraAction()
 const slice = createSlice({ name, initialState, reducers, extraReducers })
-const baseUrl = 'http://localhost:3000/'
+const baseUrl = 'http://localhost:3000'
 
 function createInitialState() {
-    let products
-    return { products: [], loaded: false }
+    let products = []
+    return { products, loaded: false }
 }
 
 function createReducers() {
@@ -21,12 +21,10 @@ function createExtraAction() {
     function getProducts() {
         return createAsyncThunk(
             `${name}/getAllProducts`,
-            async ({}, { rejectWithValue }) => {
+            async (_, { rejectWithValue }) => {
                 try {
-                    const response = await axios.get(`${baseUrl}/products`, {
-                        products,
-                    })
-                    console.log(response.data)
+                    const response = await axios.get(`${baseUrl}/products`)
+                    return response.data
                 } catch (error) {
                     return rejectWithValue(error.response?.data)
                 }
@@ -51,7 +49,7 @@ function extraReducers(builder) {
             state.loaded = true
         })
         .addCase(getProducts.rejected, (state, action) => {
-            // state true if the request is rejected
+            //  true if the request is rejected
             state.loaded = true
         })
 }
