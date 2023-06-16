@@ -1,3 +1,4 @@
+import cart from '../../src/redux/slices/cart.js'
 import User from '../models/userModel.js'
 
 const getUser = async (req, res) => {
@@ -48,20 +49,23 @@ const logout = async (req, res) => {
 
 const register = async (req, res) => {
     const user = new User(req.body)
-    res.status(200).send()
 
-    await user.save({ message: 'User registered correctly' })
+    try {
+        await user.save()
+        res.status(200).send({ message: 'User registered correctly' })
+    } catch (error) {
+        console.error(error)
+        res.status(500).send({ error: 'An error occurred during registration' })
+    }
 }
 
 //--------------- user actions in cart ------------------
 
 const getCart = async (req, res) => {
     try {
-        const user = await User.findById(req.user._id)
-            .populate('cart.product')
-            .populate('cart.amount')
+        const user = await User.findOne({ _id: req.params.id }).populate('cart')
 
-        res.status(200).send(user.cart)
+        res.status(200).send(user)
     } catch (error) {
         console.error(error)
         res.status(500).send({
@@ -69,13 +73,13 @@ const getCart = async (req, res) => {
         })
     }
 }
-
 const addToCart = async (req, res) => {
     try {
         const { userId } = req.params
         const { productId, quantity } = req.body
 
-        const user = await User.findById(req.user._id)
+        const user = await User.findOne({ _id: req.params.id })
+
         user.cart.push({ productId, quantity })
 
         user.save()
@@ -92,9 +96,9 @@ const addToCart = async (req, res) => {
 const removeOne = async (req, res) => {
     try {
         const { productId } = req.body
-        const user = await User.findById(req.user._id)
+        const user = await User.findOne({ _id: req.params.id })
 
-        user.cart = user.cart.filter((item) => item.productId !== productId)
+        user.cart = user.cart.filter((item) => item.product._id !== productId)
         await user.save()
 
         res.status(200).send({ message: 'Product removed from cart' })
@@ -108,17 +112,19 @@ const removeOne = async (req, res) => {
 
 const removeAll = async (req, res) => {
     try {
-        const user = await User.findOne({ _id: req.params._id })
+        const user = await User.findOne({ _id: req.params.id })
         user.cart = []
-        user.save()
+        await user.save()
+
         res.status(200).send({ message: 'Cart is empty' })
     } catch (error) {
         console.log(error)
         res.status(500).send({
-            error: 'Internal Server Error: cannot empty the cart',
+            error: 'Internal Server Error: unable to empty the cart',
         })
     }
 }
+
 //--------------- user actions in cart  end ------------------
 
 export default {
