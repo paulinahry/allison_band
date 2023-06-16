@@ -1,14 +1,24 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { cartActions } from '../redux/slices/cart'
+import { authActions } from 'src/redux/store'
+import { useNavigate } from 'react-router-dom'
 
 const ShoppingCart = () => {
-    // const { cart, loaded } = useSelector((s) => s.cart)
     // const dispatch = useDispatch()
+    // const navigate = useNavigate()
+    // function removeOne() {
+    //     dispatch(cartActions.removeOne())
+    // }
+    // function removeAll() {
+    //     dispatch(cartActions.removeAll())
+    // }
+    // const authUser = useSelector((s) => s.auth.user)
+    // const cart = useSelector((s) => s.cart)
 
     // useEffect(() => {
     //     if (!loaded) {
-    //         dispatch(cartActions.getCart())
+    //         dispatch(authActions.getCart())
     //     }
     // })
 

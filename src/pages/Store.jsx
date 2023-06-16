@@ -2,12 +2,14 @@ import React, { useEffect } from 'react'
 import CardProduct from '../components/CardProduct'
 import { useSelector, useDispatch } from 'react-redux'
 import { prodActions } from '../redux/slices/products'
+import { cartActions } from '../redux/slices/cart'
 import Spinner from '../components/Spinner'
 
 import vinyl from '../assets/images/vinyl.jpg'
 
 const Store = () => {
     const dispatch = useDispatch()
+    const { cart } = useSelector((s) => s.cart)
     const { products, loaded } = useSelector((s) => s.prod)
 
     useEffect(() => {
@@ -19,6 +21,9 @@ const Store = () => {
 
     if (!loaded) {
         return <Spinner size={20} />
+    }
+    function addToCart() {
+        dispatch(cartActions.addToCart())
     }
 
     return (
@@ -50,7 +55,7 @@ const Store = () => {
             </div>
 
             <div className="flex flex-wrap justify-center">
-                <div className="flex flex-wrap justify-center">
+                <div className="flex flex-wrap justify-center border-2">
                     {products.map((product) => (
                         <ul key={product._id}>
                             <li>{product.title}</li>
@@ -58,6 +63,7 @@ const Store = () => {
                             <li>{product.image}</li>
                         </ul>
                     ))}
+                    <button onClick={addToCart}>add to cart</button>
                 </div>
             </div>
         </div>
