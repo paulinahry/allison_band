@@ -31,6 +31,7 @@ const ShoppingCart = () => {
     // if ( cart.length === 0) {
     //     return <p>Your cart is empty</p>
     // }
+    console.log(authUser)
     return (
         <div>
             <h2>Shopping Cart</h2>

@@ -45,6 +45,7 @@ const Profil = () => {
     if (!loaded) {
         return <Spinner size={20} />
     }
+    console.log(authUser)
 
     return (
         <div className="profil h-screen bg-gray-200 text-main">
