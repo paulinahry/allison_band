@@ -39,7 +39,7 @@ function createExtraActions() {
 }
 
 function extraReducers(builder) {
-    const { getUserOrders, calculateOrders } = extraActions
+    const { getUserOrders } = extraActions
 
     builder
         .addCase(getUserOrders.pending, (state) => {
