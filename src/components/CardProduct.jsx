@@ -1,10 +1,13 @@
 import React from 'react'
 import Spinner from './Spinner'
-import { useDispatch } from 'react-redux'
-import { prodActions } from '../redux/slices/products'
+import { useSelector, useDispatch } from 'react-redux'
+import { cartActions } from '../redux/slices/cart'
 
-const CardProduct = ({ product }) => {
-    if (!product) {
+const CardProduct = ({ product, onClick }) => {
+    const dispatch = useDispatch()
+    const { products } = useSelector((s) => s.prod)
+
+    if (!products) {
         return <Spinner size={20} />
     }
 
@@ -36,7 +39,7 @@ const CardProduct = ({ product }) => {
                     <p>${product.price}</p>
                     <button
                         className="text-main font-bold cursor-pointer rounded bg-details p-1 px-4"
-                        onClick={handleAddToCart}
+                        onClick={onClick}
                     >
                         Add to Cart
                     </button>
