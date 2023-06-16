@@ -1,22 +1,22 @@
 import { useEffect, useState } from 'react'
 
-function CardOrders({ orders }) {
+function CardOrders({ orders, onClick }) {
     const [totalSum, setTotalSum] = useState(0)
 
     useEffect(() => {
         calculateTotalSum()
     }, [orders])
 
-    const calculateTotalSum = () => {
-        let sum = 0
-        orders.forEach((order) => {
-            const { price, amount } = order
-            const orderSum = price * amount
-            sum += orderSum
-        })
-        console.log('orders:', orders, 'sum:', sum)
-        setTotalSum(sum)
-    }
+    // const calculateTotalSum = () => {
+    //     let sum = 0
+    //     orders.forEach((order) => {
+    //         const { price, amount } = order
+    //         const orderSum = price * amount
+    //         sum += orderSum
+    //     })
+    //     console.log('orders:', orders, 'sum:', sum)
+    //     setTotalSum(sum)
+    // }
 
     return (
         <div className="w-full">

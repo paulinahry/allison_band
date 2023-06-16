@@ -18,7 +18,6 @@ const Profil = () => {
     useEffect(() => {
         if (!loaded) {
             dispatch(orderActions.getUserOrders())
-            // dispatch(orderActions.calculateOrders())
         }
     }, [])
 
@@ -37,6 +36,10 @@ const Profil = () => {
 
     if (!authUser) {
         navigate('/')
+    }
+
+    if (!orders) {
+        return <p>no orders</p>
     }
 
     if (!loaded) {
