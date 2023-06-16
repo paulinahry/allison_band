@@ -10,11 +10,10 @@
         "preview": "vite preview"
     },
     "dependencies": {
-        "@reduxjs/toolkit": "^1.9.5",
+        "@reduxjs/toolkit": "^2.0.0-beta.0",
         "axios": "^1.4.0",
         "image-tools": "^1.4.0",
         "imagetools-core": "^4.0.3",
-        "jimp": "^0.22.8",
         "mongoose": "^7.2.2",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
