@@ -20,12 +20,12 @@ function createReducers() {
 }
 
 function createExtraActions() {
-    function addToCart() {
+    function addToCart(productId) {
         return createAsyncThunk(
             `${name}/addToCart`,
             async (_, { rejectWithValue }) => {
                 try {
-                    const response = await axios.post(`${baseUrl}/add`)
+                    const response = await axios.post(`${baseUrl}/add/`,  { _id: productId })
                     return response.data
                 } catch (error) {
                     return rejectWithValue(error.response?.data)
@@ -34,12 +34,12 @@ function createExtraActions() {
         )
     }
 
-    function removeOne() {
+    function removeOne(productId) {
         return createAsyncThunk(
             `${name}/removeOneFromCart`,
             async (_, { rejectWithValue }) => {
                 try {
-                    const response = await axios.delete(`${baseUrl}/remove`)
+                    const response = await axios.delete(`${baseUrl}/remove/`,  { _id: productId })
                     return response.data
                 } catch (error) {
                     return rejectWithValue(error.response?.data)
@@ -71,7 +71,6 @@ function createExtraActions() {
 
 function extraReducers(builder) {
     const { addToCart, removeOne, removeAll } = extraActions
-    console.log('cart')
     //addToCart
     builder
         .addCase(addToCart.pending, (state) => {
@@ -88,7 +87,7 @@ function extraReducers(builder) {
                 state.cart.push({ ...action.payload, quantity: 1 })
             }
         })
-        .addCase(addToCart.rejected, (state, error) => {
+        .addCase(addToCart.rejected, (state) => {
             state.loaded = true
         })
 
@@ -104,7 +103,7 @@ function extraReducers(builder) {
             )
             state.cart = remove
         })
-        .addCase(removeOne.rejected, (state, error) => {
+        .addCase(removeOne.rejected, (state) => {
             state.loaded = true
         })
 
@@ -121,6 +120,7 @@ function extraReducers(builder) {
             state.loaded = true
         })
 }
+
 
 export const cartActions = { ...slice.actions, ...extraActions }
 export default slice.reducer

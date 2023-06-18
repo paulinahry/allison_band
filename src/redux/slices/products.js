@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, createReducer } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 
 const name = 'products'
@@ -32,11 +32,29 @@ function createExtraAction() {
         )
     }
 
-    return { getProducts: getProducts() }
+    function getProductById(productId) {
+        return createAsyncThunk(
+          `${name}/getProductById`,
+          async (_, { rejectWithValue }) => {
+            try {
+              const response = await axios.get(`${baseUrl}/products}`,
+              { _id: productId });
+              return response.data;
+            } catch (error) {
+              return rejectWithValue(error.response?.data);
+            }
+          }
+        );
+      }
+      
+    
+
+    return { getProducts: getProducts(),getProductById : getProductById ()
+     }
 }
 
 function extraReducers(builder) {
-    const { getProducts } = extraActions
+    const { getProducts , getProductById } = extraActions
 
     builder
         .addCase(getProducts.pending, (state) => {
@@ -48,11 +66,18 @@ function extraReducers(builder) {
             state.products = action.payload
             state.loaded = true
         })
-        .addCase(getProducts.rejected, (state, action) => {
+        .addCase(getProducts.rejected, (state) => {
             //  true if the request is rejected
             state.loaded = true
         })
+
+        builder
+        .addCase(getProductById.fulfilled, (state, action) => {
+          state.product = action.payload;
+          state.loaded = true;
+        });
 }
+
 
 export const prodActions = { ...slice.actions, ...extraActions }
 export default slice.reducer
