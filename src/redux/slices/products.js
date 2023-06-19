@@ -34,27 +34,25 @@ function createExtraAction() {
 
     function getProductById(productId) {
         return createAsyncThunk(
-          `${name}/getProductById`,
-          async (_, { rejectWithValue }) => {
-            try {
-              const response = await axios.get(`${baseUrl}/products}`,
-              { _id: productId });
-              return response.data;
-            } catch (error) {
-              return rejectWithValue(error.response?.data);
+            `${name}/getProductById`,
+            async (_, { rejectWithValue }) => {
+                try {
+                    const response = await axios.get(
+                        `${baseUrl}/products/${productId}}`
+                    )
+                    return response.data
+                } catch (error) {
+                    return rejectWithValue(error.response?.data)
+                }
             }
-          }
-        );
-      }
-      
-    
+        )
+    }
 
-    return { getProducts: getProducts(),getProductById : getProductById ()
-     }
+    return { getProducts: getProducts(), getProductById: getProductById() }
 }
 
 function extraReducers(builder) {
-    const { getProducts , getProductById } = extraActions
+    const { getProducts, getProductById } = extraActions
 
     builder
         .addCase(getProducts.pending, (state) => {
@@ -71,13 +69,11 @@ function extraReducers(builder) {
             state.loaded = true
         })
 
-        builder
-        .addCase(getProductById.fulfilled, (state, action) => {
-          state.product = action.payload;
-          state.loaded = true;
-        });
+    builder.addCase(getProductById.fulfilled, (state, action) => {
+        state.product = action.payload
+        state.loaded = true
+    })
 }
-
 
 export const prodActions = { ...slice.actions, ...extraActions }
 export default slice.reducer
