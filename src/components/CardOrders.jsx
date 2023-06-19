@@ -1,11 +1,12 @@
+import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react'
 
 function CardOrders({ orders, onClick }) {
     const [totalSum, setTotalSum] = useState(0)
 
-    useEffect(() => {
-        calculateTotalSum()
-    }, [orders])
+    // useEffect(() => {
+    //     calculateTotalSum()
+    // }, [orders])
 
     // const calculateTotalSum = () => {
     //     let sum = 0
