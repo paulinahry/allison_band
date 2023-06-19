@@ -9,7 +9,7 @@ app.post('/login', userController.login)
 app.post('/register', userController.register)
 app.get('/cart', userController.getCart)
 app.post('/cart/add', userController.addToCart)
-app.delete('/cart/remove', userController.removeOne)
+app.post('/cart/remove', userController.removeOne)
 app.delete('/cart/removeAll', userController.removeAll)
 
 export default app
