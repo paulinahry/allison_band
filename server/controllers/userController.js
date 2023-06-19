@@ -112,23 +112,6 @@ const addToCart = async (req, res) => {
     }
 }
 
-// const removeOne = async (req, res) => {
-//     try {
-//         const { productId } = req.body
-//         const user = await User.findOne({ _id: req.params.id })
-
-//         user.cart = user.cart.filter((item) => item.product._id !== productId)
-//         await user.save()
-
-//         res.status(200).send({ message: 'Product removed from cart' })
-//     } catch (error) {
-//         console.log(error)
-//         res.status(500).send({
-//             error: 'Internal Server Error: product not removed from cart',
-//         })
-//     }
-// }
-
 const removeOne = async (req, res) => {
     try {
         const { productId, userId } = req.body
