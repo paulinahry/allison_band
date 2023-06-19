@@ -75,16 +75,35 @@ const getCart = async (req, res) => {
 }
 const addToCart = async (req, res) => {
     try {
-        const { userId } = req.params
-        const { productId, quantity } = req.body
+        const { productId, userId, amount = 1 } = req.body
 
-        const user = await User.findOne({ _id: req.params.id })
+        let user = await User.findOne({ _id: userId })
 
-        user.cart.push({ productId, quantity })
+        let existingProductIndex = null
 
-        user.save()
+        if (!user.cart) user.cart = []
 
-        res.status(200).send({ message: 'Product added to cart', user })
+        user.cart.forEach((productInCart, i) => {
+            if (productInCart.id === productId) {
+                existingProductIndex = i
+                return
+            }
+        })
+
+        if (existingProductIndex != null) {
+            user.cart[existingProductIndex].amount++
+        } else {
+            user.cart.push({ _id: productId, amount })
+        }
+
+        await user.save()
+
+        user = await User.findOne({ _id: userId }).lean()
+
+        res.status(200).send({
+            cart: user.cart,
+            message: 'Product added to cart',
+        })
     } catch (error) {
         console.log(error)
         res.status(500).send({
@@ -120,7 +139,7 @@ const removeAll = async (req, res) => {
     } catch (error) {
         console.log(error)
         res.status(500).send({
-            error: 'Internal Server Error: unable to empty the cart',
+            error: 'Internal Server Error: cannot empty the cart',
         })
     }
 }

@@ -6,6 +6,7 @@ import {
 import axios, { AxiosError } from 'axios'
 import { history } from 'src/helpers'
 import store, { authActions as storeActions } from 'src/redux/store'
+import { cartActions } from 'slices/cart'
 
 const name = 'auth'
 const initialState = createInitialState()
@@ -63,12 +64,14 @@ function createExtraActions() {
     function login() {
         return createAsyncThunk(
             `${name}/login`,
-            async ({ email, password }, { rejectWithValue }) => {
+            async ({ email, password }, { dispatch, rejectWithValue }) => {
                 try {
                     const response = await axios.post(`${baseUrl}/login`, {
                         email,
                         password,
                     })
+
+                    dispatch(cartActions.setCart(response.data.user.cart))
                     return response.data
                 } catch (error) {
                     return rejectWithValue(error.response?.data)
@@ -161,6 +164,7 @@ function extraReducers(builder) {
             const { from } = history.location.state || {
                 from: { pathname: '/profil' },
             }
+
             history.navigate(from)
         })
         .addCase(login.rejected, (state, action) => {
@@ -181,6 +185,7 @@ function extraReducers(builder) {
             const { from } = history.location.state || {
                 from: { pathname: '/store' },
             }
+
             history.navigate(from)
         })
         .addCase(register.rejected, (state, action) => {
