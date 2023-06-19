@@ -9,6 +9,7 @@ import { AiOutlineClose } from 'react-icons/ai'
 import { IoIosLogOut } from 'react-icons/io'
 import { CgProfile } from 'react-icons/cg'
 import { BsCart2 } from 'react-icons/bs'
+import { cartActions } from '../redux/slices/cart'
 
 function Navigation() {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -43,6 +44,7 @@ function Navigation() {
     }
     const submitLogout = () => {
         dispatch(authActions.logout())
+        dispatch(cartActions.removeAll())
         console.log(' user logged out')
     }
 
