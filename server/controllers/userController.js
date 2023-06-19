@@ -112,15 +112,47 @@ const addToCart = async (req, res) => {
     }
 }
 
+// const removeOne = async (req, res) => {
+//     try {
+//         const { productId } = req.body
+//         const user = await User.findOne({ _id: req.params.id })
+
+//         user.cart = user.cart.filter((item) => item.product._id !== productId)
+//         await user.save()
+
+//         res.status(200).send({ message: 'Product removed from cart' })
+//     } catch (error) {
+//         console.log(error)
+//         res.status(500).send({
+//             error: 'Internal Server Error: product not removed from cart',
+//         })
+//     }
+// }
+
 const removeOne = async (req, res) => {
     try {
-        const { productId } = req.body
-        const user = await User.findOne({ _id: req.params.id })
+        const { productId, userId } = req.body
 
-        user.cart = user.cart.filter((item) => item.product._id !== productId)
+        let user = await User.findOne({ _id: userId }).populate('cart')
+
+        if (!user) {
+            return res.status(404).send({ error: 'User not found' })
+        }
+
+        const targetItem = user.cart.find((item) => item.id === productId)
+        if (targetItem.amount > 1) {
+            targetItem.amount--
+        } else {
+            user.cart = user.cart.filter((item) => item.amount > 1)
+        }
+
         await user.save()
+        user = await User.findOne({ _id: userId }).populate('cart').lean()
 
-        res.status(200).send({ message: 'Product removed from cart' })
+        res.status(200).send({
+            message: 'Product removed from cart',
+            cart: user.cart,
+        })
     } catch (error) {
         console.log(error)
         res.status(500).send({
@@ -131,15 +163,23 @@ const removeOne = async (req, res) => {
 
 const removeAll = async (req, res) => {
     try {
-        const user = await User.findOne({ _id: req.params.id })
-        user.cart = []
-        await user.save()
+        const { userId } = req.body
+        let user = await User.findOne({ _id: userId }).populate('cart')
 
-        res.status(200).send({ message: 'Cart is empty' })
+        if (!user) {
+            return res.status(404).send({ error: 'User not found' })
+        }
+
+        user.cart = []
+        res.status(200).send({
+            message: 'Cart empty',
+            cart: user.cart,
+        })
+        user.save()
     } catch (error) {
         console.log(error)
         res.status(500).send({
-            error: 'Internal Server Error: cannot empty the cart',
+            error: 'Internal Server Error: Unable to empty the cart',
         })
     }
 }

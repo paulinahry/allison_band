@@ -52,13 +52,20 @@ function createExtraActions() {
     function removeOne(productId) {
         return createAsyncThunk(
             `${name}/removeOneFromCart`,
-            async (_, { rejectWithValue }) => {
+            async ({ id: productId }, { rejectWithValue }) => {
                 try {
-                    const response = await axios.delete(`${baseUrl}/remove`, {
-                        _id: productId,
+                    const userData = JSON.parse(localStorage.getItem('user'))
+
+                    if (!userData) throw new Error('invalid user')
+                    if (!userData._id) throw new Error('inavild user id')
+
+                    const response = await axios.post(`${baseUrl}/remove`, {
+                        productId,
+                        userId: userData._id,
                     })
                     return response.data
                 } catch (error) {
+                    console.log(error)
                     return rejectWithValue(error.response?.data)
                 }
             }
@@ -70,9 +77,23 @@ function createExtraActions() {
             `${name}/user/removeAllFromCart`,
             async (_, { rejectWithValue }) => {
                 try {
-                    const response = await axios.delete(`${baseUrl}/removeAll`)
-                    return []
+                    const userData = JSON.parse(localStorage.getItem('user'))
+
+                    if (!userData) throw new Error('invalid user')
+                    if (!userData._id) throw new Error('inavild user id')
+
+                    const response = await axios.delete(
+                        `${baseUrl}/removeAll`,
+                        {
+                            data: {
+                                userId: userData._id,
+                            },
+                        }
+                    )
+
+                    return response.data
                 } catch (error) {
+                    console.log(error)
                     return rejectWithValue(error.response?.data)
                 }
             }
@@ -115,32 +136,26 @@ function extraReducers(builder) {
 
     //removeOne
     builder
-        .addCase(removeOne.pending, (state) => {
+        .addCase(removeOne.pending, (state, action) => {
+            const productId = action.meta.arg.id
+            const removedItem = state.cart.find((item) => item.id === productId)
+            if (removedItem) removedItem.amount--
+
             state.loaded = false
         })
         .addCase(removeOne.fulfilled, (state, action) => {
-            state.loaded = true
-            const remove = state.cart.filter(
-                (item) => item.id !== action.payload
-            )
-            state.cart = remove
+            if (action.payload.cart) {
+                state.cart = action.payload.cart
+            }
         })
         .addCase(removeOne.rejected, (state) => {
             state.loaded = true
         })
 
-    //removeAll
-    builder
-        .addCase(removeAll.pending, (state) => {
-            state.loaded = false
-        })
-        .addCase(removeAll.fulfilled, (state, action) => {
-            state.cart = action.payload
-            state.loaded = true
-        })
-        .addCase(removeAll.rejected, (state, error) => {
-            state.loaded = true
-        })
+    // removeAll
+    builder.addCase(removeAll.fulfilled, (state) => {
+        state.cart = []
+    })
 }
 
 export const cartActions = { ...slice.actions, ...extraActions }
