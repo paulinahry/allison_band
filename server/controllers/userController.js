@@ -67,7 +67,7 @@ const getCart = async (req, res) => {
         const user = await User.findOne({ _id: userId }).populate('cart')
 
         res.status(200).send({
-            user,
+            cart: user.cart,
             message: 'get user cart',
         })
     } catch (error) {
@@ -147,7 +147,6 @@ const removeOne = async (req, res) => {
         })
     }
 }
-
 const removeAll = async (req, res) => {
     try {
         const { userId } = req.body
