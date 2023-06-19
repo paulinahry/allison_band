@@ -63,9 +63,13 @@ const register = async (req, res) => {
 
 const getCart = async (req, res) => {
     try {
-        const user = await User.findOne({ _id: req.params.id }).populate('cart')
+        const { userId } = req.body
+        const user = await User.findOne({ _id: userId }).populate('cart')
 
-        res.status(200).send(user)
+        res.status(200).send({
+            user,
+            message: 'get user cart',
+        })
     } catch (error) {
         console.error(error)
         res.status(500).send({
