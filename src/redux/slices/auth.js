@@ -130,8 +130,15 @@ function createExtraActions() {
             `${name}/getCart`,
             async (_, { dispatch, rejectWithValue }) => {
                 try {
-                    const response = await axios.get(`${baseUrl}/cart`)
-                    dispatch(cartActions.setCart(response.data.user.cart))
+                    const userData = JSON.parse(localStorage.getItem('user'))
+
+                    if (!userData) throw new Error('invalid user')
+                    if (!userData._id) throw new Error('inavild user id')
+
+                    const response = await axios.post(`${baseUrl}/cart`, {
+                        userId: userData._id,
+                    })
+                    dispatch(cartActions.setCart(response.data.cart))
 
                     return response.data
                 } catch (error) {
@@ -210,11 +217,9 @@ function extraReducers(builder) {
 
     //getCart
     builder
-        .addCase(getCart.fulfilled, (state, action) => {
-            state.cart = action.payload
-        })
+        .addCase(getCart.fulfilled, (state, action) => {})
         .addCase(getCart.rejected, (state, action) => {
-            state.error = null
+            state.error = action.payload
         })
 }
 
