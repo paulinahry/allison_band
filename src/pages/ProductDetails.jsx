@@ -1,46 +1,40 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import { prodActions } from '../redux/slices/products';
-import CardProduct from '../components/CardProduct';
-import { cartActions } from '../redux/slices/cart';
+import React, { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { useParams } from 'react-router-dom'
+import { prodActions } from '../redux/slices/products'
+import CardProduct from '../components/CardProduct'
+import { cartActions } from '../redux/slices/cart'
 
-import Spinner from '../components/Spinner';
+import Spinner from '../components/Spinner'
 
 const ProductDetails = () => {
-  const { id } = useParams();
-  const dispatch = useDispatch();
-  const { product, loaded } = useSelector((s) => s.prod);
-  const { cart } = useSelector((s) => s.cart);
+    const { id } = useParams()
+    const dispatch = useDispatch()
+    const { products, loaded } = useSelector((state) => state.prod)
+    const { cart } = useSelector((state) => state.cart)
 
+    useEffect(() => {
+        dispatch(prodActions.getProductById())
+    }, [])
 
-  useEffect(() => {
-    dispatch(prodActions.getProductById(id)); 
-  }, [dispatch, id]);
+    function handleAddToCart(productId) {
+        dispatch(cartActions.addToCart({ _id: productId }))
+        console.log(productId, cart)
+    }
 
-  if (!loaded) {
-    return <Spinner size={20} />;
-  }
+    return (
+        <div className="flex flex-wrap justify-center">
+            {products && products._id === id ? (
+                <CardProduct
+                    key={products._id}
+                    product={products}
+                    onClick={() => handleAddToCart(products._id)}
+                />
+            ) : (
+                <p>Product not found.</p>
+            )}
+        </div>
+    )
+}
 
-  function handleAddToCart(productId) {
-    dispatch(cartActions.addToCart({ _id: productId }));
-    console.log(productId, cart);
-  }
-
-
-  return (
-    <div className="flex flex-wrap justify-center">
-      {product ? (
-        <CardProduct
-          key={product._id}
-          product={product}
-          onClick={() => handleAddToCart(product._id)}
-        />
-      ) : (
-        <p>No product found.</p>
-      )}
-    </div>
-  );
-};
-
-export default ProductDetails;
+export default ProductDetails

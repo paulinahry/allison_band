@@ -14,15 +14,15 @@ const ShoppingCart = () => {
 
     useEffect(() => {
         dispatch(authActions.getCart())
-        console.log('getCart läuft: ', authActions.getCart(), products, cart) //empty arrays
+        console.log('getCart läuft: ', authActions.getCart(), products, cart)
     }, [])
 
-    const handleRemoveOne = () => {
-        dispatch(cartActions.removeOne())
+    const handleDecreament = (id) => {
+        dispatch(cartActions.removeOne({ id }))
     }
 
-    const handleIncrement = () => {
-        dispatch(cartActions.addToCart())
+    const handleIncrement = (id) => {
+        dispatch(cartActions.addToCart({ id }))
     }
 
     const handleRemoveAll = () => {
@@ -34,27 +34,35 @@ const ShoppingCart = () => {
     }
     console.log(authUser)
     return (
-        <div>
-            <h2>Shopping Cart</h2>
+        <div className="bg-gray-200 text-main p-2">
+            <h2>Your Cart</h2>
             {cart.map((product) => (
                 <div key={product._id}>
-                    <p>{product.title}</p>
-                    <p>Amount: {product.amount}</p>
+                    <div className="flex items-center ">
+                        <button
+                            className="bg-white border-main px-1 text-3xl"
+                            onClick={() => {
+                                console.log(product._id)
+                                handleDecreament(product._id)
+                            }}
+                        >
+                            -
+                        </button>
+                        <p>Amount: {product.amount}</p>
 
-                    <button
-                        onClick={() => handleRemoveOne(product.product._id)}
-                    >
-                        minus
-                    </button>
-
-                    <button
-                        onClick={() => handleIncrement(product.product._id)}
-                    >
-                        plus
-                    </button>
+                        <button
+                            className="bg-white border-main  p-1 text-2xl "
+                            onClick={() => handleIncrement(product._id)}
+                        >
+                            +
+                        </button>
+                    </div>
                 </div>
             ))}
-            <button onClick={handleRemoveAll}>Remove All</button>
+
+            <button className="text-red-600" onClick={() => handleRemoveAll()}>
+                Remove All
+            </button>
         </div>
     )
 }
