@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react'
 import { orderActions } from '../redux/slices/orders'
 import Spinner from '../components/Spinner'
 import { useNavigate } from 'react-router-dom'
+import { authActions } from '../redux/slices/auth'
 
 const Profil = () => {
     const { orders, loaded } = useSelector((s) => s.ord)
@@ -18,6 +19,7 @@ const Profil = () => {
     useEffect(() => {
         if (!loaded) {
             dispatch(orderActions.getUserOrders())
+            dispatch(authActions.getCart())
         }
     }, [])
 
