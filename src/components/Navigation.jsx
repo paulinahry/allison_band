@@ -44,7 +44,6 @@ function Navigation() {
     }
     const submitLogout = () => {
         dispatch(authActions.logout())
-        dispatch(cartActions.removeAll())
         console.log(' user logged out')
     }
 

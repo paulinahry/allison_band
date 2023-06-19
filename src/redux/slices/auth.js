@@ -128,7 +128,7 @@ function createExtraActions() {
     function getCart() {
         return createAsyncThunk(
             `${name}/getCart`,
-            async ({}, { dispatch, rejectWithValue }) => {
+            async (_, { dispatch, rejectWithValue }) => {
                 try {
                     const response = await axios.get(`${baseUrl}/cart`)
                     dispatch(cartActions.setCart(response.data.user.cart))
