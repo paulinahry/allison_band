@@ -2,6 +2,8 @@ import express from 'express'
 import mongoose from 'mongoose'
 import cors from 'cors'
 import dotenv from 'dotenv'
+import delay from 'express-delay'
+import cookieParser from 'cookie-parser'
 import productRouter from './routes/productRouter.js'
 import userRouter from './routes/userRouter.js'
 import ordersRouter from './routes/ordersRouter.js'
@@ -20,8 +22,12 @@ mongoose
     .then(() => console.log('DB connection created'))
     .catch((error) => console.log('Error - database connection:', error))
 
-//acces
+//access
 app.use(cors())
+
+if (process.env.ENVIRONMENT === 'development') {
+    app.use(delay(100, 1000))
+}
 
 // Mount the product router
 app.use('/seed', seed)
