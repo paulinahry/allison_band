@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { authActions } from 'src/redux/store'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import heroPic from '../assets/images/pexels-brett-sayles-2479312.jpg'
 
 function Login() {
@@ -78,12 +78,12 @@ function Login() {
                             />
                         </div>
                         <div className="w-full px-5 flex justify-end">
-                            <span
+                            <Link
+                                to={'/register'}
                                 className="underline text-sm cursor-pointer "
-                                onClick={navigateToRegister}
                             >
                                 or register here
-                            </span>
+                            </Link>
                         </div>
 
                         <div className="m-2 w-[75%] sm:w-[90%]">
