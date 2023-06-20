@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { authActions } from '../redux/store'
@@ -10,10 +10,13 @@ import { IoIosLogOut } from 'react-icons/io'
 import { CgProfile } from 'react-icons/cg'
 import { BsCart2 } from 'react-icons/bs'
 import { cartActions } from '../redux/slices/cart'
+import { prodActions } from '../redux/slices/products'
 
 function Navigation() {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const authUser = useSelector((s) => s.auth.user)
+    const cart = useSelector((s) => s.cart.cart)
+    const [itemsInCart, setItemsinCart] = useState(0)
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -30,6 +33,20 @@ function Navigation() {
     } else {
         menuItems.push({ title: 'Login', path: '/login' })
     }
+
+    useEffect(() => {
+        dispatch(authActions.getCart())
+        dispatch(prodActions.getProducts())
+    }, [])
+
+    // function countItemsInCart() {
+    //     let counter = 0
+    //     cart.map((cartItem) => {
+    //         counter++
+    //     })
+    //     setItemsinCart(counter)
+    // }
+    // const sum = countItemsInCart()
 
     const toggleMenu = () => {
         setIsMenuOpen((state) => !state)
@@ -89,24 +106,35 @@ function Navigation() {
                 )}
             </nav>
             <div className="panel flex mt-6 cursor-pointer items-center ">
-                <CgProfile
-                    className="mx-1"
-                    size={32}
-                    onClick={handleUserNavigate}
-                />
-
-                <BsCart2 className="mx-1" size={32} onClick={navigateToCart} />
-
-                {authUser ? (
-                    <IoIosLogOut size={32} onClick={submitLogout} />
-                ) : (
-                    <p
-                        className="underline uppercase"
+                <div>
+                    <CgProfile
+                        className="mx-1"
+                        size={32}
                         onClick={handleUserNavigate}
-                    >
-                        log in
-                    </p>
-                )}
+                    />
+                </div>
+
+                <div>
+                    {/* <span>{sum}</span> */}
+                    <BsCart2
+                        className="mx-1"
+                        size={32}
+                        onClick={navigateToCart}
+                    />
+                </div>
+
+                <div>
+                    {authUser ? (
+                        <IoIosLogOut size={32} onClick={submitLogout} />
+                    ) : (
+                        <p
+                            className="underline uppercase"
+                            onClick={handleUserNavigate}
+                        >
+                            log in
+                        </p>
+                    )}
+                </div>
             </div>
         </div>
     )

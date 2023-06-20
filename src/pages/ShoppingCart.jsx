@@ -31,9 +31,22 @@ const ShoppingCart = () => {
         dispatch(cartActions.removeAll())
     }
 
+    // const getTotal = (productId) => {
+    //     console.log(cart)
+    //     let total = 0
+    //     cart.map((cartItem) => {
+    //         const prodInCart = products.find((prod) => {
+    //             prod._id = cartItem._id
+    //         })
+    //         total += prodInCart.price * cartItem.amount
+    //     })
+    //     return total
+    // }
+    // const sumOfProducts = getTotal()
+
     if (cart.length === 0) {
         return (
-            <div className="bg-white text-main">
+            <div className="bg-white text-main ">
                 <p>Your cart is currently empty</p>
                 <div className="uppercase flex flex-col justify-center">
                     <Link className="w-fit" to={'/'}>
@@ -105,6 +118,11 @@ const ShoppingCart = () => {
                             </div>
 
                             <hr />
+                            <span className="text-greenish">
+                                {(
+                                    cartItem.amount * productInCart.price
+                                ).toFixed(2)}
+                            </span>
                         </div>
                     </div>
                 )
