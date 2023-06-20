@@ -14,8 +14,6 @@ const Profil = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    console.log('orders in profil:', orders.length, Array.isArray(orders))
-
     useEffect(() => {
         if (!loaded) {
             dispatch(orderActions.getUserOrders())
@@ -47,7 +45,6 @@ const Profil = () => {
     if (!loaded) {
         return <Spinner size={20} />
     }
-    console.log(authUser)
 
     return (
         <div className="profil h-screen bg-gray-200 text-main">

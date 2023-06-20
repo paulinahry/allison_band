@@ -24,7 +24,6 @@ const Store = () => {
 
     const handleAddToCart = (id) => {
         dispatch(cartActions.addToCart({ id }))
-        console.log(id, cart)
     }
 
     return (

@@ -34,7 +34,6 @@ function Login() {
     const submitLogin = (e) => {
         e.preventDefault()
         dispatch(authActions.login({ email, password }))
-        console.log('user logged in', email)
     }
 
     const handleEmail = (e) => {

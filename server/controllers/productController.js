@@ -4,7 +4,6 @@ const getAllProducts = async (req, res) => {
     await Product.find()
 
         .then((allProducts) => {
-            console.log('products', allProducts)
             res.send(allProducts)
         })
         .catch((error) => {

@@ -19,7 +19,6 @@ const ProductDetails = () => {
 
     function handleAddToCart(productId) {
         dispatch(cartActions.addToCart({ _id: productId }))
-        console.log(productId, cart)
     }
 
     return (

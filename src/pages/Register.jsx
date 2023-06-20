@@ -25,7 +25,6 @@ function Register() {
     const submitRegister = (e) => {
         e.preventDefault()
         dispatch(authActions.register({ email, password }))
-        console.log('user logged in', email)
     }
 
     const handleEmail = (e) => {

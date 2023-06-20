@@ -124,8 +124,6 @@ function extraReducers(builder) {
             state.loaded = false
         })
         .addCase(addToCart.fulfilled, (state, action) => {
-            console.log(action)
-
             if (action.payload.cart) {
                 state.cart = action.payload.cart
             }
