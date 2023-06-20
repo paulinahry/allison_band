@@ -35,8 +35,7 @@ function Navigation() {
     }
 
     useEffect(() => {
-        dispatch(authActions.getCart())
-        dispatch(prodActions.getProducts())
+        //dispatch(authActions.getCart())
     }, [])
 
     // function countItemsInCart() {
