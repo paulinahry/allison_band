@@ -70,12 +70,12 @@ function Register() {
                             />
                         </div>
                         <div className="w-full px-5 flex justify-end">
-                            <span
-                                className="underline text-sm cursor-pointer  "
-                                onClick={navigateToLogin}
+                            <Link
+                                to={'/login'}
+                                className="underline text-sm cursor-pointer "
                             >
-                                or log in here
-                            </span>
+                                login
+                            </Link>
                         </div>
 
                         <div className="m-2 w-[75%] sm:w-[90%]">
