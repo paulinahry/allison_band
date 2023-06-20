@@ -44,7 +44,6 @@ function Navigation() {
     }
     const submitLogout = () => {
         dispatch(authActions.logout())
-        console.log(' user logged out')
     }
 
     return (
