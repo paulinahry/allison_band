@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux'
 import CardOrders from '../components/CardOrders'
 import Login from './Login'
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { orderActions } from '../redux/slices/orders'
 import Spinner from '../components/Spinner'
 import { useNavigate } from 'react-router-dom'
