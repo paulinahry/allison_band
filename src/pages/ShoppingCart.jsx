@@ -32,20 +32,39 @@ const ShoppingCart = () => {
     }
 
     if (cart.length === 0) {
-        return <p>Your cart is currently empty</p>
+        return (
+            <div className="bg-white text-main">
+                <p>Your cart is currently empty</p>
+                <div className="uppercase flex flex-col justify-center">
+                    <Link className="w-fit" to={'/'}>
+                        Home
+                    </Link>
+                    <Link className="w-fit" to={'/store'}>
+                        Store
+                    </Link>
+                    <Link className="w-fit" to={'/tour'}>
+                        tour
+                    </Link>
+                </div>
+            </div>
+        )
     }
 
     return (
         <div className="bg-gray-200 text-main p-2">
-            <h2 className="uppercase text-3xl text-right ">Your Cart</h2>
+            <h2 className="uppercase text-3xl text-left ">Your Cart</h2>
+
             {cart.map((cartItem) => {
                 const productInCart = products.find(
                     (prod) => prod._id === cartItem._id
                 )
 
                 return (
-                    <div className="flex justify-around p-2" key={cartItem._id}>
-                        <div>
+                    <div
+                        className="flex justify-around p-2 bg-white "
+                        key={cartItem._id}
+                    >
+                        <div className="bg-white ">
                             <img
                                 className=" h-40 w-40"
                                 src={productInCart.image}
@@ -53,45 +72,52 @@ const ShoppingCart = () => {
                             />
                         </div>
 
-                        <div>
-                            <div className="flex flex-col">
+                        <div className="w-[40%] ">
+                            <div className="flex flex-col  ">
                                 <span>{productInCart.title}</span>
-                                <span>Price: {productInCart.price}</span>
+                                <span>${productInCart.price}</span>
                                 <hr />
-                            </div>
-                            <div className="flex justify-center items-center">
-                                <AiOutlineMinus
-                                    className="cursor-pointer"
-                                    onClick={() =>
-                                        handleDecrement(productInCart._id)
-                                    }
-                                />
+                                <div className=" flex justify-center items-center">
+                                    <button
+                                        className="cursor-pointer"
+                                        onClick={() =>
+                                            handleDecrement(productInCart._id)
+                                        }
+                                    >
+                                        <AiOutlineMinus />
+                                    </button>
 
-                                <span> {cartItem.amount}</span>
-                                <AiOutlinePlus
-                                    className="cursor-pointer"
-                                    onClick={() =>
-                                        handleIncrement(productInCart._id)
-                                    }
-                                />
+                                    <span className="p-2">
+                                        {' '}
+                                        {cartItem.amount}
+                                    </span>
+                                    <button
+                                        clas
+                                        sName="cursor-pointer"
+                                        onClick={() =>
+                                            handleIncrement(productInCart._id)
+                                        }
+                                    >
+                                        {' '}
+                                        <AiOutlinePlus />
+                                    </button>
+                                </div>
                             </div>
-                            <div className="flex flex-col">
-                                <button
-                                    className="text-red-600 underline"
-                                    onClick={handleRemoveAll}
-                                >
-                                    Remove All
-                                </button>
 
-                                <button className="w-40 bg-details  text-main  h-11 rounded-full">
-                                    buy
-                                </button>
-                            </div>
+                            <hr />
                         </div>
-                        <hr />
                     </div>
                 )
             })}
+            <div className="flex flex-col items-end ">
+                <button className=" w-fit underline" onClick={handleRemoveAll}>
+                    Remove all
+                </button>
+
+                <button className="w-40 bg-details  text-main  h-11 rounded-full uppercase">
+                    buy
+                </button>
+            </div>
         </div>
     )
 }
