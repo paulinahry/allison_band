@@ -23,7 +23,6 @@ const ShoppingCart = () => {
             const cartProduct = products.find(
                 (prod) => prod._id === cartItem._id
             )
-            console.log('cartProduct', cartProduct.price)
             total += cartItem.amount * cartProduct.price
         })
         return total.toFixed(2)

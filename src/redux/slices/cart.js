@@ -54,10 +54,14 @@ function createExtraActions() {
     function removeOne(productId) {
         return createAsyncThunk(
             `${name}/removeOneFromCart`,
-            async ({ id: productId }, { rejectWithValue }) => {
+            async ({ id: productId }, { rejectWithValue, dispatch }) => {
                 try {
+                    const updateHash = Math.floor(Math.random() * 9000)
+                    dispatch(cartActions.setUpdateHash(updateHash))
+
                     const response = await axios.post(`${baseUrl}/remove`, {
                         productId,
+                        updateHash,
                     })
                     return response.data
                 } catch (error) {
@@ -131,7 +135,10 @@ function extraReducers(builder) {
             state.loaded = false
         })
         .addCase(removeOne.fulfilled, (state, action) => {
-            if (action.payload.cart) {
+            if (
+                action.payload.updateHash === state.updateHash &&
+                action.payload.cart
+            ) {
                 state.cart = action.payload.cart
             }
         })
