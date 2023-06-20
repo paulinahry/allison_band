@@ -69,13 +69,13 @@ function Register() {
                                 style={inputStyle}
                             />
                         </div>
-                        <div className="w-full px-5 ">
-                            <p
-                                className="underline text-sm text-right cursor-pointer"
+                        <div className="w-full px-5 flex justify-end">
+                            <span
+                                className="underline text-sm cursor-pointer  "
                                 onClick={navigateToLogin}
                             >
                                 or log in here
-                            </p>
+                            </span>
                         </div>
 
                         <div className="m-2 w-[75%] sm:w-[90%]">
