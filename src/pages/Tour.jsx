@@ -31,7 +31,7 @@ function Tour() {
                     className="absolute z-[-1] 
                         top-16 right-20 w-innerhit
                         lg:left-60 xl:left-72
-                        tracking-tighter text-white/40 text-6xl"
+                        tracking-tighter text-white/60 text-6xl"
                 >
                     tour 2023
                 </span>

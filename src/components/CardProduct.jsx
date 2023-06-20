@@ -2,24 +2,25 @@ import React from 'react'
 import Spinner from './Spinner'
 import { useSelector, useDispatch } from 'react-redux'
 import { cartActions } from '../redux/slices/cart'
-import { Link, useNavigate } from 'react-router-dom';
-
+import { Link, useNavigate } from 'react-router-dom'
 
 const CardProduct = ({ product, onClick }) => {
     const dispatch = useDispatch()
-    const navigate= useNavigate()
+    const navigate = useNavigate()
     const { products, loaded } = useSelector((s) => s.prod)
+
+    // function ifAdded() {
+    //     setAddedToCart(true)
+    //     return <p className='text-green-200'> added to cart </p>
+    // }
 
     if (!loaded) {
         return <Spinner size={20} />
     }
 
-
-
     return (
         <>
-            <div className="card bg-white m-2 p-2 rounded first-letter cursor-pointer" 
-       >
+            <div className="card bg-white m-2 p-2 rounded first-letter cursor-pointer">
                 <img
                     className="h-[250px] w-[250px]"
                     src={product.image}
@@ -49,11 +50,8 @@ const CardProduct = ({ product, onClick }) => {
                     >
                         Add to Cart
                     </button>
-
-
                 </div>
                 <Link to={`/store/${product._id}`}>read more... </Link>
-        
             </div>
         </>
     )

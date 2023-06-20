@@ -55,8 +55,6 @@ function Register() {
                         className="  h-full bg-wite text-main border-2 border-gray flex flex-col justify-center items-center sm: p-1  "
                         onSubmit={submitRegister}
                     >
-                        {/* <h2 className="font-mono">Welcome</h2> */}
-
                         <div className="w-full  flex flex-col justify-center items-center">
                             <label htmlFor="username">Email</label>
                             <input
