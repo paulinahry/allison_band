@@ -11,8 +11,11 @@ import seed from './routes/seed.js'
 
 dotenv.config()
 const app = express()
-app.use(express.json())
 const port = 3000
+
+if (process.env.ENVIRONMENT === 'development') {
+    app.use(delay(100, 1000))
+}
 
 // Connect DB
 // ensures that values passed to our model constructor that were not specified in our schema do not get saved to the db
@@ -23,11 +26,19 @@ mongoose
     .catch((error) => console.log('Error - database connection:', error))
 
 //access
-app.use(cors())
+const corsUrls = process.env.CORS_URLS?.split(',') ?? []
 
-if (process.env.ENVIRONMENT === 'development') {
-    app.use(delay(100, 1000))
-}
+app.use(
+    cors({
+        origin: corsUrls,
+        exposedHeaders: 'Set-Cookie',
+        credentials: true,
+    })
+)
+
+app.use(cookieParser())
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 
 // Mount the product router
 app.use('/seed', seed)

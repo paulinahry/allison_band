@@ -1,5 +1,12 @@
-import cart from '../../src/redux/slices/cart.js'
 import User from '../models/userModel.js'
+import jwt from 'jsonwebtoken'
+
+const tokenLifetime = 60 * 60 * 1000
+const refreshTokenLifetime = 24 * 60 * 60 * 1000
+
+function generateAccessToken(data, expiresIn) {
+    return jwt.sign(data, process.env.TOKEN_SECRET, { expiresIn })
+}
 
 const getUser = async (req, res) => {
     try {
@@ -37,7 +44,24 @@ const login = async (req, res) => {
         }
 
         delete user.password
-        res.status(200).json({ message: 'Login successful', user })
+
+        const token = generateAccessToken({ id: user._id }, tokenLifetime)
+        const refreshToken = generateAccessToken(
+            { id: user._id },
+            refreshTokenLifetime
+        )
+
+        res.cookie('token', token, {
+            maxAge: tokenLifetime,
+            httpOnly: true,
+        })
+
+        res.cookie('refreshToken', refreshToken, {
+            maxAge: refreshTokenLifetime,
+            httpOnly: true,
+        })
+
+        res.json({ message: 'Login successful', user })
     } catch (error) {
         console.error(error)
         res.status(500).send({ error: 'An error occurred during login' })
