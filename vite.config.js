@@ -13,5 +13,8 @@ export default defineConfig({
             slices: path.resolve(__dirname, './src/redux/slices'),
         },
     },
+    server: {
+        port: 8000,
+    },
     plugins: [react(), imagetools()],
 })
