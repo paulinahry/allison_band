@@ -12,7 +12,7 @@ function createInitialState() {
     let cart = []
     let loaded = false
     let error = null
-    return { cart, loaded, error }
+    return { cart, loaded, error, updateHash: null }
 }
 
 function createReducers() {
@@ -20,8 +20,13 @@ function createReducers() {
         state.cart = payload
     }
 
+    function setUpdateHash(state, { payload }) {
+        state.updateHash = payload
+    }
+
     return {
         setCart,
+        setUpdateHash,
     }
 }
 
@@ -29,16 +34,13 @@ function createExtraActions() {
     function addToCart(productId) {
         return createAsyncThunk(
             `${name}/addToCart`,
-            async ({ id: productId }, { rejectWithValue }) => {
+            async ({ id: productId }, { rejectWithValue, dispatch }) => {
                 try {
-                    const userData = JSON.parse(localStorage.getItem('user'))
-
-                    if (!userData) throw new Error('invalid user')
-                    if (!userData._id) throw new Error('invalid user id')
-
+                    const updateHash = Math.floor(Math.random() * 9000)
+                    dispatch(cartActions.setUpdateHash(updateHash))
                     const response = await axios.post(`${baseUrl}/add`, {
                         productId,
-                        userId: userData._id,
+                        updateHash,
                     })
                     return response.data
                 } catch (error) {
@@ -54,14 +56,8 @@ function createExtraActions() {
             `${name}/removeOneFromCart`,
             async ({ id: productId }, { rejectWithValue }) => {
                 try {
-                    const userData = JSON.parse(localStorage.getItem('user'))
-
-                    if (!userData) throw new Error('invalid user')
-                    if (!userData._id) throw new Error('inavild user id')
-
                     const response = await axios.post(`${baseUrl}/remove`, {
                         productId,
-                        userId: userData._id,
                     })
                     return response.data
                 } catch (error) {
@@ -77,19 +73,7 @@ function createExtraActions() {
             `${name}/user/removeAllFromCart`,
             async (_, { rejectWithValue }) => {
                 try {
-                    const userData = JSON.parse(localStorage.getItem('user'))
-
-                    if (!userData) throw new Error('invalid user')
-                    if (!userData._id) throw new Error('inavild user id')
-
-                    const response = await axios.delete(
-                        `${baseUrl}/removeAll`,
-                        {
-                            data: {
-                                userId: userData._id,
-                            },
-                        }
-                    )
+                    const response = await axios.delete(`${baseUrl}/removeAll`)
 
                     return response.data
                 } catch (error) {
@@ -124,7 +108,10 @@ function extraReducers(builder) {
             state.loaded = false
         })
         .addCase(addToCart.fulfilled, (state, action) => {
-            if (action.payload.cart) {
+            if (
+                action.payload.updateHash === state.updateHash &&
+                action.payload.cart
+            ) {
                 state.cart = action.payload.cart
             }
         })
@@ -136,7 +123,9 @@ function extraReducers(builder) {
     builder
         .addCase(removeOne.pending, (state, action) => {
             const productId = action.meta.arg.id
-            const removedItem = state.cart.find((item) => item.id === productId)
+            const removedItem = state.cart.find(
+                (item) => item._id === productId
+            )
             if (removedItem) removedItem.amount--
 
             state.loaded = false
@@ -151,9 +140,13 @@ function extraReducers(builder) {
         })
 
     // removeAll
-    builder.addCase(removeAll.fulfilled, (state) => {
-        state.cart = []
-    })
+    builder
+        .addCase(removeAll.pending, (state, action) => {
+            state.cart = []
+        })
+        .addCase(removeAll.fulfilled, (state, action) => {
+            state.cart = action.payload.cart
+        })
 }
 
 export const cartActions = { ...slice.actions, ...extraActions }
