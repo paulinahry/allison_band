@@ -1,7 +1,7 @@
 import User from '../models/userModel.js'
 import jwt from 'jsonwebtoken'
 
-const tokenLifetime = 60 * 60 * 1000
+const tokenLifetime = 10 * 10 * 1000 //10 min
 const refreshTokenLifetime = 24 * 60 * 60 * 1000
 
 function generateAccessToken(data, expiresIn) {
@@ -68,7 +68,50 @@ const login = async (req, res) => {
     }
 }
 const logout = async (req, res) => {
+    res.clearCookie('token')
+    res.clearCookie('refreshToken')
     res.status(200).send()
+}
+
+const refresh = async (req, res) => {
+    const { refreshToken } = req.cookies
+    if (refreshToken == null) return res.sendStatus(401)
+
+    let tokenData
+    try {
+        tokenData = jwt.verify(refreshToken, process.env.TOKEN_SECRET)
+    } catch (e) {
+        return res.sendStatus(401)
+    }
+
+    try {
+        const user = await User.findOne({ _id: tokenData.id }).exec()
+        if (!user) {
+            throw new Error('USER NOT FOUND')
+        }
+    } catch (error) {
+        return res.sendStatus(401)
+    }
+
+    const token = generateAccessToken({ id: tokenData.id }, tokenLifetime)
+    const newRefreshToken = generateAccessToken(
+        { id: tokenData.id },
+        refreshTokenLifetime
+    )
+
+    res.cookie('token', token, {
+        maxAge: tokenLifetime,
+        httpOnly: true,
+    })
+
+    res.cookie('refreshToken', newRefreshToken, {
+        maxAge: refreshTokenLifetime,
+        httpOnly: true,
+    })
+
+    res.json({
+        error: 0,
+    })
 }
 
 const register = async (req, res) => {
@@ -87,8 +130,20 @@ const register = async (req, res) => {
 
 const getCart = async (req, res) => {
     try {
-        const { userId } = req.body
-        const user = await User.findOne({ _id: userId }).populate('cart')
+        const { token } = req.cookies
+        let tokenData
+        try {
+            jwt.verify(token, String(process.env.TOKEN_SECRET), (err, data) => {
+                if (err || !data) {
+                    throw new Error(err)
+                }
+                tokenData = data
+            })
+        } catch (error) {
+            return res.sendStatus(401)
+        }
+
+        const user = await User.findOne({ _id: tokenData.id }).populate('cart')
 
         res.status(200).send({
             cart: user.cart,
@@ -103,9 +158,22 @@ const getCart = async (req, res) => {
 }
 const addToCart = async (req, res) => {
     try {
-        const { productId, userId, amount = 1 } = req.body
+        const { productId, amount = 1, updateHash } = req.body
 
-        let user = await User.findOne({ _id: userId })
+        const { token } = req.cookies
+        let tokenData
+        try {
+            jwt.verify(token, String(process.env.TOKEN_SECRET), (err, data) => {
+                if (err || !data) {
+                    throw new Error(err)
+                }
+                tokenData = data
+            })
+        } catch (error) {
+            return res.sendStatus(401)
+        }
+
+        let user = await User.findOne({ _id: tokenData.id })
 
         let existingProductIndex = null
 
@@ -126,11 +194,12 @@ const addToCart = async (req, res) => {
 
         await user.save()
 
-        user = await User.findOne({ _id: userId }).lean()
+        user = await User.findOne({ _id: tokenData.id }).lean()
 
         res.status(200).send({
             cart: user.cart,
             message: 'Product added to cart',
+            updateHash,
         })
     } catch (error) {
         console.log(error)
@@ -142,9 +211,22 @@ const addToCart = async (req, res) => {
 
 const removeOne = async (req, res) => {
     try {
-        const { productId, userId } = req.body
+        const { productId } = req.body
 
-        let user = await User.findOne({ _id: userId }).populate('cart')
+        const { token } = req.cookies
+        let tokenData
+        try {
+            jwt.verify(token, String(process.env.TOKEN_SECRET), (err, data) => {
+                if (err || !data) {
+                    throw new Error(err)
+                }
+                tokenData = data
+            })
+        } catch (error) {
+            return res.sendStatus(401)
+        }
+
+        let user = await User.findOne({ _id: tokenData.id }).populate('cart')
 
         if (!user) {
             return res.status(404).send({ error: 'User not found' })
@@ -158,7 +240,7 @@ const removeOne = async (req, res) => {
         }
 
         await user.save()
-        user = await User.findOne({ _id: userId }).populate('cart').lean()
+        user = await User.findOne({ _id: tokenData.id }).populate('cart').lean()
 
         res.status(200).send({
             message: 'Product removed from cart',
@@ -173,8 +255,20 @@ const removeOne = async (req, res) => {
 }
 const removeAll = async (req, res) => {
     try {
-        const { userId } = req.body
-        let user = await User.findOne({ _id: userId }).populate('cart')
+        const { token } = req.cookies
+        let tokenData
+        try {
+            jwt.verify(token, String(process.env.TOKEN_SECRET), (err, data) => {
+                if (err || !data) {
+                    throw new Error(err)
+                }
+                tokenData = data
+            })
+        } catch (error) {
+            return res.sendStatus(401)
+        }
+
+        let user = await User.findOne({ _id: tokenData.id }).populate('cart')
 
         if (!user) {
             return res.status(404).send({ error: 'User not found' })
@@ -206,4 +300,5 @@ export default {
     addToCart,
     removeOne,
     removeAll,
+    refresh,
 }
