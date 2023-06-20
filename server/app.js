@@ -13,9 +13,9 @@ dotenv.config()
 const app = express()
 const port = 3000
 
-if (process.env.ENVIRONMENT === 'development') {
-    app.use(delay(100, 1000))
-}
+// if (process.env.ENVIRONMENT === 'development') {
+//     app.use(delay(100, 1000))
+// }
 
 // Connect DB
 // ensures that values passed to our model constructor that were not specified in our schema do not get saved to the db

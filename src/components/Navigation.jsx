@@ -35,17 +35,12 @@ function Navigation() {
     }
 
     useEffect(() => {
-        //dispatch(authActions.getCart())
-    }, [])
+        setItemsinCart(getTotalAmount());
+      }, [cart]);
 
-    // function countItemsInCart() {
-    //     let counter = 0
-    //     cart.map((cartItem) => {
-    //         counter++
-    //     })
-    //     setItemsinCart(counter)
-    // }
-    // const sum = countItemsInCart()
+    const getTotalAmount = () => {
+        return cart.reduce((total, cartItem) => total + cartItem.amount, 0);
+      };
 
     const toggleMenu = () => {
         setIsMenuOpen((state) => !state)
@@ -120,6 +115,11 @@ function Navigation() {
                         size={32}
                         onClick={navigateToCart}
                     />
+                    {itemsInCart > 0 && (
+            <span className="bg-red-500 text-white rounded-full w-6 h-6 flex justify-center items-center absolute -top-1 -right-1 text-sm">
+              {itemsInCart}
+            </span>
+          )}
                 </div>
 
                 <div>

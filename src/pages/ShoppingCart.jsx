@@ -7,7 +7,6 @@ import { cartActions } from '../redux/slices/cart'
 import { authActions } from '../redux/slices/auth'
 import { prodActions } from '../redux/slices/products'
 import { Link, useNavigate } from 'react-router-dom'
-import Spinner from '../components/Spinner'
 
 const ShoppingCart = () => {
     const dispatch = useDispatch()
@@ -28,16 +27,24 @@ const ShoppingCart = () => {
         return total.toFixed(2)
     }
 
-    const getTotalAmount = () => {
-        let total = 0
-        cart.forEach((cartItem) => {
-            const cartProduct = products.find(
-                (prod) => prod._id === cartItem._id
-            )
-            total += cartItem.amount
-        })
-        return total
+    // const getTotalAmount = () => {
+    //     let total = 0
+    //     cart.forEach((cartItem) => {
+    //         const cartProduct = products.find(
+    //             (prod) => prod._id === cartItem._id
+    //         )
+    //         total += cartItem.amount
+    //     })
+    //     return total
     }
+    const getTotalAmount = () => {
+        return cart.reduce((total, cartItem) => total + cartItem.amount, 0);
+      };
+
+    const getSubtotal = (amount, price) => {
+  return (amount * price).toFixed(2);
+}
+
 
     useEffect(() => {
         window.scrollTo(0, 0)
@@ -57,27 +64,26 @@ const ShoppingCart = () => {
         dispatch(cartActions.removeAll())
     }
 
-    if (loaded) return <Spinner />
 
     if (cart.length === 0 || products.length === 0) {
         return (
-            <div className="bg-white text-main   ">
+            <div className="bg-white text-main">
                 <p>Your cart is currently empty</p>
                 <div className="uppercase flex flex-col justify-center">
-                    <Link className="w-fit" to={'/'}>
+                    <Link className="w-fit" to="/">
                         Home
                     </Link>
-                    <Link className="w-fit" to={'/store'}>
+                    <Link className="w-fit" to="/store">
                         Store
                     </Link>
-                    <Link className="w-fit" to={'/tour'}>
-                        tour
+                    <Link className="w-fit" to="/tour">
+                        Tour
                     </Link>
                 </div>
             </div>
-        )
+        );
     }
-
+    
     return (
         <>
             <h2 className="uppercase text-3xl bg-white text-main text-left p-2 ">
@@ -148,12 +154,10 @@ const ShoppingCart = () => {
                                     <div className=" flex justify-between border-b ">
                                         <span>subtotal: </span>
                                         <span className="text-greenish text-right">
-                                            ${' '}
-                                            {(
-                                                cartItem.amount *
-                                                productInCart.price
-                                            ).toFixed(2)}
-                                        </span>
+  ${' '}
+  {getSubtotal(cartItem.amount, productInCart.price)}
+</span>
+
                                     </div>
                                 </div>
                             </div>
