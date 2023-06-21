@@ -20,18 +20,18 @@ const Profil = () => {
         // dispatch(authActions.getCart())
     }, [])
 
-    // const calculateTotalPrice = () => {
-    //     let totalPrice = 0
+    const calculateTotalPrice = () => {
+        let totalPrice = 0
 
-    //     orders.forEach((order) => {
-    //         order.items.forEach((item) => {
-    //             totalPrice += item.price * item.amount
-    //         })
-    //     })
-    //     return totalPrice
-    // }
+        orders.forEach((order) => {
+            order.items.forEach((item) => {
+                totalPrice += item.price * item.amount
+            })
+        })
+        return totalPrice
+    }
 
-    // const totalSum = calculateTotalPrice()
+    const totalSum = calculateTotalPrice()
 
     if (!authUser) {
         navigate('/')
