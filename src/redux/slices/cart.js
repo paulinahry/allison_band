@@ -53,7 +53,7 @@ function createExtraActions() {
 
     function removeOne(productId) {
         return createAsyncThunk(
-            `${name}/removeOneFromCart`,
+            `${name}/removeOne`,
             async ({ id: productId }, { rejectWithValue, dispatch }) => {
                 try {
                     const updateHash = Math.floor(Math.random() * 9000)
