@@ -2,6 +2,8 @@ import { useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { authActions } from '../redux/store'
+import { cartActions } from '../redux/slices/cart'
+import { prodActions } from '../redux/slices/products'
 
 // ICONS
 import { RxHamburgerMenu } from 'react-icons/rx'
@@ -9,8 +11,6 @@ import { AiOutlineClose } from 'react-icons/ai'
 import { IoIosLogOut } from 'react-icons/io'
 import { CgProfile } from 'react-icons/cg'
 import { BsCart2 } from 'react-icons/bs'
-import { cartActions } from '../redux/slices/cart'
-import { prodActions } from '../redux/slices/products'
 
 function Navigation() {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -60,6 +60,7 @@ function Navigation() {
     return (
         <div className="flex fixed w-full  justify-between text-details  bg-main p-2 z-50">
             <nav className=" flex justify-between items-center z-50 mt-4 ">
+                {/* NAV TOGGLE */}
                 {isMenuOpen ? (
                     <AiOutlineClose
                         className="cursor-pointer"
@@ -82,6 +83,7 @@ function Navigation() {
         opacity-90 
         items-center"
                     >
+                        {/* MENU ITEMS */}
                         {menuItems.map((item, index) => (
                             <Link
                                 key={index}
@@ -99,6 +101,9 @@ function Navigation() {
                     </div>
                 )}
             </nav>
+
+            {/* ICONS RIGHT  */}
+            {/* PROFILE */}
             <div className="panel flex mt-6 cursor-pointer items-center ">
                 <div>
                     <CgProfile
@@ -108,31 +113,35 @@ function Navigation() {
                     />
                 </div>
 
+                {/* CART */}
                 <div>
-                    {/* <span>{sum}</span> */}
                     <BsCart2
                         className="mx-1"
                         size={32}
                         onClick={navigateToCart}
                     />
-                    {itemsInCart > 0 && (
+                    {/* ITEMS IN CART */}
+                    {authUser && itemsInCart > 0 ? (
                         <span
                             className="bg-red-500 text-white rounded-full w-5 h-5 flex justify-center items-center 
                             absolute 
                             top-7 right-10
-                         text-sm"
+                         text-xs"
                         >
                             {itemsInCart}
                         </span>
+                    ) : (
+                        ''
                     )}
                 </div>
 
                 <div>
+                    {/*  LOGOUT  */}
                     {authUser ? (
                         <IoIosLogOut size={32} onClick={submitLogout} />
                     ) : (
                         <p
-                            className="underline uppercase"
+                            className="underline uppercase ml-4"
                             onClick={handleUserNavigate}
                         >
                             log in
@@ -140,6 +149,7 @@ function Navigation() {
                     )}
                 </div>
             </div>
+            {/* ICONS RIGHT END */}
         </div>
     )
 }
