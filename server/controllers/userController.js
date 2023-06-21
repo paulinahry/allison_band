@@ -1,7 +1,7 @@
 import User from '../models/userModel.js'
 import jwt from 'jsonwebtoken'
 
-const tokenLifetime = 10 * 10 * 1000 //10 min
+const tokenLifetime = 60 * 60 * 1000 //1h, than refresh function with new token
 const refreshTokenLifetime = 24 * 60 * 60 * 1000
 
 function generateAccessToken(data, expiresIn) {
@@ -211,7 +211,7 @@ const addToCart = async (req, res) => {
 
 const removeOne = async (req, res) => {
     try {
-        const { productId } = req.body
+        const { productId, updatedHash } = req.body
 
         const { token } = req.cookies
         let tokenData
@@ -245,6 +245,7 @@ const removeOne = async (req, res) => {
         res.status(200).send({
             message: 'Product removed from cart',
             cart: user.cart,
+            updatedHash,
         })
     } catch (error) {
         console.log(error)
