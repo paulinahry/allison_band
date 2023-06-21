@@ -121,20 +121,30 @@ const ShoppingCart = () => {
                                     <div className="flex flex-col  ">
                                         <hr />
                                         <div className=" flex justify-center items-center bg-gray-200">
-                                            <button
-                                                className=" border border-main p-1"
-                                                onClick={() =>
-                                                    handleDecrement(
-                                                        productInCart._id
-                                                    )
-                                                }
-                                            >
-                                                <AiOutlineMinus />
-                                            </button>
+                                            {/* button decrement  */}
+                                            {cartItem.amount > 0 ? (
+                                                <button
+                                                    className=" border border-main p-1"
+                                                    onClick={() =>
+                                                        handleDecrement(
+                                                            productInCart._id
+                                                        )
+                                                    }
+                                                >
+                                                    <AiOutlineMinus />
+                                                </button>
+                                            ) : (
+                                                <button className=" border border-gray-400 p-1 text-gray-400">
+                                                    <AiOutlineMinus />
+                                                </button>
+                                            )}
+                                            {/* button decrement end */}
 
                                             <span className="p-2">
                                                 {cartItem.amount}
                                             </span>
+
+                                            {/* button increment  */}
                                             <button
                                                 className="border border-main p-1"
                                                 onClick={() =>
@@ -146,6 +156,7 @@ const ShoppingCart = () => {
                                                 {' '}
                                                 <AiOutlinePlus />
                                             </button>
+                                            {/* button increment end  */}
                                         </div>
                                     </div>
 
