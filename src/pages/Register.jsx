@@ -74,7 +74,7 @@ function Register() {
                                 to={'/login'}
                                 className="underline text-sm cursor-pointer "
                             >
-                                login
+                                or login here
                             </Link>
                         </div>
 
