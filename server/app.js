@@ -43,7 +43,6 @@ app.use(express.urlencoded({ extended: true }))
 // Mount the product router
 app.use('/seed', seed)
 app.use('/products', productRouter)
-// app.use('/user', userRouter)
 app.use('/user/orders', ordersRouter)
 app.use('/api', userRouter)
 

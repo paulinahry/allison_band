@@ -5,6 +5,6 @@ import authTokenMiddleware from '../middlewares/token.middleware.js'
 const app = express.Router()
 
 app.get('/', authTokenMiddleware, ordersController.getOrders)
-app.get('/:id', authTokenMiddleware, ordersController.getUsersOrders)
+// app.get('/:id', authTokenMiddleware, ordersController.getUsersOrders)
 
 export default app
