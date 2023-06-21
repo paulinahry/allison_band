@@ -8,7 +8,6 @@ import heroPic from '../assets/images/pexels-brett-sayles-2479312.jpg'
 function Login() {
     const dispatch = useDispatch()
     const authUser = useSelector((s) => s.auth.user)
-    const authError = useSelector((s) => s.auth.error)
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -42,9 +41,7 @@ function Login() {
     const handlePassword = (e) => {
         setPassword(e.target.value)
     }
-    const navigateToRegister = () => {
-        navigate('/register')
-    }
+
     return (
         <div className=" flex justify-center items-center bg-white h-screen">
             <div
