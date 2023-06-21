@@ -1,20 +1,28 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Spinner from './Spinner'
 import { useSelector, useDispatch } from 'react-redux'
 import { cartActions } from '../redux/slices/cart'
+import { prodActions } from '../redux/slices/products'
 import { Link, useNavigate } from 'react-router-dom'
 
 const CardProduct = ({ product, onClick }) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const { products, loaded } = useSelector((s) => s.prod)
+    const [isLoading, setIsLoading] = useState(false)
+    const [showNotification, setShowNotification] = useState(false)
 
-    // function ifAdded() {
-    //     setAddedToCart(true)
-    //     return <p className='text-green-200'> added to cart </p>
-    // }
+    useEffect(() => {
+        window.scrollTo(0, 0)
+        dispatch(prodActions.getProducts())
+        setShowNotification(true)
+    }, [])
 
-    if (!loaded) {
+    const handleAddToCart = (id) => {
+        dispatch(cartActions.addToCart({ id }))
+        setShowNotification(true)
+    }
+
+    if (isLoading) {
         return <Spinner size={20} />
     }
 
@@ -50,6 +58,11 @@ const CardProduct = ({ product, onClick }) => {
                     >
                         Add to Cart
                     </button>
+                </div>
+                <div className="text-right">
+                    {showNotification && (
+                        <p className="text-greenish">added to cart</p>
+                    )}
                 </div>
                 <Link to={`/store/${product._id}`}>read more... </Link>
             </div>

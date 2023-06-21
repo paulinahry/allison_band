@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import CardProduct from '../components/CardProduct'
 import { useSelector, useDispatch } from 'react-redux'
 import { prodActions } from '../redux/slices/products'
@@ -8,21 +8,19 @@ import Spinner from '../components/Spinner'
 import vinyl from '../assets/images/vinyl.jpg'
 
 const Store = () => {
-    const dispatch = useDispatch()
-    const { cart } = useSelector((s) => s.cart)
-    const authUser = useSelector((s) => s.auth.user)
-    const { products, loaded } = useSelector((s) => s.prod)
+    // const dispatch = useDispatch()
+    const { products } = useSelector((s) => s.prod)
 
-    useEffect(() => {
-        window.scrollTo(0, 0)
-        if (!loaded) {
-            dispatch(prodActions.getProducts())
-        }
-    }, [])
+    // useEffect(() => {
+    //     window.scrollTo(0, 0)
+    //     if (!loaded) {
+    //         dispatch(prodActions.getProducts())
+    //     }
+    // }, [])
 
-    const handleAddToCart = (id) => {
-        dispatch(cartActions.addToCart({ id }))
-    }
+    // const handleAddToCart = (id) => {
+    //     dispatch(cartActions.addToCart({ id }))
+    // }
 
     return (
         <div className="store pb-10 bg-gray-200 text-main">
