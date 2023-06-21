@@ -130,6 +130,7 @@ function extraReducers(builder) {
             const removedItem = state.cart.find(
                 (item) => item._id === productId
             )
+
             if (removedItem) removedItem.amount--
 
             state.loaded = false

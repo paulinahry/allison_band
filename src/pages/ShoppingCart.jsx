@@ -27,24 +27,23 @@ const ShoppingCart = () => {
         return total.toFixed(2)
     }
 
-    // const getTotalAmount = () => {
-    //     let total = 0
-    //     cart.forEach((cartItem) => {
-    //         const cartProduct = products.find(
-    //             (prod) => prod._id === cartItem._id
-    //         )
-    //         total += cartItem.amount
-    //     })
-    //     return total
-    }
+    //     const getTotalAmount = () => {
+    //         let total = 0
+    //         cart.forEach((cartItem) => {
+    //             const cartProduct = products.find(
+    //                 (prod) => prod._id === cartItem._id
+    //             )
+    //             total += cartItem.amount
+    //         })
+    //         return total
+    // }
     const getTotalAmount = () => {
-        return cart.reduce((total, cartItem) => total + cartItem.amount, 0);
-      };
+        return cart.reduce((total, cartItem) => total + cartItem.amount, 0)
+    }
 
     const getSubtotal = (amount, price) => {
-  return (amount * price).toFixed(2);
-}
-
+        return (amount * price).toFixed(2)
+    }
 
     useEffect(() => {
         window.scrollTo(0, 0)
@@ -64,7 +63,6 @@ const ShoppingCart = () => {
         dispatch(cartActions.removeAll())
     }
 
-
     if (cart.length === 0 || products.length === 0) {
         return (
             <div className="bg-white text-main">
@@ -81,17 +79,17 @@ const ShoppingCart = () => {
                     </Link>
                 </div>
             </div>
-        );
+        )
     }
-    
+
     return (
         <>
-            <h2 className="uppercase text-3xl bg-white text-main text-left p-2 ">
+            <h2 className="uppercase text-3xl bg-white text-main text-left p-2">
                 Your Cart
             </h2>
             <div className="bg-gray-200 text-main p-2 flex justify-around pt-4 h-screen">
                 {/* left */}
-                <div className="w-[60%]">
+                <div className="w-[60%] ">
                     {cart.map((cartItem) => {
                         const productInCart = products.find(
                             (prod) => prod._id === cartItem._id
@@ -99,17 +97,17 @@ const ShoppingCart = () => {
 
                         return (
                             <div
-                                className="flex justify-around p-2 bg-white "
+                                className="flex justify-between p-3 bg-white"
                                 key={cartItem._id}
                             >
                                 <div className="flex justify-center">
                                     <img
-                                        className=" h-40 w-40"
+                                        className="h-40 w-40"
                                         src={productInCart.image}
                                         alt={productInCart.title}
                                     />
-                                    <div className="flex flex-col pl-2 justify-center ">
-                                        <span className="font-extrabold ">
+                                    <div className="flex flex-col pl-2 justify-center">
+                                        <span className="font-extrabold">
                                             {productInCart.title}
                                         </span>
                                         <span>{productInCart.description}</span>
@@ -154,32 +152,34 @@ const ShoppingCart = () => {
                                     <div className=" flex justify-between border-b ">
                                         <span>subtotal: </span>
                                         <span className="text-greenish text-right">
-  ${' '}
-  {getSubtotal(cartItem.amount, productInCart.price)}
-</span>
-
+                                            ${' '}
+                                            {getSubtotal(
+                                                cartItem.amount,
+                                                productInCart.price
+                                            )}
+                                        </span>
                                     </div>
                                 </div>
                             </div>
                         )
                     })}
-                    <div>
+                    <div className="w-full bg-white text-right pb-1">
                         <button
-                            className=" w-fit underline "
+                            className=" w-fit underline  items-center "
                             onClick={handleRemoveAll}
                         >
                             {' '}
                             remove all
-                            <BsTrash3 />
+                            <BsTrash3 className="inline mx-1" />
                         </button>
                     </div>
                 </div>
 
                 {/* right  */}
                 <div
-                    className="flex flex-col justify-center items-center
-                w-[30%] h-fit bg-white  
-                rounded-b-3xl p-5 mr-2"
+                    className="flex flex-col justify-center items-center 
+                    w-[30%] h-fit bg-white  
+                    rounded-b-3xl p-5 mr-2"
                 >
                     <span>Total products: {getTotalAmount()}</span>
                     <span className="font-bold text-greenish">
