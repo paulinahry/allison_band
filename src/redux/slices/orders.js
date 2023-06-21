@@ -42,15 +42,9 @@ function extraReducers(builder) {
     const { getUserOrders } = extraActions
 
     builder
-        .addCase(getUserOrders.pending, (state) => {
-            state.loaded = false
-        })
-        .addCase(getUserOrders.fulfilled, (state, action) => {
-            state.orders = action.payload
-            state.loaded = true
-        })
-        .addCase(getUserOrders.rejected, (state) => {
-            state.loaded = true
+        .addCase(getUserOrders.fulfilled, (state, action) => {})
+        .addCase(getUserOrders.rejected, (state, action) => {
+            state.error = action.payload
         })
 }
 
