@@ -3,13 +3,15 @@ import CardProduct from '../components/CardProduct'
 import { useSelector, useDispatch } from 'react-redux'
 import { prodActions } from '../redux/slices/products'
 import { cartActions } from '../redux/slices/cart'
+import { authActions } from '../redux/slices/auth'
 import Spinner from '../components/Spinner'
 import vinyl from '../assets/images/vinyl.jpg'
 
 const Store = () => {
     const dispatch = useDispatch()
-    const { cart } = useSelector((state) => state.cart)
-    const { products, loaded } = useSelector((state) => state.prod)
+    const { cart } = useSelector((s) => s.cart)
+    const authUser = useSelector((s) => s.auth.user)
+    const { products, loaded } = useSelector((s) => s.prod)
 
     useEffect(() => {
         window.scrollTo(0, 0)
@@ -17,10 +19,6 @@ const Store = () => {
             dispatch(prodActions.getProducts())
         }
     }, [])
-
-    if (!loaded) {
-        return <Spinner size={20} />
-    }
 
     const handleAddToCart = (id) => {
         dispatch(cartActions.addToCart({ id }))
