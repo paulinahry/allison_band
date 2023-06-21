@@ -4,7 +4,7 @@ import Login from './Login'
 import React, { useEffect } from 'react'
 import { orderActions } from '../redux/slices/orders'
 import Spinner from '../components/Spinner'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { authActions } from '../redux/slices/auth'
 
 const Profil = () => {
@@ -13,45 +13,48 @@ const Profil = () => {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    console.log('orders', orders)
 
     useEffect(() => {
-        if (!loaded) {
-            dispatch(orderActions.getUserOrders())
-            dispatch(authActions.getCart())
-        }
+        dispatch(orderActions.getUserOrders())
+        // dispatch(authActions.getCart())
     }, [])
 
-    const calculateTotalPrice = () => {
-        let totalPrice = 0
+    // const calculateTotalPrice = () => {
+    //     let totalPrice = 0
 
-        orders.forEach((order) => {
-            order.items.forEach((item) => {
-                totalPrice += item.price * item.amount
-            })
-        })
-        return totalPrice
-    }
+    //     orders.forEach((order) => {
+    //         order.items.forEach((item) => {
+    //             totalPrice += item.price * item.amount
+    //         })
+    //     })
+    //     return totalPrice
+    // }
 
-    const totalSum = calculateTotalPrice()
+    // const totalSum = calculateTotalPrice()
 
     if (!authUser) {
         navigate('/')
     }
 
-    if (!orders) {
-        return <p>no orders</p>
-    }
-
-    if (!loaded) {
-        return <Spinner size={20} />
-    }
-
     return (
         <div className="profil h-screen bg-gray-200 text-main">
-            <div className="pt-10">
-                <p>Your current orders:</p>
-                {!orders && orders.length < 0 ? (
-                    <p>No orders available.</p>
+            <div className="orders">
+                {orders.length === 0 ? (
+                    <div className="bg-white text-main">
+                        <p className="">You have no orders yet.</p>
+                        <div className="uppercase flex flex-col justify-center">
+                            <Link className="w-fit" to="/">
+                                Home
+                            </Link>
+                            <Link className="w-fit" to="/store">
+                                Store
+                            </Link>
+                            <Link className="w-fit" to="/tour">
+                                Tour
+                            </Link>
+                        </div>
+                    </div>
                 ) : (
                     orders.map((order) => (
                         <ul key={order._id}>
@@ -61,6 +64,8 @@ const Profil = () => {
                                     className="border 1px bg-white text-black p-3"
                                 >
                                     <div className="flex">
+                                        <p>Your current orders:</p>
+
                                         <img
                                             className="rounded w-[35%]"
                                             src={item.product.image}
