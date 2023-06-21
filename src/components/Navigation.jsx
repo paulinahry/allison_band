@@ -35,12 +35,12 @@ function Navigation() {
     }
 
     useEffect(() => {
-        setItemsinCart(getTotalAmount());
-      }, [cart]);
+        setItemsinCart(getTotalAmount())
+    }, [cart])
 
     const getTotalAmount = () => {
-        return cart.reduce((total, cartItem) => total + cartItem.amount, 0);
-      };
+        return cart.reduce((total, cartItem) => total + cartItem.amount, 0)
+    }
 
     const toggleMenu = () => {
         setIsMenuOpen((state) => !state)
@@ -116,10 +116,15 @@ function Navigation() {
                         onClick={navigateToCart}
                     />
                     {itemsInCart > 0 && (
-            <span className="bg-red-500 text-white rounded-full w-6 h-6 flex justify-center items-center absolute -top-1 -right-1 text-sm">
-              {itemsInCart}
-            </span>
-          )}
+                        <span
+                            className="bg-red-500 text-white rounded-full w-5 h-5 flex justify-center items-center 
+                            absolute 
+                            top-7 right-10
+                         text-sm"
+                        >
+                            {itemsInCart}
+                        </span>
+                    )}
                 </div>
 
                 <div>
