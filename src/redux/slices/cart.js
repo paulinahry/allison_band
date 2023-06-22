@@ -12,7 +12,8 @@ function createInitialState() {
     let cart = []
     let loaded = false
     let error = null
-    return { cart, loaded, error, updateHash: null }
+    let updateHash = null
+    return { cart, loaded, error, updateHash }
 }
 
 function createReducers() {
