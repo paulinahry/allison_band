@@ -6,15 +6,13 @@ import { useSelector, useDispatch } from 'react-redux'
 import { cartActions } from '../redux/slices/cart'
 import { authActions } from '../redux/slices/auth'
 import { prodActions } from '../redux/slices/products'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import Info from '../components/Info'
 
 const ShoppingCart = () => {
     const dispatch = useDispatch()
-    const navigate = useNavigate()
-    const { cart, loaded } = useSelector((s) => s.cart)
+    const { cart } = useSelector((s) => s.cart)
     const products = useSelector((s) => s.prod.products)
-    const authUser = useSelector((s) => s.auth.user)
 
     const getTotal = () => {
         let total = 0
@@ -37,7 +35,6 @@ const ShoppingCart = () => {
     }
 
     useEffect(() => {
-        window.scrollTo(0, 0)
         dispatch(authActions.getCart())
         dispatch(prodActions.getProducts())
     }, [])
