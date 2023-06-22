@@ -2,25 +2,16 @@ import React, { useEffect, useState } from 'react'
 import CardProduct from '../components/CardProduct'
 import { useSelector, useDispatch } from 'react-redux'
 import { prodActions } from '../redux/slices/products'
-import { cartActions } from '../redux/slices/cart'
-import { authActions } from '../redux/slices/auth'
-import Spinner from '../components/Spinner'
 import vinyl from '../assets/images/vinyl.jpg'
 
 const Store = () => {
-    // const dispatch = useDispatch()
+    const dispatch = useDispatch()
     const { products } = useSelector((s) => s.prod)
 
-    // useEffect(() => {
-    //     window.scrollTo(0, 0)
-    //     if (!loaded) {
-    //         dispatch(prodActions.getProducts())
-    //     }
-    // }, [])
-
-    // const handleAddToCart = (id) => {
-    //     dispatch(cartActions.addToCart({ id }))
-    // }
+    useEffect(() => {
+        window.scrollTo(0, 0)
+        dispatch(prodActions.getProducts())
+    }, [])
 
     return (
         <div className="store pb-10 bg-gray-200 text-main">
@@ -50,11 +41,7 @@ const Store = () => {
 
             <div className="flex flex-wrap justify-center">
                 {products.map((product) => (
-                    <CardProduct
-                        key={product._id}
-                        product={product}
-                        onClick={() => handleAddToCart(product._id)}
-                    />
+                    <CardProduct key={product._id} product={product} />
                 ))}
             </div>
         </div>
