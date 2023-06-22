@@ -7,11 +7,9 @@ import piano from '../assets/images/piano.jpg'
 
 function Register() {
     const dispatch = useDispatch()
-    const authUser = useSelector((s) => s.auth.user)
     const authError = useSelector((s) => s.auth.error)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const navigate = useNavigate()
 
     const inputStyle = {
         color: 'black ',
@@ -24,7 +22,7 @@ function Register() {
 
     const submitRegister = (e) => {
         e.preventDefault()
-        dispatch(authActions.register({ email, password }))
+        dispatch(authActions.register({ email, password })).catch(authError)
     }
 
     const handleEmail = (e) => {
@@ -32,9 +30,6 @@ function Register() {
     }
     const handlePassword = (e) => {
         setPassword(e.target.value)
-    }
-    const navigateToLogin = () => {
-        navigate('/login')
     }
 
     return (
@@ -69,6 +64,14 @@ function Register() {
                                 style={inputStyle}
                             />
                         </div>
+                        {authError && (
+                            <p
+                                key={authError.error}
+                                className="mt-1 text-red-600  px-5 text-sm"
+                            >
+                                {authError.error}
+                            </p>
+                        )}
                         <div className="w-full px-5 flex justify-end">
                             <Link
                                 to={'/login'}
@@ -82,7 +85,7 @@ function Register() {
                             <input
                                 type="submit"
                                 value="Register"
-                                className=" bg-details w-full  text-main  h-11 rounded-full "
+                                className=" bg-details w-full  text-main  h-11 rounded-full cursor-pointer"
                             />
                         </div>
                     </form>
