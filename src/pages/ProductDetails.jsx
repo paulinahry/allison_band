@@ -3,34 +3,23 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { prodActions } from '../redux/slices/products'
 import CardProduct from '../components/CardProduct'
-import { cartActions } from '../redux/slices/cart'
-
-import Spinner from '../components/Spinner'
 
 const ProductDetails = () => {
     const { id } = useParams()
     const dispatch = useDispatch()
-    const { products, loaded } = useSelector((state) => state.prod)
-    const { cart } = useSelector((state) => state.cart)
+    const { products } = useSelector((s) => s.prod)
 
     useEffect(() => {
-        dispatch(prodActions.getProductById())
+        dispatch(prodActions.getProductById({ id }))
     }, [])
-
-    function handleAddToCart(productId) {
-        dispatch(cartActions.addToCart({ _id: productId }))
-    }
+    console.log('Product with id: ', products.id, 'id', id)
 
     return (
         <div className="flex flex-wrap justify-center">
-            {products && products._id === id ? (
-                <CardProduct
-                    key={products._id}
-                    product={products}
-                    onClick={() => handleAddToCart(products._id)}
-                />
+            {id & (products.id === id) ? (
+                <CardProduct key={products._id} product={products} />
             ) : (
-                <p>Product not found.</p>
+                'nope'
             )}
         </div>
     )
