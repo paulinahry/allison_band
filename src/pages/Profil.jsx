@@ -1,12 +1,9 @@
 import { useSelector, useDispatch } from 'react-redux'
-import CardOrders from '../components/CardOrders'
-import Login from './Login'
 import React, { useEffect } from 'react'
 import { orderActions } from '../redux/slices/orders'
-import Spinner from '../components/Spinner'
 import { useNavigate, Link } from 'react-router-dom'
-import { authActions } from '../redux/slices/auth'
 import Info from '../components/Info'
+import { prodActions } from '../redux/slices/products'
 
 const Profil = () => {
     const { orders, loaded } = useSelector((s) => s.ord)
@@ -14,11 +11,10 @@ const Profil = () => {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    console.log('orders', orders)
 
     useEffect(() => {
         dispatch(orderActions.getUserOrders())
-        // dispatch(authActions.getCart())
+        dispatch(prodActions.getProducts())
     }, [])
 
     const calculateTotalPrice = () => {
