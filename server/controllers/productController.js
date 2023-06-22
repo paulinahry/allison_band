@@ -13,18 +13,13 @@ const getAllProducts = async (req, res) => {
 }
 
 const getProductById = async (req, res) => {
-    await Product.findById(req.params.id)
-        .then((prod) => {
-            if (!prod) {
-                res.status(404).send('Product not found')
-            } else {
-                res.send(prod)
-            }
-        })
-        .catch((error) => {
-            console.log('Error', error)
-            res.status(500).send('Server Error')
-        })
+    try {
+        const product = await Product.findOne({ id: req.params._id })
+        res.status(200).send(product)
+    } catch (error) {
+        console.log(error)
+        res.status(500).send({ error: 'Server Error' })
+    }
 }
 
 export default {
