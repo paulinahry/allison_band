@@ -6,6 +6,7 @@ import { orderActions } from '../redux/slices/orders'
 import Spinner from '../components/Spinner'
 import { useNavigate, Link } from 'react-router-dom'
 import { authActions } from '../redux/slices/auth'
+import Info from '../components/Info'
 
 const Profil = () => {
     const { orders, loaded } = useSelector((s) => s.ord)
@@ -41,20 +42,7 @@ const Profil = () => {
         <div className="profil h-screen bg-gray-200 text-main">
             <div className="orders">
                 {orders.length === 0 ? (
-                    <div className="bg-white text-main">
-                        <p className="">You have no orders yet.</p>
-                        <div className="uppercase flex flex-col justify-center">
-                            <Link className="w-fit" to="/">
-                                Home
-                            </Link>
-                            <Link className="w-fit" to="/store">
-                                Store
-                            </Link>
-                            <Link className="w-fit" to="/tour">
-                                Tour
-                            </Link>
-                        </div>
-                    </div>
+                    <Info />
                 ) : (
                     orders.map((order) => (
                         <ul key={order._id}>
