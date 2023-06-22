@@ -29,6 +29,7 @@ function Navigation() {
     ]
 
     if (authUser) {
+        menuItems.push({ title: 'Profil', path: '/profil' })
         menuItems.push({ title: 'Logout', path: '/logout' })
     } else {
         menuItems.push({ title: 'Login', path: '/login' })
