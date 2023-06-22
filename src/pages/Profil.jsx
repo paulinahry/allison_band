@@ -4,6 +4,7 @@ import { orderActions } from '../redux/slices/orders'
 import { useNavigate, Link } from 'react-router-dom'
 import Info from '../components/Info'
 import { prodActions } from '../redux/slices/products'
+import Spinner from '../components/Spinner'
 
 const Profil = () => {
     const { orders, loaded } = useSelector((s) => s.ord)
@@ -14,7 +15,6 @@ const Profil = () => {
 
     useEffect(() => {
         dispatch(orderActions.getUserOrders())
-        dispatch(prodActions.getProducts())
     }, [])
 
     const calculateTotalPrice = () => {
@@ -30,6 +30,9 @@ const Profil = () => {
 
     const totalSum = calculateTotalPrice()
 
+    if (!orders) {
+        return <Spinner />
+    }
     if (!authUser) {
         navigate('/')
     }

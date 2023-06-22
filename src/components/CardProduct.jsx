@@ -3,15 +3,16 @@ import { useDispatch, useSelector } from 'react-redux'
 import { cartActions } from '../redux/slices/cart'
 import { Link } from 'react-router-dom'
 import { MdDone } from 'react-icons/md'
+import { prodActions } from '../redux/slices/products'
 
 const CardProduct = ({ product }) => {
     const dispatch = useDispatch()
+    const products = useSelector((s) => s.prod)
     const [isAdded, setIsAdded] = useState(false)
 
     useEffect(() => {
         const timer = setTimeout(() => {
             setIsAdded(false)
-            console.log(isAdded)
         }, 500)
         return () => clearTimeout(timer)
     })
@@ -19,6 +20,10 @@ const CardProduct = ({ product }) => {
     const handleAddToCart = (id) => {
         dispatch(cartActions.addToCart({ id }))
         setIsAdded(true)
+    }
+
+    if (!products) {
+        return <Spinner />
     }
 
     return (

@@ -3,6 +3,7 @@ import CardProduct from '../components/CardProduct'
 import { useSelector, useDispatch } from 'react-redux'
 import { prodActions } from '../redux/slices/products'
 import vinyl from '../assets/images/vinyl.jpg'
+import Spinner from '../components/Spinner'
 
 const Store = () => {
     const dispatch = useDispatch()
@@ -11,6 +12,10 @@ const Store = () => {
     useEffect(() => {
         dispatch(prodActions.getProducts())
     }, [])
+
+    if (!products) {
+        return <Spinner />
+    }
 
     return (
         <div className="store pb-10 bg-gray-200 text-main">

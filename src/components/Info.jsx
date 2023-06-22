@@ -4,9 +4,11 @@ import CardProduct from '../components/CardProduct'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { authActions } from '../redux/slices/auth'
+import Spinner from './Spinner'
 
 function Info() {
     const { products } = useSelector((s) => s.prod)
+    if (!products) return <Spinner />
 
     const submitLogout = () => {
         dispatch(authActions.logout())

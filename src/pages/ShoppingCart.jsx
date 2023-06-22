@@ -6,15 +6,21 @@ import { useSelector, useDispatch } from 'react-redux'
 import { cartActions } from '../redux/slices/cart'
 import { authActions } from '../redux/slices/auth'
 import { prodActions } from '../redux/slices/products'
-import { useNavigate } from 'react-router-dom'
 import Info from '../components/Info'
+import Spinner from '../components/Spinner'
 
 const ShoppingCart = () => {
     const dispatch = useDispatch()
-    const { cart } = useSelector((s) => s.cart)
+    const { cart, loaded } = useSelector((s) => s.cart)
     const products = useSelector((s) => s.prod.products)
+    console.log('products', products)
+    console.log('cart', cart)
 
-    const getTotal = () => {
+    if (!products || !cart || products.length === 0) {
+        return <Spinner />
+    }
+
+    const toPay = () => {
         let total = 0
 
         cart.forEach((cartItem) => {
@@ -26,11 +32,11 @@ const ShoppingCart = () => {
         return total.toFixed(2)
     }
 
-    const getTotalAmount = () => {
+    const getTotalofProducts = () => {
         return cart.reduce((total, cartItem) => total + cartItem.amount, 0)
     }
 
-    const getSubtotal = (amount, price) => {
+    const getSubtotalOfProduct = (amount, price) => {
         return (amount * price).toFixed(2)
     }
 
@@ -51,14 +57,13 @@ const ShoppingCart = () => {
         dispatch(cartActions.removeAll())
     }
 
-    if (cart.length === 0 || products.length === 0) {
+    if (cart.length === 0) {
         return (
             <div className="bg-white text-main">
                 <Info />
             </div>
         )
     }
-
     return (
         <>
             <h2 className="uppercase text-3xl bg-white text-main text-left p-2">
@@ -141,7 +146,7 @@ const ShoppingCart = () => {
                                         <span>subtotal: </span>
                                         <span className="text-greenish text-right">
                                             ${' '}
-                                            {getSubtotal(
+                                            {getSubtotalOfProduct(
                                                 cartItem.amount,
                                                 productInCart.price
                                             )}
@@ -169,10 +174,8 @@ const ShoppingCart = () => {
                     w-[30%] h-fit bg-white  
                     rounded-b-3xl p-5 mr-2"
                 >
-                    <span>Total products: {getTotalAmount()}</span>
-                    <span className="font-bold text-greenish">
-                        $ {getTotal()}
-                    </span>
+                    <span>Total products: {getTotalofProducts()}</span>
+                    <span className="font-bold text-greenish">$ {toPay()}</span>
                     <button className="w-40 bg-details  text-main  h-11 rounded-full uppercase">
                         buy
                     </button>
