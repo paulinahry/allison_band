@@ -5,25 +5,38 @@ import { Link } from 'react-router-dom'
 import { MdDone } from 'react-icons/md'
 import { prodActions } from '../redux/slices/products'
 
-const CardProduct = ({ product }) => {
+const CardProduct = ({ product , onClick}) => {
     const dispatch = useDispatch()
-    const products = useSelector((s) => s.prod)
+    const {products, loaded} = useSelector((s) => s.prod)
     const [isAdded, setIsAdded] = useState(false)
+    const [isAnimating, setIsAnimating] = useState(false);
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            setIsAdded(false)
-        }, 500)
-        return () => clearTimeout(timer)
-    })
+            setIsAdded(false);
+        }, 1500);
+
+        return () => clearTimeout(timer);
+    }, [isAdded]);
 
     const handleAddToCart = (id) => {
-        dispatch(cartActions.addToCart({ id }))
-        setIsAdded(true)
-    }
+        dispatch(cartActions.addToCart({ id }));
+        setIsAdded(true);
+        setIsAnimating(true);
+    };
 
-    if (!products) {
-        return <Spinner />
+    useEffect(() => {
+        if (isAnimating) {
+            const timer = setTimeout(() => {
+                setIsAnimating(false);
+            }, 1000);
+
+            return () => clearTimeout(timer);
+        }
+    }, [isAnimating]);
+
+    if (!loaded) {
+        return <Spinner size={20} />
     }
 
     return (
@@ -58,6 +71,13 @@ const CardProduct = ({ product }) => {
                         cursor-pointer rounded py-1 px-3"
                         onClick={() => handleAddToCart(product._id)}
                     >
+                         {isAnimating ? (
+                            <Spinner size={12} />
+                        ) : isAdded ? (
+                            <MdDone className="inline" />
+                        ) : (
+                            'Add to Cart'
+                        )}
                         add to cart
                     </button>
                 </div>

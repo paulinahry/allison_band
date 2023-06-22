@@ -16,9 +16,7 @@ const ShoppingCart = () => {
     console.log('products', products)
     console.log('cart', cart)
 
-    if (!products || !cart || products.length === 0) {
-        return <Spinner />
-    }
+
 
     const toPay = () => {
         let total = 0
@@ -57,10 +55,15 @@ const ShoppingCart = () => {
         dispatch(cartActions.removeAll())
     }
 
-    if (cart.length === 0) {
+    if (!products || !cart || products.length === 0) {
+        return <Spinner />
+    }
+
+    if (cart.length === 0 || products.length === 0) {
         return (
             <div className="bg-white text-main">
-                <Info />
+                loading
+                {/* <Info /> */}
             </div>
         )
     }

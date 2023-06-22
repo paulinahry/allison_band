@@ -7,14 +7,18 @@ import Spinner from '../components/Spinner'
 
 const Store = () => {
     const dispatch = useDispatch()
-    const { products } = useSelector((s) => s.prod)
+    const { cart } = useSelector((state) => state.cart)
+    const { products, loaded } = useSelector((state) => state.prod)
 
     useEffect(() => {
         dispatch(prodActions.getProducts())
     }, [])
 
-    if (!products) {
-        return <Spinner />
+    if (!loaded) {
+        return <Spinner size={20} />
+    }
+    const handleAddToCart = (id) => {
+        dispatch(cartActions.addToCart({ id }))
     }
 
     return (
@@ -45,7 +49,9 @@ const Store = () => {
 
             <div className="flex flex-wrap justify-center">
                 {products.map((product) => (
-                    <CardProduct key={product._id} product={product} />
+                    <CardProduct key={product._id} product={product} 
+                    onClick={() => handleAddToCart(product._id)}
+                    />
                 ))}
             </div>
         </div>
