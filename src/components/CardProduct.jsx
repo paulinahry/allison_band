@@ -1,34 +1,29 @@
 import React, { useState, useEffect } from 'react'
-import Spinner from './Spinner'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { cartActions } from '../redux/slices/cart'
-import { prodActions } from '../redux/slices/products'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import { MdDone } from 'react-icons/md'
 
-const CardProduct = ({ product, onClick }) => {
+const CardProduct = ({ product }) => {
     const dispatch = useDispatch()
-    const navigate = useNavigate()
-    const [isLoading, setIsLoading] = useState(false)
-    const [showNotification, setShowNotification] = useState(false)
+    const [isAdded, setIsAdded] = useState(false)
 
     useEffect(() => {
-        window.scrollTo(0, 0)
-        dispatch(prodActions.getProducts())
-        setShowNotification(true)
-    }, [])
+        const timer = setTimeout(() => {
+            setIsAdded(false)
+            console.log(isAdded)
+        }, 500)
+        return () => clearTimeout(timer)
+    })
 
     const handleAddToCart = (id) => {
         dispatch(cartActions.addToCart({ id }))
-        setShowNotification(true)
-    }
-
-    if (isLoading) {
-        return <Spinner size={20} />
+        setIsAdded(true)
     }
 
     return (
         <>
-            <div className="card bg-white m-2 p-2 rounded first-letter cursor-pointer">
+            <div className="card bg-white m-2 p-3 rounded first-letter cursor-pointer">
                 <img
                     className="h-[250px] w-[250px]"
                     src={product.image}
@@ -53,17 +48,22 @@ const CardProduct = ({ product, onClick }) => {
                 <div className="flex justify-between mt-1">
                     <p>${product.price}</p>
                     <button
-                        className="text-main font-bold cursor-pointer rounded bg-details p-1 px-4"
-                        onClick={onClick}
+                        className="text-main  bg-details font-bold 
+                        hover:text-details hover:bg-main
+                        cursor-pointer rounded py-1 px-3"
+                        onClick={() => handleAddToCart(product._id)}
                     >
-                        Add to Cart
+                        add to cart
                     </button>
                 </div>
-                <div className="text-right">
-                    {showNotification && (
-                        <p className="text-greenish">added to cart</p>
+                <div className="flex justify-end">
+                    {isAdded && (
+                        <span className="text-xs text-greenish  ">
+                            <MdDone className="inline" /> product added{' '}
+                        </span>
                     )}
                 </div>
+
                 <Link to={`/store/${product._id}`}>read more... </Link>
             </div>
         </>
