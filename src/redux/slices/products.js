@@ -33,13 +33,13 @@ function createExtraAction() {
         )
     }
 
-    function getProductById(productId) {
+    function getProductById(_id) {
         return createAsyncThunk(
             `${name}/getProductById`,
             async (_, { rejectWithValue }) => {
                 try {
                     const response = await axios.post(
-                        `${baseUrl}/products/${productId}}`
+                        `${baseUrl}/products/${_id}}`
                     )
                     return response.data
                 } catch (error) {
