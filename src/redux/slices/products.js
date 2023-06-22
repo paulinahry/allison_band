@@ -24,6 +24,7 @@ function createExtraAction() {
             async (_, { rejectWithValue }) => {
                 try {
                     const response = await axios.get(`${baseUrl}/products`)
+
                     return response.data
                 } catch (error) {
                     return rejectWithValue(error.response?.data)
@@ -70,11 +71,6 @@ function extraReducers(builder) {
         })
 
     builder.addCase(getProductById.fulfilled, (state, action) => {
-        // const productId = action.meta.arg.id
-        // const productWithId = state.products.find(
-        //     (item) => item._id === productId
-        // )
-        // if (productWithId)
         state.product = action.payload
         state.loaded = true
     })
