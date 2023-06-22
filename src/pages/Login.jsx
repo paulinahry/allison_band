@@ -7,11 +7,12 @@ import heroPic from '../assets/images/pexels-brett-sayles-2479312.jpg'
 
 function Login() {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const authUser = useSelector((s) => s.auth.user)
+    const authError = useSelector((s) => s.auth.error)
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const navigate = useNavigate()
 
     useEffect(() => {
         if (authUser) {
@@ -30,9 +31,9 @@ function Login() {
         border: '1px solid black ',
     }
 
-    const submitLogin = (e) => {
+    const submitLogin = async (e) => {
         e.preventDefault()
-        dispatch(authActions.login({ email, password }))
+        await dispatch(authActions.login({ email, password })).catch(authError)
     }
 
     const handleEmail = (e) => {
@@ -74,6 +75,14 @@ function Login() {
                                 style={inputStyle}
                             />
                         </div>
+                        {authError && (
+                            <p
+                                key={authError.error}
+                                className="mt-1 text-red-600  px-5 text-sm"
+                            >
+                                {authError.error}
+                            </p>
+                        )}
                         <div className="w-full px-5 flex justify-end">
                             <Link
                                 to={'/register'}
@@ -87,7 +96,7 @@ function Login() {
                             <input
                                 type="submit"
                                 value="Log in"
-                                className=" bg-details w-full  text-main  h-11 rounded-full "
+                                className=" bg-details w-full  text-main  h-11 rounded-full cursor-pointer"
                             />
                         </div>
                     </form>
