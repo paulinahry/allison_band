@@ -57,13 +57,14 @@ const CardProduct = ({ product }) => {
                     </button>
                 </div>
                 <div className="flex justify-end">
-                    {isAdded && (
+                    {isAdded ? (
                         <span className="text-xs text-greenish  ">
                             <MdDone className="inline" /> product added{' '}
                         </span>
+                    ) : (
+                        <p> </p>
                     )}
                 </div>
-
                 <Link to={`/store/${product._id}`}>read more... </Link>
             </div>
         </>
