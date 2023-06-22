@@ -9,7 +9,6 @@ const Store = () => {
     const { products } = useSelector((s) => s.prod)
 
     useEffect(() => {
-        window.scrollTo(0, 0)
         dispatch(prodActions.getProducts())
     }, [])
 

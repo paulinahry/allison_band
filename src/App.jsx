@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
     BrowserRouter as Router,
     Route,
@@ -18,13 +18,16 @@ import Footer from 'components/Footer'
 import Login from './pages/Login'
 import Profil from './pages/Profil'
 import Register from './pages/Register'
-import Logout from './pages/Logout'
 import ShoppingCart from './pages/ShoppingCart'
 import ProductDetails from './pages/ProductDetails'
 
 function App() {
     history.navigate = useNavigate()
     history.location = useLocation()
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
 
     return (
         <div id="root">
@@ -34,12 +37,11 @@ function App() {
                     <Route path="/" element={<Home />} />
                     <Route path="/tour" element={<Tour />} />
                     <Route path="/store" element={<Store />} />
-                     <Route path="/store/:id" element={<ProductDetails />} />
+                    <Route path="/store/:id" element={<ProductDetails />} />
                     <Route path="/music" element={<Music />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/profil" element={<Profil />} />
                     <Route path="/register" element={<Register />} />
-                    <Route path="/logout" element={<Logout />} />
                     <Route path="/cart" element={<ShoppingCart />} />
                 </Routes>
             </div>

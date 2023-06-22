@@ -5,10 +5,6 @@ import { useEffect } from 'react'
 import concert from '../assets/images/concert.jpeg'
 
 function Tour() {
-    useEffect(() => {
-        window.scrollTo(0, 0)
-    }, [])
-
     return (
         <div
             className="  text-details
