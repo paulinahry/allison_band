@@ -18,7 +18,6 @@ function useScreenSize() {
     function getSize() {
         return {
             width: isClient ? window.innerWidth : undefined,
-            height: isClient ? window.innerHeight : undefined,
         }
     }
     const [windowSize, setWindowSize] = useState(getSize)
@@ -44,7 +43,7 @@ function Navigation() {
     const [itemsInCart, setItemsinCart] = useState(0)
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const { width, height } = useScreenSize()
+    const { width } = useScreenSize()
     const mode = useMemo(() => (width > 640 ? 'normal' : 'small'), [width])
 
     const menuItems = [
@@ -52,6 +51,7 @@ function Navigation() {
         { title: 'Tour', path: '/tour' },
         { title: 'Store', path: '/store' },
         { title: 'Music', path: '/music' },
+        { title: 'Profil', path: '/profil' },
     ]
 
     if (authUser) {
@@ -137,9 +137,10 @@ function Navigation() {
                         <Link
                             key={index}
                             to={item.path}
-                            className="text-details uppercase text-sm font-extrabold mr-5"
+                            className="text-details uppercase text-md font-extrabold mr-5"
                         >
-                            {item.title === 'Logout' ? '' : item.title}
+                            {(item.title === 'Logout' ? '' : item.title) &&
+                                (item.title === 'Login' ? '' : item.title)}
                         </Link>
                     ))}
                 </nav>
