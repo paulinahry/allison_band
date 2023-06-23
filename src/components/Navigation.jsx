@@ -117,7 +117,7 @@ function Navigation() {
                                 <Link
                                     key={index}
                                     to={item.path}
-                                    className="text-details uppercase text-4xl font-extrabold py-8"
+                                    className="text-details uppercase text-2xl font-extrabold py-4"
                                     onClick={
                                         item.title === 'Logout'
                                             ? submitLogout
