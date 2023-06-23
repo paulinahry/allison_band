@@ -32,7 +32,10 @@ function App() {
     return (
         <div id="root">
             <Navigation />
-            <div className="content pt-20 2xl:w-[70%] 2xl:my-0 2xl:mx-auto">
+            <div
+                className="content  pt-20 
+            2xl:w-[70%] 2xl:my-0 2xl:mx-auto"
+            >
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/tour" element={<Tour />} />
