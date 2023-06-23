@@ -30,7 +30,7 @@ function Navigation() {
 
     if (authUser) {
         menuItems.push({ title: 'Profil', path: '/profil' })
-        menuItems.push({ title: 'Logout', path: '/logout' })
+        menuItems.push({ title: 'Logout', path: '/' })
     } else {
         menuItems.push({ title: 'Login', path: '/login' })
     }
@@ -56,6 +56,7 @@ function Navigation() {
     }
     const submitLogout = () => {
         dispatch(authActions.logout())
+        navigate('/')
     }
 
     return (
