@@ -7,17 +7,20 @@ import CardProduct from '../components/CardProduct'
 const ProductDetails = () => {
     const { id } = useParams()
     const dispatch = useDispatch()
-    const { products } = useSelector((s) => s.prod)
+    const products = useSelector((s) => s.prod.products)
 
     useEffect(() => {
         dispatch(prodActions.getProductById({ id }))
     }, [])
-    console.log('Product with id: ', products.id, 'id', id)
+
+    const myProduct = products.find((prod) => prod.id === products.id)
 
     return (
-        <div className="flex flex-wrap justify-center">
-            {id & (products.id === id) ? (
-                <CardProduct key={products._id} product={products} />
+        <div className="flex flex-wrap justify-center bg-gray-200 text-main ">
+            {myProduct ? (
+                <div>
+                    <p>{myProduct.title}</p>
+                </div>
             ) : (
                 'nope'
             )}
