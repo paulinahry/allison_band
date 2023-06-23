@@ -53,7 +53,7 @@ const ShoppingCart = () => {
         dispatch(cartActions.removeAll())
     }
 
-    if (cart.length === 0 || products.length === 0) {
+    if (cart.length === 0 || products.length === 0 || products === null) {
         return (
             <div className="bg-white text-main">
                 <Info />
@@ -61,13 +61,20 @@ const ShoppingCart = () => {
         )
     }
     return (
-        <>
+        <div className="h-screen bg-gray-200 text-main">
             <h2 className="uppercase text-3xl bg-white text-main text-left p-2">
                 Your Cart
             </h2>
-            <div className="bg-gray-200 text-main p-2 flex justify-around pt-4 h-screen">
+            <div
+                className="bg-gray-200 text-main p-2
+            flex 
+            flex-wrap justify-center 
+            sm:flex-nowrap sm:justify-around  
+            
+            pt-4 "
+            >
                 {/* left */}
-                <div className="w-[60%] ">
+                <div className="w-[90%] sm:w-[60%] ">
                     {cart.map((cartItem) => {
                         const productInCart = products.find(
                             (prod) => prod._id === cartItem._id
@@ -76,17 +83,27 @@ const ShoppingCart = () => {
 
                         return (
                             <div
-                                className="flex justify-between p-3 bg-white"
+                                className="flex justify-between 
+                                p-3 bg-white
+                                text-sm
+                                sm:text-s
+                                md:text-lg
+                                "
                                 key={cartItem._id}
                             >
                                 {productInCart && (
                                     <div className="flex justify-center">
                                         <img
-                                            className="h-40 w-40"
+                                            className="
+                                            h-20 w-20
+                                            sm:h-40 sm:w-40"
                                             src={productInCart.image}
                                             alt={productInCart.title}
                                         />
-                                        <div className="flex flex-col pl-2 justify-center">
+                                        <div
+                                            className="
+                                        flex flex-col pl-2 justify-center"
+                                        >
                                             <span className="font-extrabold">
                                                 {productInCart.title}
                                             </span>
@@ -100,7 +117,7 @@ const ShoppingCart = () => {
                                     </div>
                                 )}
 
-                                <div className="w-[40%] ">
+                                <div className=" w-[40%] ">
                                     <div className="flex flex-col  ">
                                         <hr />
                                         <div className=" flex justify-center items-center bg-gray-200">
@@ -173,9 +190,12 @@ const ShoppingCart = () => {
 
                 {/* right  */}
                 <div
-                    className="flex flex-col justify-center items-center 
-                    w-[30%] h-fit bg-white  
-                    rounded-b-3xl p-5 mr-2"
+                    className="flex flex-col justify-center items-center  bg-white  
+                    w-[80%] sm:w-[30%]
+                    sm:mr-2
+                    sm:mt-0 mt-2 
+                   h-fit
+                    rounded-b-3xl p-5 "
                 >
                     <span>Total products: {getTotalofProducts()}</span>
                     <span className="font-bold text-greenish">$ {toPay()}</span>
@@ -184,7 +204,7 @@ const ShoppingCart = () => {
                     </button>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 
