@@ -147,7 +147,7 @@ function Navigation() {
 
             {/* ICONS RIGHT  */}
             {/* PROFILE */}
-            <div className="panel flex mt-6 cursor-pointer items-center pb-1">
+            <div className="panel flex mt-6 cursor-pointer items-center mr-3 pb-1">
                 <div>
                     <CgProfile
                         className="mx-1"
