@@ -12,14 +12,40 @@ import { IoIosLogOut } from 'react-icons/io'
 import { CgProfile } from 'react-icons/cg'
 import { BsCart2 } from 'react-icons/bs'
 
+function useScreenSize() {
+    const isClient = typeof window === 'object'
+
+    function getSize() {
+        return {
+            width: isClient ? window.innerWidth : undefined,
+            height: isClient ? window.innerHeight : undefined,
+        }
+    }
+    const [windowSize, setWindowSize] = useState(getSize)
+
+    useEffect(() => {
+        if (!isClient) {
+            return false
+        }
+        function handleResize() {
+            setWindowSize(getSize())
+        }
+        window.addEventListener('resize', handleResize)
+        return () => window.removeEventListener('resize', handleResize)
+    }, [])
+
+    return windowSize
+}
+
 function Navigation() {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const authUser = useSelector((s) => s.auth.user)
     const cart = useSelector((s) => s.cart.cart)
     const [itemsInCart, setItemsinCart] = useState(0)
-    // const [windowWidth, setWindowWidth] = useState(window.innerWidth)
     const navigate = useNavigate()
     const dispatch = useDispatch()
+    const { width, height } = useScreenSize()
+    const mode = useMemo(() => (width > 640 ? 'normal' : 'small'), [width])
 
     const menuItems = [
         { title: 'Home', path: '/' },
@@ -34,14 +60,6 @@ function Navigation() {
     } else {
         menuItems.push({ title: 'Login', path: '/login' })
     }
-
-    // useEffect(() => {
-    //     const handleWindow = () => {
-    //         setWindowWidth(windowWidth.innerWidth)
-    //     }
-    //     windowWidth.addEventListener('resize', handleWindow)
-    //     return () => windowWidth.remoweEventListener('resize', handleWindow)
-    // }, [])
 
     useEffect(() => {
         setItemsinCart(getTotalAmount())
@@ -69,7 +87,7 @@ function Navigation() {
 
     return (
         <div className="flex fixed w-full  justify-between text-details  bg-main p-3 z-50">
-            {window.innerWidth < '640px' ? (
+            {mode === 'small' ? (
                 <nav className=" flex justify-between items-center z-50 mt-4 ">
                     {/* NAV TOGGLE */}
                     {isMenuOpen ? (
