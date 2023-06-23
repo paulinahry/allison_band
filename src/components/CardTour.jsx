@@ -35,7 +35,7 @@ function CardTour({ item: tourItem }) {
                          mt-2 p-1 m-1 
                          w-[150px] sm:w-[30%] sm:min-w-[200px] sm:max-w-[250px]"
                     >
-                        {'tickets'}
+                        tickets
                     </button>
                 ) : (
                     <div className="flex justify-center space-x-2 sm:w-[30%]  sm:max-w-[250px] items-center">

@@ -60,7 +60,7 @@ function Navigation() {
     }
 
     return (
-        <div className="flex fixed w-full  justify-between text-details  bg-main p-2 z-50">
+        <div className="flex fixed w-full  justify-between text-details  bg-main p-3 z-50">
             <nav className=" flex justify-between items-center z-50 mt-4 ">
                 {/* NAV TOGGLE */}
                 {isMenuOpen ? (

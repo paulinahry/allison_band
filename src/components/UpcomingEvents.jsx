@@ -17,7 +17,7 @@ function UpcomingEvents() {
 
     return (
         <div className="flex justify-center align-center text-center">
-            <div className="py-10 text-details w-full ">
+            <div className="py-10 text-details w-full bg-white">
                 <h2
                     className="uppercase font-thin font-mono 
                 text-3xl sm:text-4xl "
