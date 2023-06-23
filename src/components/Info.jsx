@@ -8,9 +8,14 @@ import Spinner from './Spinner'
 
 function Info() {
     const { products } = useSelector((s) => s.prod)
+    const authUser = useSelector((s) => s.auth.user)
     if (!products) return <Spinner />
 
     const submitLogout = () => {
+        dispatch(authActions.logout())
+    }
+
+    const submitLogin = () => {
         dispatch(authActions.logout())
     }
 
@@ -23,9 +28,16 @@ function Info() {
                 <Link className="w-fit" to="/store">
                     Store
                 </Link>
-                <Link className="w-fit" onClick={submitLogout}>
-                    Logout
-                </Link>
+
+                {authUser ? (
+                    <Link className="w-fit" onClick={submitLogout}>
+                        Logout
+                    </Link>
+                ) : (
+                    <Link className="w-fit" onClick={submitLogin}>
+                        Log in
+                    </Link>
+                )}
             </div>
             <UpcomingEvents />
             <div>
