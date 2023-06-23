@@ -4,36 +4,37 @@ import { cartActions } from '../redux/slices/cart'
 import { Link } from 'react-router-dom'
 import { MdDone } from 'react-icons/md'
 import { prodActions } from '../redux/slices/products'
+import Spinner from '../components/Spinner'
 
-const CardProduct = ({ product , onClick}) => {
+const CardProduct = ({ product, onClick }) => {
     const dispatch = useDispatch()
-    const {products, loaded} = useSelector((s) => s.prod)
+    const { products, loaded } = useSelector((s) => s.prod)
     const [isAdded, setIsAdded] = useState(false)
-    const [isAnimating, setIsAnimating] = useState(false);
+    const [isAnimating, setIsAnimating] = useState(false)
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            setIsAdded(false);
-        }, 1500);
+            setIsAdded(false)
+        }, 1500)
 
-        return () => clearTimeout(timer);
-    }, [isAdded]);
-
-    const handleAddToCart = (id) => {
-        dispatch(cartActions.addToCart({ id }));
-        setIsAdded(true);
-        setIsAnimating(true);
-    };
+        return () => clearTimeout(timer)
+    }, [isAdded])
 
     useEffect(() => {
         if (isAnimating) {
             const timer = setTimeout(() => {
-                setIsAnimating(false);
-            }, 1000);
+                setIsAnimating(false)
+            }, 1000)
 
-            return () => clearTimeout(timer);
+            return () => clearTimeout(timer)
         }
-    }, [isAnimating]);
+    }, [isAnimating])
+
+    const handleAddToCart = (id) => {
+        dispatch(cartActions.addToCart({ id }))
+        setIsAdded(true)
+        setIsAnimating(true)
+    }
 
     if (!loaded) {
         return <Spinner size={20} />
@@ -66,30 +67,27 @@ const CardProduct = ({ product , onClick}) => {
                 <div className="flex justify-between mt-1">
                     <p>${product.price}</p>
                     <button
-                        className="text-main  bg-details font-bold 
+                        className=" w-32 h-9 
+                        flex justify-center items-center
+                        text-main  bg-details font-bold 
                         hover:text-details hover:bg-main
-                        cursor-pointer rounded py-1 px-3"
+                        cursor-pointer rounded "
                         onClick={() => handleAddToCart(product._id)}
                     >
-                         {isAnimating ? (
-                            <Spinner size={12} />
+                        {isAnimating ? (
+                            <Spinner
+                                size={12}
+                                color={'#f7d5b1'}
+                                secondaryColor={'#2C3139'}
+                            />
                         ) : isAdded ? (
                             <MdDone className="inline" />
                         ) : (
                             'Add to Cart'
                         )}
-                        add to cart
                     </button>
                 </div>
-                <div className="flex justify-end">
-                    {isAdded ? (
-                        <span className="text-xs text-greenish  ">
-                            <MdDone className="inline" /> product added{' '}
-                        </span>
-                    ) : (
-                        <p> </p>
-                    )}
-                </div>
+
                 <Link to={`/store/${product._id}`}>read more... </Link>
             </div>
         </>
