@@ -12,7 +12,6 @@ const ShoppingCart = () => {
     const dispatch = useDispatch()
     const { cart, loaded } = useSelector((s) => s.cart)
     const products = useSelector((s) => s.prod.products)
-
     const toPay = () => {
         let total = 0
 
