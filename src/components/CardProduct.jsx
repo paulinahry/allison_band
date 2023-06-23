@@ -50,7 +50,7 @@ const CardProduct = ({ product, onClick }) => {
             <div
                 className=" card bg-white cursor-pointer 
              rounded p-4
-            w-[200px] md:w-fit mt-2 mr-2
+            w-[200px] md:w-fit mt-2 mx-3
             "
             >
                 <div className="flex justify-center ">

@@ -47,7 +47,7 @@ const Store = () => {
                 </div>
             </div>
 
-            <div className="flex flex-wrap justify-around p-2">
+            <div className="flex flex-wrap justify-center">
                 {products.map((product) => (
                     <CardProduct
                         key={product._id}
