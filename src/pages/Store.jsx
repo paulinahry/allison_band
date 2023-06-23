@@ -47,10 +47,12 @@ const Store = () => {
                 </div>
             </div>
 
-            <div className="flex flex-wrap justify-center">
+            <div>
                 {products.map((product) => (
-                    <CardProduct key={product._id} product={product} 
-                    onClick={() => handleAddToCart(product._id)}
+                    <CardProduct
+                        key={product._id}
+                        product={product}
+                        onClick={() => handleAddToCart(product._id)}
                     />
                 ))}
             </div>

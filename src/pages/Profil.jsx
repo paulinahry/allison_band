@@ -38,7 +38,7 @@ const Profil = () => {
     }
 
     return (
-        <div className="profil bg-gray-200 text-main h-full">
+        <div className="profil bg-gray-200 text-main ">
             <div className="orders">
                 {orders.length === 0 ? (
                     <Info />

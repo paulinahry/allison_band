@@ -48,21 +48,22 @@ const CardProduct = ({ product, onClick }) => {
     return (
         <>
             <div
-                className="card bg-white m-2 ounded first-letter cursor-pointer 
-            sm:p-3 p-2 r"
+                className=" card bg-white cursor-pointer 
+             rounded p-4
+            w-[200px] md:w-fit mt-2 mr-2
+            "
             >
-                <div className="flex  justify-center ">
+                <div className="flex justify-center ">
                     <img
                         onClick={navigateTo}
                         className="
-                    
-                    w-[150px]  h-[150px]
-                    md:h-[250px] md:w-[250px]"
+                    w-full h-[170px]
+                    md:h-[200px] md:w-[200px] "
                         src={product.image}
                         alt={product.title}
                     />
                 </div>
-                <h3 className="text-s sm:text-xl font-extrabold">
+                <h3 className="text-s w-full sm:text-xl font-extrabold ">
                     {product.title}
                 </h3>
                 <p>{product.description}</p>
@@ -72,11 +73,13 @@ const CardProduct = ({ product, onClick }) => {
                 ) : (
                     <>
                         {product.stock < 10 ? (
-                            <p className="text-red-400">
+                            <p className="text-red-400 mt-1 text-[14px]">
                                 Hurry up! Last Pieces
                             </p>
                         ) : (
-                            <p className="text-greenish">Available</p>
+                            <p className="text-greenish mt-1 text-[14px]">
+                                Available
+                            </p>
                         )}
                     </>
                 )}

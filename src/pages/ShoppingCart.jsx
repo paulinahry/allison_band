@@ -161,8 +161,14 @@ const ShoppingCart = () => {
                                     </div>
 
                                     {productInCart && (
-                                        <div className=" flex justify-between border-b ">
-                                            <span>subtotal: </span>
+                                        <div
+                                            className=" flex border-b 
+                                        flex-col
+                                        sm:flex-row justify-between "
+                                        >
+                                            <span span className="text-right">
+                                                subtotal:{' '}
+                                            </span>
                                             <span className="text-greenish text-right">
                                                 ${' '}
                                                 {getSubtotalOfProduct(
