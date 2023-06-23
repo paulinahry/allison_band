@@ -1,16 +1,20 @@
 import React from 'react'
 import { Oval } from 'react-loader-spinner'
 
-function Spinner({ size = 50 }) {
+function Spinner({
+    size = 50,
+    color = 'text-main',
+    secondaryColor = 'text-details',
+}) {
     return (
         <div className="text-center">
             <Oval
                 height={size}
                 width={size}
-                color="#f7d5b1"
+                color={color}
                 visible={true}
                 ariaLabel="oval-loading"
-                secondaryColor="#f7d5b1"
+                secondaryColor={secondaryColor}
                 strokeWidth={2}
                 strokeWidthSecondary={2}
             />
