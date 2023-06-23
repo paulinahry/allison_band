@@ -85,9 +85,9 @@ function Navigation() {
     }
 
     return (
-        <div className="flex fixed w-full  justify-between text-details  bg-main py-3  z-50">
+        <div className="flex fixed w-full align-center justify-between text-details  bg-main py-3  z-50">
             {mode === 'small' ? (
-                <nav className=" flex justify-between items-center z-50 mt-1 ">
+                <nav className=" flex justify-between align-center items-center z-50 ">
                     {/* NAV TOGGLE */}
                     {isMenuOpen ? (
                         <AiOutlineClose
@@ -116,7 +116,7 @@ function Navigation() {
                                 <Link
                                     key={index}
                                     to={item.path}
-                                    className="text-details uppercase text-2xl font-extrabold py-4"
+                                    className="text-details uppercase text-3xl font-extrabold py-2"
                                     onClick={
                                         item.title === 'Logout'
                                             ? submitLogout
@@ -130,7 +130,7 @@ function Navigation() {
                     )}
                 </nav>
             ) : (
-                <nav className=" flex justify-between items-center z-50 ml-2 ">
+                <nav className=" flex justify-between items-center z-50 ml-2 mt-4 ">
                     {/* MENU ITEMS */}
                     {menuItems.map((item, index) => (
                         <Link
@@ -147,7 +147,7 @@ function Navigation() {
 
             {/* ICONS RIGHT  */}
             {/* PROFILE */}
-            <div className="panel flex mt-6 cursor-pointer items-center ">
+            <div className="panel flex mt-6 cursor-pointer items-center pb-1">
                 <div>
                     <CgProfile
                         className="mx-1"
@@ -168,7 +168,7 @@ function Navigation() {
                         <span
                             className="bg-red-500 text-white rounded-full w-5 h-5 flex justify-center items-center 
                             absolute 
-                            top-7 right-10
+                            top-7 right-8
                          text-xs"
                         >
                             {itemsInCart}
