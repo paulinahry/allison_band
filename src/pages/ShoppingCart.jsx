@@ -13,10 +13,6 @@ const ShoppingCart = () => {
     const dispatch = useDispatch()
     const { cart, loaded } = useSelector((s) => s.cart)
     const products = useSelector((s) => s.prod.products)
-    console.log('products', products)
-    console.log('cart', cart)
-
-
 
     const toPay = () => {
         let total = 0
@@ -25,7 +21,9 @@ const ShoppingCart = () => {
             const cartProduct = products.find(
                 (prod) => prod._id === cartItem._id
             )
-            total += cartItem.amount * cartProduct.price
+            if (cartProduct && cartProduct.price) {
+                total += cartItem.amount * cartProduct.price
+            }
         })
         return total.toFixed(2)
     }
@@ -55,15 +53,10 @@ const ShoppingCart = () => {
         dispatch(cartActions.removeAll())
     }
 
-    if (!products || !cart || products.length === 0) {
-        return <Spinner />
-    }
-
     if (cart.length === 0 || products.length === 0) {
         return (
             <div className="bg-white text-main">
-                loading
-                {/* <Info /> */}
+                <Info />
             </div>
         )
     }
@@ -79,28 +72,33 @@ const ShoppingCart = () => {
                         const productInCart = products.find(
                             (prod) => prod._id === cartItem._id
                         )
+                        if (!productInCart) return null
 
                         return (
                             <div
                                 className="flex justify-between p-3 bg-white"
                                 key={cartItem._id}
                             >
-                                <div className="flex justify-center">
-                                    <img
-                                        className="h-40 w-40"
-                                        src={productInCart.image}
-                                        alt={productInCart.title}
-                                    />
-                                    <div className="flex flex-col pl-2 justify-center">
-                                        <span className="font-extrabold">
-                                            {productInCart.title}
-                                        </span>
-                                        <span>{productInCart.description}</span>
-                                        <span>
-                                            Price: ${productInCart.price}
-                                        </span>
+                                {productInCart && (
+                                    <div className="flex justify-center">
+                                        <img
+                                            className="h-40 w-40"
+                                            src={productInCart.image}
+                                            alt={productInCart.title}
+                                        />
+                                        <div className="flex flex-col pl-2 justify-center">
+                                            <span className="font-extrabold">
+                                                {productInCart.title}
+                                            </span>
+                                            <span>
+                                                {productInCart.description}
+                                            </span>
+                                            <span>
+                                                Price: ${productInCart.price}
+                                            </span>
+                                        </div>
                                     </div>
-                                </div>
+                                )}
 
                                 <div className="w-[40%] ">
                                     <div className="flex flex-col  ">
@@ -145,16 +143,18 @@ const ShoppingCart = () => {
                                         </div>
                                     </div>
 
-                                    <div className=" flex justify-between border-b ">
-                                        <span>subtotal: </span>
-                                        <span className="text-greenish text-right">
-                                            ${' '}
-                                            {getSubtotalOfProduct(
-                                                cartItem.amount,
-                                                productInCart.price
-                                            )}
-                                        </span>
-                                    </div>
+                                    {productInCart && (
+                                        <div className=" flex justify-between border-b ">
+                                            <span>subtotal: </span>
+                                            <span className="text-greenish text-right">
+                                                ${' '}
+                                                {getSubtotalOfProduct(
+                                                    cartItem.amount,
+                                                    productInCart.price
+                                                )}
+                                            </span>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         )
