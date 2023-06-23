@@ -17,6 +17,7 @@ function Navigation() {
     const authUser = useSelector((s) => s.auth.user)
     const cart = useSelector((s) => s.cart.cart)
     const [itemsInCart, setItemsinCart] = useState(0)
+    const [window, setWindow] = useState()
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -34,6 +35,14 @@ function Navigation() {
     } else {
         menuItems.push({ title: 'Login', path: '/login' })
     }
+
+    useEffect(() => {
+        const handleWindow = () => {
+            setWindow(window.innerWidth)
+        }
+        window.addEventListener('resize', handleWindow)
+        return () => window.remoweEventListener('resize', handleWindow)
+    }, [])
 
     useEffect(() => {
         setItemsinCart(getTotalAmount())
@@ -61,48 +70,52 @@ function Navigation() {
 
     return (
         <div className="flex fixed w-full  justify-between text-details  bg-main p-3 z-50">
-            <nav className=" flex justify-between items-center z-50 mt-4 ">
-                {/* NAV TOGGLE */}
-                {isMenuOpen ? (
-                    <AiOutlineClose
-                        className="cursor-pointer"
-                        size={45}
-                        onClick={toggleMenu}
-                    />
-                ) : (
-                    <RxHamburgerMenu
-                        className="cursor-pointer"
-                        size={45}
-                        onClick={toggleMenu}
-                    />
-                )}
+            {window < '640px' ? (
+                <nav className=" flex justify-between items-center z-50 mt-4 ">
+                    {/* NAV TOGGLE */}
+                    {isMenuOpen ? (
+                        <AiOutlineClose
+                            className="cursor-pointer"
+                            size={45}
+                            onClick={toggleMenu}
+                        />
+                    ) : (
+                        <RxHamburgerMenu
+                            className="cursor-pointer"
+                            size={45}
+                            onClick={toggleMenu}
+                        />
+                    )}
 
-                {isMenuOpen && (
-                    <div
-                        className="fixed top-[72px] right-0 
-        flex flex-col justify-center align-center
-        h-screen w-screen bg-main
-        opacity-90 
-        items-center"
-                    >
-                        {/* MENU ITEMS */}
-                        {menuItems.map((item, index) => (
-                            <Link
-                                key={index}
-                                to={item.path}
-                                className="text-details uppercase text-4xl font-extrabold py-8"
-                                onClick={
-                                    item.title === 'Logout'
-                                        ? submitLogout
-                                        : toggleMenu
-                                }
-                            >
-                                {item.title}
-                            </Link>
-                        ))}
-                    </div>
-                )}
-            </nav>
+                    {isMenuOpen && (
+                        <div
+                            className="fixed top-[72px] right-0 
+                                    flex flex-col justify-center align-center
+                                    h-screen w-screen bg-main
+                                    opacity-90 
+                                    items-center"
+                        >
+                            {/* MENU ITEMS */}
+                            {menuItems.map((item, index) => (
+                                <Link
+                                    key={index}
+                                    to={item.path}
+                                    className="text-details uppercase text-4xl font-extrabold py-8"
+                                    onClick={
+                                        item.title === 'Logout'
+                                            ? submitLogout
+                                            : toggleMenu
+                                    }
+                                >
+                                    {item.title}
+                                </Link>
+                            ))}
+                        </div>
+                    )}
+                </nav>
+            ) : (
+                'hello'
+            )}
 
             {/* ICONS RIGHT  */}
             {/* PROFILE */}
