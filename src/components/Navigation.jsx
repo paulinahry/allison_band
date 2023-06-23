@@ -55,7 +55,6 @@ function Navigation() {
     ]
 
     if (authUser) {
-        menuItems.push({ title: 'Profil', path: '/profil' })
         menuItems.push({ title: 'Logout', path: '/' })
     } else {
         menuItems.push({ title: 'Login', path: '/login' })
@@ -86,9 +85,9 @@ function Navigation() {
     }
 
     return (
-        <div className="flex fixed w-full  justify-between text-details  bg-main p-3 z-50">
+        <div className="flex fixed w-full  justify-between text-details  bg-main py-3  z-50">
             {mode === 'small' ? (
-                <nav className=" flex justify-between items-center z-50 mt-4 ">
+                <nav className=" flex justify-between items-center z-50 mt-1 ">
                     {/* NAV TOGGLE */}
                     {isMenuOpen ? (
                         <AiOutlineClose
