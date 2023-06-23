@@ -7,7 +7,6 @@ import { cartActions } from '../redux/slices/cart'
 import { authActions } from '../redux/slices/auth'
 import { prodActions } from '../redux/slices/products'
 import Info from '../components/Info'
-import Spinner from '../components/Spinner'
 
 const ShoppingCart = () => {
     const dispatch = useDispatch()
@@ -62,19 +61,30 @@ const ShoppingCart = () => {
     }
     return (
         <div className="h-screen bg-gray-200 text-main">
-            <h2 className="uppercase text-3xl bg-white text-main text-left p-2">
-                Your Cart
-            </h2>
+            <div className="bg-white flex justify-around p-3 items-center">
+                <h2 className="uppercase text-3xl  text-main text-left ">
+                    Your Cart
+                </h2>
+                {cart.length > 0 && (
+                    <div className="flex flex-col">
+                        <span>Total products: {getTotalofProducts()}</span>
+                        <span className="font-bold text-greenish">
+                            $ {toPay()}
+                        </span>
+                    </div>
+                )}
+            </div>
+
             <div
                 className="bg-gray-200 text-main p-2
             flex 
             flex-wrap justify-center 
-            sm:flex-nowrap sm:justify-around  
+            md:flex-nowrap md:justify-around  
             
             pt-4 "
             >
                 {/* left */}
-                <div className="w-[90%] sm:w-[60%] ">
+                <div className="w-[90%] md:w-[60%] ">
                     {cart.map((cartItem) => {
                         const productInCart = products.find(
                             (prod) => prod._id === cartItem._id
@@ -101,7 +111,7 @@ const ShoppingCart = () => {
                                             alt={productInCart.title}
                                         />
                                         <div
-                                            className="
+                                            className=" text-sm
                                         flex flex-col pl-2 justify-center"
                                         >
                                             <span className="font-extrabold">
@@ -110,9 +120,7 @@ const ShoppingCart = () => {
                                             <span>
                                                 {productInCart.description}
                                             </span>
-                                            <span>
-                                                Price: ${productInCart.price}
-                                            </span>
+                                            <span>${productInCart.price}</span>
                                         </div>
                                     </div>
                                 )}
@@ -197,9 +205,9 @@ const ShoppingCart = () => {
                 {/* right  */}
                 <div
                     className="flex flex-col justify-center items-center  bg-white  
-                    w-[80%] sm:w-[30%]
+                    w-[80%] md:w-[30%]
                     sm:mr-2
-                    sm:mt-0 mt-2 
+                    md:mt-0 mt-4 
                    h-fit
                     rounded-b-3xl p-5 "
                 >
