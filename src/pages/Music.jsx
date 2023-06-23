@@ -63,7 +63,7 @@ function Music() {
         <div className=" flex flex-col justify-center items-center ">
             <img
                 className=" h-screen w-full 
-                bg-cover bg-center blur sepia "
+                bg-cover bg-center blur  "
                 src={heroPic}
                 alt="allison band"
             ></img>
