@@ -17,8 +17,7 @@ function Navigation() {
     const authUser = useSelector((s) => s.auth.user)
     const cart = useSelector((s) => s.cart.cart)
     const [itemsInCart, setItemsinCart] = useState(0)
-    const [window, setWindow] = useState()
-
+    // const [windowWidth, setWindowWidth] = useState(window.innerWidth)
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
@@ -36,13 +35,13 @@ function Navigation() {
         menuItems.push({ title: 'Login', path: '/login' })
     }
 
-    useEffect(() => {
-        const handleWindow = () => {
-            setWindow(window.innerWidth)
-        }
-        window.addEventListener('resize', handleWindow)
-        return () => window.remoweEventListener('resize', handleWindow)
-    }, [])
+    // useEffect(() => {
+    //     const handleWindow = () => {
+    //         setWindowWidth(windowWidth.innerWidth)
+    //     }
+    //     windowWidth.addEventListener('resize', handleWindow)
+    //     return () => windowWidth.remoweEventListener('resize', handleWindow)
+    // }, [])
 
     useEffect(() => {
         setItemsinCart(getTotalAmount())
@@ -70,7 +69,7 @@ function Navigation() {
 
     return (
         <div className="flex fixed w-full  justify-between text-details  bg-main p-3 z-50">
-            {window < '640px' ? (
+            {window.innerWidth < '640px' ? (
                 <nav className=" flex justify-between items-center z-50 mt-4 ">
                     {/* NAV TOGGLE */}
                     {isMenuOpen ? (
@@ -95,7 +94,7 @@ function Navigation() {
                                     opacity-90 
                                     items-center"
                         >
-                            {/* MENU ITEMS */}
+                            {/* BURGER MENU ITEMS */}
                             {menuItems.map((item, index) => (
                                 <Link
                                     key={index}
@@ -114,7 +113,18 @@ function Navigation() {
                     )}
                 </nav>
             ) : (
-                'hello'
+                <nav className=" flex justify-between items-center z-50 ml-2 ">
+                    {/* MENU ITEMS */}
+                    {menuItems.map((item, index) => (
+                        <Link
+                            key={index}
+                            to={item.path}
+                            className="text-details uppercase text-sm font-extrabold mr-5"
+                        >
+                            {item.title === 'Logout' ? '' : item.title}
+                        </Link>
+                    ))}
+                </nav>
             )}
 
             {/* ICONS RIGHT  */}
