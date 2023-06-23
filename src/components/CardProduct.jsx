@@ -63,7 +63,7 @@ const CardProduct = ({ product, onClick }) => {
                         alt={product.title}
                     />
                 </div>
-                <h3 className="text-s w-full sm:text-xl font-extrabold ">
+                <h3 className="text-s w-full sm:text-lg font-extrabold h-10">
                     {product.title}
                 </h3>
                 <p>{product.description}</p>
