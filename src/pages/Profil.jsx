@@ -15,6 +15,7 @@ const Profil = () => {
 
     useEffect(() => {
         dispatch(orderActions.getUserOrders())
+        dispatch(prodActions.getProducts())
     }, [])
 
     const calculateTotalPrice = () => {
@@ -41,7 +42,13 @@ const Profil = () => {
         <div className="profil bg-gray-200 text-main ">
             <div className="orders">
                 {orders.length === 0 ? (
-                    <Info />
+                    <>
+                        <p className="bg-details text-main text-center p-10">
+                            You have no orders yet. Why don't you check out our
+                            tour dates and store in meanwhile?{' '}
+                        </p>
+                        <Info />
+                    </>
                 ) : (
                     orders.map((order) => (
                         <ul key={order._id}>
