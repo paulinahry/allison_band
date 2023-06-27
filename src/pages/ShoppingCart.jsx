@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { cartActions } from '../redux/slices/cart'
 import { authActions } from '../redux/slices/auth'
 import { prodActions } from '../redux/slices/products'
+import { orderActions } from '../redux/slices/orders'
 import Info from '../components/Info'
 
 const ShoppingCart = () => {
@@ -37,6 +38,7 @@ const ShoppingCart = () => {
     useEffect(() => {
         dispatch(authActions.getCart())
         dispatch(prodActions.getProducts())
+        dispatch(orderActions.addOrder())
     }, [])
 
     const handleDecrement = (id) => {
@@ -51,6 +53,11 @@ const ShoppingCart = () => {
         dispatch(cartActions.removeAll())
     }
 
+    const handleBuy = () => {
+        dispatch(cartActions.buy())
+        dispatch(orderActions.addOrder())
+    }
+
     if (cart.length === 0 || products.length === 0 || products === null) {
         return (
             <div className="bg-white text-main">
@@ -59,7 +66,7 @@ const ShoppingCart = () => {
         )
     }
     return (
-        <div className="h-screen bg-gray-200 text-main">
+        <div className="min-h-screen max-h-full  bg-gray-200 text-main">
             <div className="bg-white flex justify-around p-3 items-center">
                 <h2 className="uppercase text-3xl  text-main text-left ">
                     Your Cart
@@ -212,7 +219,10 @@ const ShoppingCart = () => {
                 >
                     <span>Total products: {getTotalofProducts()}</span>
                     <span className="font-bold text-greenish">$ {toPay()}</span>
-                    <button className="w-40 bg-details  text-main  h-11 rounded-full uppercase">
+                    <button
+                        onClick={() => handleBuy()}
+                        className="w-40 bg-details  text-main  h-11 rounded-full uppercase"
+                    >
                         buy
                     </button>
                 </div>

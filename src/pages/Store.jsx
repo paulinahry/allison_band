@@ -14,9 +14,13 @@ const Store = () => {
         dispatch(prodActions.getProducts())
     }, [])
 
-    if (!loaded) {
-        return <Spinner size={20} />
-    }
+    if (!products || products.length === 0 || products === null)
+        return (
+            <>
+                <p className="text-center">Shop loading...</p>
+                <Spinner />
+            </>
+        )
     const handleAddToCart = (id) => {
         dispatch(cartActions.addToCart({ id }))
     }
