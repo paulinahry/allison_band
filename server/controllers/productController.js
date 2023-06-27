@@ -15,7 +15,7 @@ const getAllProducts = async (req, res) => {
 const getProductById = async (req, res) => {
     try {
         const product = await Product.findOne({ id: req.params._id })
-        res.status(200).send(product)
+        res.status(200).send(product.id)
     } catch (error) {
         console.log(error)
         res.status(500).send({ error: 'Server Error' })

@@ -41,4 +41,9 @@ const getUsersOrders = async (req, res) => {
         })
     }
 }
-export default { getOrders, getUsersOrders }
+
+const addOrder = async (req, res) => {
+    const orders = await Order.find().populate('items.product').populate('user')
+    res.status(200).send(orders)
+}
+export default { getOrders, getUsersOrders, addOrder }
