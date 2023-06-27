@@ -116,7 +116,7 @@ function Navigation() {
                                 <Link
                                     key={index}
                                     to={item.path}
-                                    className="text-details uppercase text-3xl font-extrabold py-2"
+                                    className="text-details uppercase text-3xl font-extrabold py-4"
                                     onClick={
                                         item.title === 'Logout'
                                             ? submitLogout
@@ -166,10 +166,12 @@ function Navigation() {
                     {/* ITEMS IN CART */}
                     {authUser && itemsInCart > 0 ? (
                         <span
-                            className="bg-red-500 text-white rounded-full w-5 h-5 flex justify-center items-center 
+                            className="bg-red-500 text-white rounded-full  flex justify-center items-center 
                             absolute 
-                            top-7 right-8
-                         text-xs"
+                            top-8 right-11
+                            w-4 h-4
+                            md:w-5 md:h-5
+                            text-xs"
                         >
                             {itemsInCart}
                         </span>
