@@ -17,7 +17,6 @@ const divStyle = {
     textAlign: 'center',
     cursor: 'pointer',
 }
-// teste
 const Wrapper = ({ children, onClick }) => {
     return (
         <div style={divStyle} onClick={onClick}>
