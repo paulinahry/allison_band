@@ -39,7 +39,10 @@ function createExtraAction() {
             async (_, { rejectWithValue }) => {
                 try {
                     const response = await axios.post(
-                        `${baseUrl}/products/${_id}}`
+                        `${baseUrl}/products/${_id}}`,
+                        {
+                            _id,
+                        }
                     )
                     return response.data
                 } catch (error) {
@@ -72,7 +75,6 @@ function extraReducers(builder) {
 
     builder.addCase(getProductById.fulfilled, (state, action) => {
         state.product = action.payload
-        state.loaded = true
     })
 }
 

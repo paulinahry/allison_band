@@ -13,7 +13,8 @@ function createInitialState() {
     let loaded = false
     let error = null
     let updateHash = null
-    return { cart, loaded, error, updateHash }
+    let stock
+    return { cart, loaded, error, updateHash, stock }
 }
 
 function createReducers() {
@@ -89,15 +90,32 @@ function createExtraActions() {
         )
     }
 
+    function buy() {
+        return createAsyncThunk(
+            `${name}/user/buy`,
+            async (_, { rejectWithValue }) => {
+                try {
+                    const response = await axios.delete(`${baseUrl}/buy`)
+
+                    return response.data
+                } catch (error) {
+                    console.log(error)
+                    return rejectWithValue(error.response?.data)
+                }
+            }
+        )
+    }
+
     return {
         addToCart: addToCart(),
         removeOne: removeOne(),
         removeAll: removeAll(),
+        buy: buy(),
     }
 }
 
 function extraReducers(builder) {
-    const { addToCart, removeOne, removeAll } = extraActions
+    const { addToCart, removeOne, removeAll, buy } = extraActions
     //addToCart
     builder
         .addCase(addToCart.pending, (state, action) => {
@@ -154,6 +172,15 @@ function extraReducers(builder) {
             state.cart = []
         })
         .addCase(removeAll.fulfilled, (state, action) => {
+            state.cart = action.payload.cart
+        })
+
+    // buy
+    builder
+        .addCase(buy.pending, (state, action) => {
+            state.cart = []
+        })
+        .addCase(buy.fulfilled, (state, action) => {
             state.cart = action.payload.cart
         })
 }
