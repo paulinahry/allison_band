@@ -1,4 +1,6 @@
 import User from '../models/userModel.js'
+import Order from '../models/orderModel.js'
+
 import jwt from 'jsonwebtoken'
 
 const tokenLifetime = 60 * 60 * 1000 //1h, than refresh function with new token
@@ -254,6 +256,7 @@ const removeOne = async (req, res) => {
         })
     }
 }
+
 const removeAll = async (req, res) => {
     try {
         const { token } = req.cookies
@@ -289,6 +292,47 @@ const removeAll = async (req, res) => {
     }
 }
 
+const buy = async (req, res) => {
+    try {
+        const { token } = req.cookies
+        let tokenData
+        try {
+            jwt.verify(token, String(process.env.TOKEN_SECRET), (err, data) => {
+                if (err || !data) {
+                    throw new Error(err)
+                }
+                tokenData = data
+            })
+        } catch (error) {
+            return res.sendStatus(401)
+        }
+        const user = await User.findOne({ _id: tokenData.id }).populate('cart')
+        const userOrder = await Order.find().populate('user')
+
+        if (!user) {
+            return res.status(404).send({ error: 'User not found' })
+        }
+        const products = user.cart
+        const order = new Order({
+            user: user._id,
+            items: products.map((prod) => ({
+                product: prod._id,
+                amount: prod.amount,
+            })),
+        })
+        user.order.save()
+        user.cart = []
+        user.cart.save()
+
+        res.status(200).send({
+            userOrder: order,
+            messege: 'Purchase succeded',
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 //--------------- user actions in cart  end ------------------
 
 export default {
@@ -302,4 +346,5 @@ export default {
     removeOne,
     removeAll,
     refresh,
+    buy,
 }
