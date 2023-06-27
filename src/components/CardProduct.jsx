@@ -41,7 +41,7 @@ const CardProduct = ({ product, onClick }) => {
         setIsAnimating(true)
     }
 
-    if (!loaded) {
+    if (!loaded || products.length === 0) {
         return <Spinner size={20} />
     }
 
@@ -59,7 +59,7 @@ const CardProduct = ({ product, onClick }) => {
                         className="
                     w-full h-[170px]
                     md:h-[200px] md:w-[200px] "
-                        src={product.image}
+                        src={!product.image ? <Spinner /> : product.image}
                         alt={product.title}
                     />
                 </div>
