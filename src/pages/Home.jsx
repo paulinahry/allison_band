@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Hero from 'components/Hero'
 import UpcomingEvents from 'components/UpcomingEvents'
+import Info from '../components/Info'
 
 function Home() {
     const [showUpcomingEvents] = useState(true)
@@ -19,7 +20,7 @@ function Home() {
     return (
         <>
             <Hero />
-            <UpcomingEvents />
+            <Info />
         </>
     )
 }
