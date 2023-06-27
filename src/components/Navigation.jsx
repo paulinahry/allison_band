@@ -2,8 +2,6 @@ import { useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { authActions } from '../redux/store'
-import { cartActions } from '../redux/slices/cart'
-import { prodActions } from '../redux/slices/products'
 
 // ICONS
 import { RxHamburgerMenu } from 'react-icons/rx'

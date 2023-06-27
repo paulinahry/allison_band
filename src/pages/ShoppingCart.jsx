@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai'
 import { BsTrash3 } from 'react-icons/bs'
 
@@ -10,9 +10,13 @@ import { orderActions } from '../redux/slices/orders'
 import Info from '../components/Info'
 
 const ShoppingCart = () => {
+    const [shoppingCart, setShoppingCart] = useState()
     const dispatch = useDispatch()
-    const { cart, loaded } = useSelector((s) => s.cart)
+    const { cart } = useSelector((s) => s.cart)
     const products = useSelector((s) => s.prod.products)
+    const orders = useSelector((s) => s.ord.orders)
+    const baseUrl = 'http://localhost:3000/api'
+
     const toPay = () => {
         let total = 0
 
@@ -38,7 +42,6 @@ const ShoppingCart = () => {
     useEffect(() => {
         dispatch(authActions.getCart())
         dispatch(prodActions.getProducts())
-        dispatch(orderActions.addOrder())
     }, [])
 
     const handleDecrement = (id) => {
@@ -53,9 +56,25 @@ const ShoppingCart = () => {
         dispatch(cartActions.removeAll())
     }
 
-    const handleBuy = () => {
-        dispatch(cartActions.buy())
-        dispatch(orderActions.addOrder())
+    async function handleBuy() {
+        let total = 0
+
+        cart.forEach((cartItem) => {
+            const cartProduct = products.find(
+                (prod) => prod._id === cartItem._id
+            )
+            if (cartProduct && cartProduct.price) {
+                total += cartItem.amount * cartProduct.price
+            }
+        })
+
+        const newOrder = [(items = cart), (finalPrice = total.toFixed(2))]
+        await axios.post(`${baseUrl}/orders`, newOrder)
+
+        try {
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     if (cart.length === 0 || products.length === 0 || products === null) {
