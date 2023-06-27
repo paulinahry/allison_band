@@ -1,5 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { authActions } from './auth'
+import { orderActions } from './orders'
 
 const name = 'cart'
 const initialState = createInitialState()
@@ -13,8 +15,8 @@ function createInitialState() {
     let loaded = false
     let error = null
     let updateHash = null
-    let stock
-    return { cart, loaded, error, updateHash, stock }
+    let orders = []
+    return { cart, loaded, error, updateHash, orders }
 }
 
 function createReducers() {
@@ -80,7 +82,6 @@ function createExtraActions() {
             async (_, { rejectWithValue }) => {
                 try {
                     const response = await axios.delete(`${baseUrl}/removeAll`)
-
                     return response.data
                 } catch (error) {
                     console.log(error)
@@ -90,27 +91,29 @@ function createExtraActions() {
         )
     }
 
-    function buy() {
-        return createAsyncThunk(
-            `${name}/user/buy`,
-            async (_, { rejectWithValue }) => {
-                try {
-                    const response = await axios.delete(`${baseUrl}/buy`)
+    // function buy() {
+    //     return createAsyncThunk(
+    //         `${name}/user/buy`,
+    //         async ({ _id: orderId }, { rejectWithValue }) => {
+    //             try {
+    //                 const response = await axios.delete(`${baseUrl}/buy`, {
+    //                     orderId,
+    //                 })
 
-                    return response.data
-                } catch (error) {
-                    console.log(error)
-                    return rejectWithValue(error.response?.data)
-                }
-            }
-        )
-    }
+    //                 return response.data
+    //             } catch (error) {
+    //                 console.log(error)
+    //                 return rejectWithValue(error.response?.data)
+    //             }
+    //         }
+    //     )
+    // }
 
     return {
         addToCart: addToCart(),
         removeOne: removeOne(),
         removeAll: removeAll(),
-        buy: buy(),
+        // buy: buy(),
     }
 }
 
@@ -175,14 +178,11 @@ function extraReducers(builder) {
             state.cart = action.payload.cart
         })
 
-    // buy
-    builder
-        .addCase(buy.pending, (state, action) => {
-            state.cart = []
-        })
-        .addCase(buy.fulfilled, (state, action) => {
-            state.cart = action.payload.cart
-        })
+    // // buy
+    // builder.addCase(buy.fulfilled, (state, action) => {
+    //     state.order.push({ _id: orderId })
+    //     state.cart = []
+    // })
 }
 
 export const cartActions = { ...slice.actions, ...extraActions }

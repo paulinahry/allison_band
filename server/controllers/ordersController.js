@@ -30,20 +30,16 @@ const getUsersOrders = async (req, res) => {
         }
 
         const user = await User.findOne({ _id: tokenData.id }).populate('order')
-        res.status(200).sebd({
+        res.status(200).send({
             order: user.order,
             messege: 'get user order ',
         })
     } catch (error) {
         console.log(error)
         res.status(500).send({
-            error: 'An error occured while fetching user order',
+            error: 'An error occuredwhile fetching data',
         })
     }
 }
 
-const addOrder = async (req, res) => {
-    const orders = await Order.find().populate('items.product').populate('user')
-    res.status(200).send(orders)
-}
-export default { getOrders, getUsersOrders, addOrder }
+export default { getOrders, getUsersOrders }
