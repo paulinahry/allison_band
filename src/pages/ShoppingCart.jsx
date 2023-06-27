@@ -56,26 +56,26 @@ const ShoppingCart = () => {
         dispatch(cartActions.removeAll())
     }
 
-    async function handleBuy() {
-        let total = 0
-
-        cart.forEach((cartItem) => {
-            const cartProduct = products.find(
-                (prod) => prod._id === cartItem._id
-            )
-            if (cartProduct && cartProduct.price) {
-                total += cartItem.amount * cartProduct.price
-            }
-        })
-
-        const newOrder = [(items = cart), (finalPrice = total.toFixed(2))]
-        await axios.post(`${baseUrl}/orders`, newOrder)
-
+    const handleBuy = async () => {
         try {
+          const { user } = useSelector((state) => state.auth);
+          const { cart } = useSelector((state) => state.cart);
+
+          const productIds = cart.map((item) => item._id);
+      
+          const newOrder = {
+            userId: user._id,
+            productIds: productIds,
+          };
+      
+          const response = await axios.post('/api/orders', newOrder);
+          dispatch(orderActions.addOrder(response.data.order));
+          dispatch(cartActions.removeAll());
         } catch (error) {
-            console.log(error)
+          console.log(error);
         }
-    }
+      };
+      
 
     if (cart.length === 0 || products.length === 0 || products === null) {
         return (
