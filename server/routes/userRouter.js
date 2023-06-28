@@ -13,6 +13,6 @@ app.get('/cart', authTokenMiddleware, userController.getCart)
 app.post('/cart/add', authTokenMiddleware, userController.addToCart)
 app.post('/cart/remove', authTokenMiddleware, userController.removeOne)
 app.delete('/cart/removeAll', authTokenMiddleware, userController.removeAll)
-app.delete('/cart/buy', authTokenMiddleware, userController.buy)
+app.post('/cart/buy', authTokenMiddleware, userController.buy)
 
 export default app

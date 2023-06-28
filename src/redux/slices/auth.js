@@ -15,30 +15,30 @@ const extraActions = createExtraActions()
 const slice = createSlice({ name, initialState, reducers, extraReducers })
 const baseUrl = 'http://localhost:3000/api'
 
-axios.interceptors.response.use(
-    (response) => response,
-    (error) => {
-        const originalRequest = error.config
-        console.log(error.response.status)
-        if (
-            error.response.status === 401 &&
-            originalRequest.url === `${baseUrl}/login/refresh-token`
-        ) {
-            store.dispatch(authActions.logout())
-            return Promise.reject(error)
-        }
+// axios.interceptors.response.use(
+//     (response) => response,
+//     (error) => {
+//         const originalRequest = error.config
+//         console.log(error.response.status)
+//         if (
+//             error.response.status === 401 &&
+//             originalRequest.url === `${baseUrl}/login/refresh-token`
+//         ) {
+//             store.dispatch(authActions.logout())
+//             return Promise.reject(error)
+//         }
 
-        if (error.response.status === 403 && !originalRequest._retry) {
-            originalRequest._retry = true
-            return axios.post(`${baseUrl}/login/refresh-token`).then((res) => {
-                if (res.status === 200) {
-                    return axios(originalRequest)
-                }
-            })
-        }
-        return Promise.reject(error)
-    }
-)
+//         if (error.response.status === 403 && !originalRequest._retry) {
+//             originalRequest._retry = true
+//             return axios.post(`${baseUrl}/login/refresh-token`).then((res) => {
+//                 if (res.status === 200) {
+//                     return axios(originalRequest)
+//                 }
+//             })
+//         }
+//         return Promise.reject(error)
+//     }
+// )
 
 function createInitialState() {
     const userData = localStorage.getItem('user')

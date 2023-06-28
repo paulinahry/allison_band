@@ -14,17 +14,28 @@ function createInitialState() {
 }
 
 function createReducers() {
-    return {}
+    function setOrder(state, { payload }) {
+        state.order = payload
+    }
+
+    return {
+        setOrder,
+    }
 }
 
 function createExtraActions() {
     //get orders
-    function getUserOrders() {
+
+    function getOrders() {
         return createAsyncThunk(
-            `${name}/getUserOrders`,
-            async (_, { rejectWithValue }) => {
+            `${name}/getOredrs`,
+            async (_, { dispatch, rejectWithValue }) => {
                 try {
-                    const response = await axios.get(`${baseUrl}/user/orders`)
+                    const response = await axios.post(
+                        `${baseUrl}/orders/getOrders`
+                    )
+                    dispatch(orderActions.setOrder(response.data.order))
+
                     return response.data
                 } catch (error) {
                     return rejectWithValue(error.response?.data)
@@ -34,18 +45,19 @@ function createExtraActions() {
     }
 
     return {
-        getUserOrders: getUserOrders(),
+        getOrders: getOrders(),
     }
 }
 
 function extraReducers(builder) {
-    const { getUserOrders } = extraActions
+    const { getUserOrders, getOrders } = extraActions
 
     builder
-        .addCase(getUserOrders.fulfilled, (state, action) => {
-            const { orders } = action.payload
+        .addCase(getOrders.fulfilled, (state, action) => {
+            state.products = action.payload
+            state.loaded = true
         })
-        .addCase(getUserOrders.rejected, (state, action) => {
+        .addCase(getOrders.rejected, (state, action) => {
             state.error = action.payload
         })
 }

@@ -42,4 +42,49 @@ const getUsersOrders = async (req, res) => {
     }
 }
 
-export default { getOrders, getUsersOrders }
+const addOrder = async (req, res) => {
+    try {
+        const { token } = req.cookies
+        let tokenData
+        try {
+            tokenData = jwt.verify(token, process.env.TOKEN_SECRET)
+        } catch (error) {
+            return res.sendStatus(401)
+        }
+
+        const user = await User.findOne({ _id: tokenData.id }).populate('cart')
+        const userOrder = await Order.find().populate('user')
+
+        if (!user) {
+            return res.status(404).send({ error: 'User not found' })
+        }
+
+        const products = user.cart
+        const order = new Order({
+            user: user._id,
+            items: products.map((prod) => ({
+                product: prod._id,
+                amount: prod.amount,
+            })),
+        })
+
+        await order.save()
+
+        user.order = order
+        user.cart = []
+
+        await user.save()
+
+        res.status(200).send({
+            userOrder: order,
+            message: 'Purchase succeeded',
+        })
+    } catch (error) {
+        console.error(error)
+        res.status(500).send({
+            error: 'Internal Server Error: Unable to complete the purchase',
+        })
+    }
+}
+
+export default { getOrders, getUsersOrders, addOrder }

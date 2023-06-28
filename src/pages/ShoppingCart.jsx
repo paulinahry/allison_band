@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai'
 import { BsTrash3 } from 'react-icons/bs'
-
 import { useSelector, useDispatch } from 'react-redux'
 import { cartActions } from '../redux/slices/cart'
 import { authActions } from '../redux/slices/auth'
@@ -10,12 +11,14 @@ import { orderActions } from '../redux/slices/orders'
 import Info from '../components/Info'
 
 const ShoppingCart = () => {
-    const [shoppingCart, setShoppingCart] = useState()
+    const [loading, setIsLoading] = useState(false)
+    const navigate = useNavigate()
     const dispatch = useDispatch()
+    const { user } = useSelector((s) => s.auth)
     const { cart } = useSelector((s) => s.cart)
     const products = useSelector((s) => s.prod.products)
     const orders = useSelector((s) => s.ord.orders)
-    const baseUrl = 'http://localhost:3000/api'
+    const baseUrl = 'http://localhost:3000'
 
     const toPay = () => {
         let total = 0
@@ -41,7 +44,7 @@ const ShoppingCart = () => {
 
     useEffect(() => {
         dispatch(authActions.getCart())
-        dispatch(prodActions.getProducts())
+        dispatch(orderActions.getOrders())
     }, [])
 
     const handleDecrement = (id) => {
@@ -58,24 +61,29 @@ const ShoppingCart = () => {
 
     const handleBuy = async () => {
         try {
-          const { user } = useSelector((state) => state.auth);
-          const { cart } = useSelector((state) => state.cart);
+            const productIds = cart.map((item) => item._id)
 
-          const productIds = cart.map((item) => item._id);
-      
-          const newOrder = {
-            userId: user._id,
-            productIds: productIds,
-          };
-      
-          const response = await axios.post('/api/orders', newOrder);
-          dispatch(orderActions.addOrder(response.data.order));
-          dispatch(cartActions.removeAll());
+            const newOrder = {
+                user: user._id,
+                items: productIds,
+            }
+            console.log(newOrder)
+
+            const response = await axios.post(`${baseUrl}/orders/getOrders`, {
+                newOrder,
+            })
+
+            const userOrders = response.data
+            console.log(userOrders)
+
+            dispatch(orderActions.getOrders())
+            dispatch(cartActions.removeAll())
+            navigate('/profil')
+            console.log('bought')
         } catch (error) {
-          console.log(error);
+            console.log(error)
         }
-      };
-      
+    }
 
     if (cart.length === 0 || products.length === 0 || products === null) {
         return (
