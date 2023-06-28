@@ -20,6 +20,7 @@ import Profil from './pages/Profil'
 import Register from './pages/Register'
 import ShoppingCart from './pages/ShoppingCart'
 import ProductDetails from './pages/ProductDetails'
+import NotFound from './pages/NotFound'
 
 function App() {
     history.navigate = useNavigate()
@@ -46,6 +47,7 @@ function App() {
                     <Route path="/profil" element={<Profil />} />
                     <Route path="/register" element={<Register />} />
                     <Route path="/cart" element={<ShoppingCart />} />
+                    <Route path="/*" element={<NotFound />} />
                 </Routes>
             </div>
             <Footer />
