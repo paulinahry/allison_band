@@ -294,44 +294,48 @@ const removeAll = async (req, res) => {
 
 const buy = async (req, res) => {
     try {
-        const { token } = req.cookies
-        let tokenData
+        const { token } = req.cookies;
+        let tokenData;
         try {
-            jwt.verify(token, String(process.env.TOKEN_SECRET), (err, data) => {
-                if (err || !data) {
-                    throw new Error(err)
-                }
-                tokenData = data
-            })
+            tokenData = jwt.verify(token, process.env.TOKEN_SECRET);
         } catch (error) {
-            return res.sendStatus(401)
+            return res.sendStatus(401);
         }
-        const user = await User.findOne({ _id: tokenData.id }).populate('cart')
-        const userOrder = await Order.find().populate('user')
+
+        const user = await User.findOne({ _id: tokenData.id }).populate('cart');
+        const userOrder = await Order.find().populate('user');
 
         if (!user) {
-            return res.status(404).send({ error: 'User not found' })
+            return res.status(404).send({ error: 'User not found' });
         }
-        const products = user.cart
+
+        const products = user.cart;
         const order = new Order({
             user: user._id,
             items: products.map((prod) => ({
                 product: prod._id,
                 amount: prod.amount,
             })),
-        })
-        user.order.save()
-        user.cart = []
-        user.cart.save()
+        });
+
+        await order.save(); 
+
+        user.order = order; 
+        user.cart = []; 
+
+        await user.save(); 
 
         res.status(200).send({
             userOrder: order,
-            messege: 'Purchase succeded',
-        })
+            message: 'Purchase succeeded',
+        });
     } catch (error) {
-        console.log(error)
+        console.error(error);
+        res.status(500).send({
+            error: 'Internal Server Error: Unable to complete the purchase',
+        });
     }
-}
+};
 
 //--------------- user actions in cart  end ------------------
 
