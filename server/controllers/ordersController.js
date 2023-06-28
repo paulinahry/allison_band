@@ -29,7 +29,14 @@ const getUsersOrders = async (req, res) => {
             return res.sendStatus(401)
         }
 
-        const user = await User.findOne({ _id: tokenData.id }).populate('order')
+        const user = await User.findOne({ _id: tokenData.id }).populate(
+            'orders'
+        )
+
+        const orderId = req.params._id
+        const userOrder = await Order.findById(orderId).populate(
+            'items.product'
+        )
         res.status(200).send({
             order: user.order,
             messege: 'get user order ',
@@ -52,19 +59,26 @@ const addOrder = async (req, res) => {
             return res.sendStatus(401)
         }
 
-        const user = await User.findOne({ _id: tokenData.id }).populate('cart')
-        const userOrder = await Order.find().populate('user')
+        const user = await User.findOne({ _id: tokenData.id }).populate(
+            'orders'
+        )
+        const orderId = req.params._id
+        const userOrder = await Order.find(orderId)
+            .populate('items')
+            .populate('finalPrice')
 
         if (!user) {
             return res.status(404).send({ error: 'User not found' })
         }
 
         const products = user.cart
+        console.log(products)
         const order = new Order({
             user: user._id,
             items: products.map((prod) => ({
                 product: prod._id,
                 amount: prod.amount,
+                title: prod.title,
             })),
         })
 
@@ -76,7 +90,8 @@ const addOrder = async (req, res) => {
         await user.save()
 
         res.status(200).send({
-            userOrder: order,
+            userOrder,
+            order,
             message: 'Purchase succeeded',
         })
     } catch (error) {

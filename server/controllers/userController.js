@@ -149,7 +149,7 @@ const getCart = async (req, res) => {
 
         res.status(200).send({
             cart: user.cart,
-            message: 'get user cart',
+            message: 'Cart successfully displayed',
         })
     } catch (error) {
         console.error(error)

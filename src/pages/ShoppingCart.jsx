@@ -69,14 +69,14 @@ const ShoppingCart = () => {
             }
             console.log(newOrder)
 
-            const response = await axios.post(`${baseUrl}/orders/getOrders`, {
+            const response = await axios.post(`${baseUrl}/orders/addOrder`, {
                 newOrder,
             })
 
             const userOrders = response.data
             console.log(userOrders)
 
-            dispatch(orderActions.getOrders())
+            dispatch(orderActions.addOrder())
             dispatch(cartActions.removeAll())
             navigate('/profil')
             console.log('bought')
