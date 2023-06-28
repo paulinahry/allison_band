@@ -14,7 +14,7 @@ const ProductDetails = () => {
 
     useEffect(() => {
         dispatch(prodActions.getProductById({ id }))
-    }, [])
+    }, [id])
 
     const handleAddToCart = (id) => {
         dispatch(cartActions.addToCart({ id }))
@@ -23,14 +23,14 @@ const ProductDetails = () => {
     const myProduct = products.find((prod) => prod.id === products.id)
 
     return (
-        <div className="min-h-screen max-h-full  bg-gray-200 text-main ">
+        <div className="min-h-screen max-h-full  bg-gray-200 text-main flex flex-col ">
             <button onClick={() => navigate('/store')} className="mt-10">
                 <BiArrowBack className=" inline underline" />
-                go back
+                store
             </button>
             {myProduct ? (
-                <div className="max-h-full min-h-screen mx-0 my-auto ">
-                    <div className="max-w-[600px]">
+                <div className="max-h-full min-h-screen ">
+                    <div className="max-w-[600px] min-w-[350px]">
                         <img src={myProduct.image} alt={myProduct.title} />
                     </div>
                     <div className="p-5 flex justify-around">
