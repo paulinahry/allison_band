@@ -18,10 +18,10 @@ function Home() {
     }
 
     return (
-        <>
+        <div className="text-main">
             <Hero />
             <Info />
-        </>
+        </div>
     )
 }
 
