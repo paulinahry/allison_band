@@ -181,6 +181,8 @@ const addToCart = async (req, res) => {
 
         if (!user.cart) user.cart = []
 
+        // existingProductIndex = user.cart.findIndex((productInCart) =>  productInCart === productId)
+
         user.cart.forEach((productInCart, i) => {
             if (productInCart.id === productId) {
                 existingProductIndex = i

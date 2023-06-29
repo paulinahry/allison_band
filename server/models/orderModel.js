@@ -13,7 +13,6 @@ const orderSchema = new Schema({
                 ref: 'Product',
             },
             amout: { type: Number },
-            price: { type: Number },
         },
     ],
     finalPrice: { type: Number },
