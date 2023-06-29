@@ -8,10 +8,10 @@ import { prodActions } from '../redux/slices/products'
 import { authActions } from '../redux/slices/auth'
 
 const Profil = () => {
-    // const { orders, loaded } = useSelector((s) => s.ord)
     const authUser = useSelector((s) => s.auth.user)
     const { orders } = useSelector((s) => s.ord)
-    const authOrders = authUser.orders
+    const products = useSelector((s) => s.prod.products)
+    console.log(products)
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -25,28 +25,38 @@ const Profil = () => {
     const calculateTotalPrice = () => {
         let totalPrice = 0
 
-        orders.forEach((order) => {
-            order.items.forEach((item) => {
-                totalPrice += item.price * item.amount
-            })
+        orders.forEach((orderItem) => {
+            const productInOrder = products.find(
+                (prod) => prod._id === orderItem.items.product
+            )
+            console.log('productInOrder', productInOrder)
+            console.log('orderitem items', orderItem.items)
+            console.log('oorderItem.items.product_id', orderItem.items.product)
+            if (productInOrder && productInOrder.price)
+                totalPrice += productInOrder.price * orderItem.amount
         })
         return totalPrice
     }
 
     const totalSum = calculateTotalPrice()
 
+    console.log('oredrs: ', orders)
+
     if (!orders) {
         return <Spinner />
     }
     if (!authUser) {
-        navigate('/')
+        return navigate('/')
     }
-    console.log('user profil', authUser.orders)
-    console.log('auth orders', authOrders)
-    console.log(' orders', orders)
+
     return (
-        <div className="profil bg-gray-200 text-main ">
+        <div className="profil min-h-screen max-h-full bg-gray-200 text-main ">
             <p className="bg-white text-center p-5">Welcome {authUser.email}</p>
+            {orders > 0 && (
+                <p className="bg-white text-center pb-1  text-xl">
+                    Actuall orders: {orders.length}
+                </p>
+            )}
 
             <div className="orders">
                 {orders.length === 0 ? (
@@ -60,12 +70,11 @@ const Profil = () => {
                 ) : (
                     orders.map((order) => (
                         <>
-                            <p className=" text-center">
-                                {' '}
-                                order {authOrders._id}:{' '}
+                            <p key={order._id} className=" pl-4">
+                                Order ID: {order._id}{' '}
                             </p>
 
-                            <ul key={order._id}>
+                            <ul>
                                 {order.items.map((item) => (
                                     <div
                                         key={item._id}
@@ -79,7 +88,7 @@ const Profil = () => {
                                             />
                                             <ul className="pl-3 w-full">
                                                 <li className="text-xl font-extrabold">
-                                                    {item.product.title}
+                                                    item product: {item.product}
                                                 </li>
                                                 <li className="text-sm">
                                                     {item.product.description}

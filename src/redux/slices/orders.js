@@ -15,7 +15,7 @@ function createInitialState() {
 
 function createReducers() {
     function setOrder(state, { payload }) {
-        state.order = payload
+        state.orders = payload
     }
 
     return {
@@ -44,31 +44,31 @@ function createExtraActions() {
         )
     }
 
-    function addOrder(order) {
-        return createAsyncThunk(
-            `${name}/addOrder`,
-            async (_, { dispatch, rejectWithValue }) => {
-                try {
-                    const response = await axios.post(
-                        `${baseUrl}/orders/addOrder`
-                    )
+    // function addOrder(order) {
+    //     return createAsyncThunk(
+    //         `${name}/addOrder`,
+    //         async (_, { dispatch, rejectWithValue }) => {
+    //             try {
+    //                 const response = await axios.post(
+    //                     `${baseUrl}/orders/addOrder`
+    //                 )
 
-                    return response.data
-                } catch (error) {
-                    return rejectWithValue(error.response?.data)
-                }
-            }
-        )
-    }
+    //                 return response.data
+    //             } catch (error) {
+    //                 return rejectWithValue(error.response?.data)
+    //             }
+    //         }
+    //     )
+    // }
 
     return {
         getOrders: getOrders(),
-        addOrder: addOrder(),
+        // addOrder: addOrder(),
     }
 }
 
 function extraReducers(builder) {
-    const { getUserOrders, getOrders, addOrder } = extraActions
+    const { getUserOrders, getOrders } = extraActions
 
     builder
         .addCase(getOrders.fulfilled, (state, action) => {
@@ -79,14 +79,14 @@ function extraReducers(builder) {
             state.error = action.payload
         })
 
-    builder
-        .addCase(addOrder.fulfilled, (state, action) => {
-            state.products = action.payload
-            state.loaded = true
-        })
-        .addCase(addOrder.rejected, (state, action) => {
-            state.error = action.payload
-        })
+    // builder
+    //     .addCase(addOrder.fulfilled, (state, action) => {
+    //         state.products = action.payload
+    //         state.loaded = true
+    //     })
+    //     .addCase(addOrder.rejected, (state, action) => {
+    //         state.error = action.payload
+    //     })
 }
 
 export const orderActions = { ...slice.actions, ...extraActions }

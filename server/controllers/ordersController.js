@@ -38,7 +38,7 @@ const getUsersOrders = async (req, res) => {
             'items.product'
         )
         res.status(200).send({
-            order: user.order,
+            order: user.orders,
             messege: 'get user order ',
         })
     } catch (error) {
@@ -49,7 +49,7 @@ const getUsersOrders = async (req, res) => {
     }
 }
 
-const addOrder = async (req, res) => {
+const buyCart = async (req, res) => {
     try {
         const { token } = req.cookies
         let tokenData
@@ -62,25 +62,26 @@ const addOrder = async (req, res) => {
         const user = await User.findOne({ _id: tokenData.id }).populate(
             'orders'
         )
-        const orderId = req.params._id
-        const userOrder = await Order.find(orderId)
-            .populate('items')
-            .populate('finalPrice')
 
         if (!user) {
             return res.status(404).send({ error: 'User not found' })
         }
 
         const products = user.cart
-        console.log(products)
+
         const order = new Order({
             user: user._id,
             items: products.map((prod) => ({
                 product: prod._id,
                 amount: prod.amount,
-                title: prod.title,
             })),
         })
+
+        // const orderId = req.params._id
+
+        // const userOrder = await Order.find(orderId)
+        //     .populate('items')
+        //     .populate('finalPrice')
 
         await order.save()
 
@@ -90,16 +91,15 @@ const addOrder = async (req, res) => {
         await user.save()
 
         res.status(200).send({
-            userOrder,
             order,
             message: 'Purchase succeeded',
         })
     } catch (error) {
         console.error(error)
         res.status(500).send({
-            error: 'Internal Server Error: Unable to complete the purchase',
+            error: 'Internal Server Error: Unable to purchase',
         })
     }
 }
 
-export default { getOrders, getUsersOrders, addOrder }
+export default { getOrders, getUsersOrders, buyCart }

@@ -11,13 +11,10 @@ import { orderActions } from '../redux/slices/orders'
 import Info from '../components/Info'
 
 const ShoppingCart = () => {
-    const [loading, setIsLoading] = useState(false)
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const { user } = useSelector((s) => s.auth)
     const { cart } = useSelector((s) => s.cart)
     const products = useSelector((s) => s.prod.products)
-    const orders = useSelector((s) => s.ord.orders)
     const baseUrl = 'http://localhost:3000'
 
     const toPay = () => {
@@ -61,22 +58,7 @@ const ShoppingCart = () => {
 
     const handleBuy = async () => {
         try {
-            const productIds = cart.map((item) => item._id)
-
-            const newOrder = {
-                user: user._id,
-                items: productIds,
-            }
-            console.log(newOrder)
-
-            const response = await axios.post(`${baseUrl}/orders/addOrder`, {
-                newOrder,
-            })
-
-            const userOrders = response.data
-            console.log(userOrders)
-
-            dispatch(orderActions.addOrder())
+            const response = await axios.post(`${baseUrl}/orders/buyCart`)
             dispatch(cartActions.removeAll())
             navigate('/profil')
             console.log('bought')
@@ -207,7 +189,7 @@ const ShoppingCart = () => {
                                         flex-col
                                         sm:flex-row justify-between "
                                         >
-                                            <span span className="text-right">
+                                            <span className="text-right">
                                                 subtotal:{' '}
                                             </span>
                                             <span className="text-greenish text-right">
