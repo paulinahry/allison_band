@@ -13,6 +13,8 @@ function CardTour({ item: tourItem }) {
         window.open(url, '_blank')
     }
 
+    const currDate = new Date()
+
     return (
         <div className="sm:w-[90%] sm:m-auto text-center  ">
             <div className="my-6  sm:flex sm:justify-around text-details">
@@ -25,12 +27,12 @@ function CardTour({ item: tourItem }) {
                     <p>{tourItem.place}</p>
                 </div>
 
-                {tourItem.tickets ? (
+                {tourItem.tickets && tourItem.date > currDate ? (
                     <button
                         onClick={() => gotoTickets(tourItem.tickets)}
                         className="uppercase tracking-widest
                          border-solid border border-details
-                         hover:bg-details hover:text-black 
+                         hover:bg-details hover:text-main
                          rounded-full
                          mt-2 p-1 m-1 
                          w-[150px] sm:w-[30%] sm:min-w-[200px] sm:max-w-[250px]"
@@ -38,9 +40,22 @@ function CardTour({ item: tourItem }) {
                         tickets
                     </button>
                 ) : (
-                    <div className="flex justify-center space-x-2 sm:w-[30%]  sm:max-w-[250px] items-center">
-                        <TbTicketOff size={20} />
-                        <p className="italic text-sm">no tickets available</p>
+                    <div className="flex flex-col justify-center space-x-2 sm:w-[30%]  sm:max-w-[250px] items-center">
+                        <button
+                            disabled
+                            className="uppercase tracking-widest
+                            border-solid border border-details
+                            rounded-full
+                            mt-2 p-1 m-1 
+                            w-[150px] sm:w-[30%] sm:min-w-[200px] sm:max-w-[250px]"
+                        >
+                            tickets
+                        </button>
+
+                        <p className="italic text-sm">
+                            <TbTicketOff size={20} className=" inline" /> no
+                            tickets available
+                        </p>
                     </div>
                 )}
             </div>
