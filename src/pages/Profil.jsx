@@ -106,7 +106,7 @@ const Profil = () => {
                         })
 
                         return (
-                            <div key={order._id} className="border p-20">
+                            <div key={order._id} className=" p-20 ">
                                 <p className="p-2 bg-details  text-main">
                                     order ID: {order._id}
                                 </p>
@@ -143,6 +143,7 @@ const Profil = () => {
                                         )}
                                     </div>
                                 ))}
+                                <hr />‚
                             </div>
                         )
                     })
