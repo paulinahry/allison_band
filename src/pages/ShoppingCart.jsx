@@ -57,6 +57,7 @@ const ShoppingCart = () => {
     }
 
     const handleBuy = async () => {
+        //if cart 0 buy is  not possible
         try {
             const response = await axios.post(`${baseUrl}/orders/buyCart`)
             dispatch(cartActions.removeAll())

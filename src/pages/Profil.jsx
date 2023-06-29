@@ -35,7 +35,7 @@ const Profil = () => {
                 const product = products.filter((prod) => prod._id === id)
                 return product
             })
-            totalPrice += productId[0].price * itemInOrder.items.amount
+            // totalPrice += productId[0].price * itemInOrder.items.amount
         })
 
         return totalPrice
@@ -111,7 +111,7 @@ const Profil = () => {
                                     order ID: {order._id}
                                 </p>
                                 {orderedProducts.map((product) => (
-                                    <div className="flex justify-between">
+                                    <div className="flex justify-between border-b">
                                         <img
                                             className="
                                          h-20 w-20
