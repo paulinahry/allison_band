@@ -1,7 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
-import { authActions } from './auth'
-import { orderActions } from './orders'
 
 const name = 'cart'
 const initialState = createInitialState()
@@ -91,34 +89,15 @@ function createExtraActions() {
         )
     }
 
-    // function buy() {
-    //     return createAsyncThunk(
-    //         `${name}/user/buy`,
-    //         async ({ _id: orderId }, { rejectWithValue }) => {
-    //             try {
-    //                 const response = await axios.delete(`${baseUrl}/buy`, {
-    //                     orderId,
-    //                 })
-
-    //                 return response.data
-    //             } catch (error) {
-    //                 console.log(error)
-    //                 return rejectWithValue(error.response?.data)
-    //             }
-    //         }
-    //     )
-    // }
-
     return {
         addToCart: addToCart(),
         removeOne: removeOne(),
         removeAll: removeAll(),
-        // buy: buy(),
     }
 }
 
 function extraReducers(builder) {
-    const { addToCart, removeOne, removeAll, buy } = extraActions
+    const { addToCart, removeOne, removeAll } = extraActions
     //addToCart
     builder
         .addCase(addToCart.pending, (state, action) => {
@@ -177,12 +156,6 @@ function extraReducers(builder) {
         .addCase(removeAll.fulfilled, (state, action) => {
             state.cart = action.payload.cart
         })
-
-    // // buy
-    // builder.addCase(buy.fulfilled, (state, action) => {
-    //     state.order.push({ _id: orderId })
-    //     state.cart = []
-    // })
 }
 
 export const cartActions = { ...slice.actions, ...extraActions }
