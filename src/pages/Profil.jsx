@@ -135,7 +135,7 @@ const Profil = () => {
                                 <p
                                     className="
                                  text-right
-                                    font-bold text-greenish text-lg  pr-2"
+                                    font-bold text-greenish  pr-2 text-xl"
                                 >
                                     $ {calculateTotalPrice(order._id)}
                                 </p>
