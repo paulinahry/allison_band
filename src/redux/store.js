@@ -17,6 +17,7 @@ const store = configureStore({
         ord,
         cart,
     },
+    devTools: false,
 })
 
 export default store

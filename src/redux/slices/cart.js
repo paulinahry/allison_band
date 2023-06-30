@@ -6,7 +6,7 @@ const initialState = createInitialState()
 const reducers = createReducers()
 const extraActions = createExtraActions()
 const slice = createSlice({ name, initialState, reducers, extraReducers })
-const baseUrl = 'http://localhost:3000/api/cart'
+const baseUrl = 'http://localhost:3000/'
 
 function createInitialState() {
     let cart = []
@@ -40,10 +40,13 @@ function createExtraActions() {
                 try {
                     const updateHash = Math.floor(Math.random() * 9000)
                     dispatch(cartActions.setUpdateHash(updateHash))
-                    const response = await axios.post(`${baseUrl}/add`, {
-                        productId,
-                        updateHash,
-                    })
+                    const response = await axios.post(
+                        `${baseUrl}api/cart/add`,
+                        {
+                            productId,
+                            updateHash,
+                        }
+                    )
                     return response.data
                 } catch (error) {
                     console.log(error)
@@ -61,10 +64,13 @@ function createExtraActions() {
                     const updateHash = Math.floor(Math.random() * 9000)
                     dispatch(cartActions.setUpdateHash(updateHash))
 
-                    const response = await axios.post(`${baseUrl}/remove`, {
-                        productId,
-                        updateHash,
-                    })
+                    const response = await axios.post(
+                        `${baseUrl}api/cart/remove`,
+                        {
+                            productId,
+                            updateHash,
+                        }
+                    )
                     return response.data
                 } catch (error) {
                     console.log(error)
@@ -79,7 +85,9 @@ function createExtraActions() {
             `${name}/user/removeAllFromCart`,
             async (_, { rejectWithValue }) => {
                 try {
-                    const response = await axios.delete(`${baseUrl}/removeAll`)
+                    const response = await axios.delete(
+                        `${baseUrl}api/cart/removeAll`
+                    )
                     return response.data
                 } catch (error) {
                     console.log(error)

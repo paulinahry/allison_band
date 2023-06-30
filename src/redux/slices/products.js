@@ -6,7 +6,7 @@ const initialState = createInitialState()
 const reducers = createReducers()
 const extraActions = createExtraAction()
 const slice = createSlice({ name, initialState, reducers, extraReducers })
-const baseUrl = 'http://localhost:3000'
+const baseUrl = 'http://localhost:3000/'
 
 function createInitialState() {
     let products = []
@@ -23,7 +23,7 @@ function createExtraAction() {
             `${name}/getAllProducts`,
             async (_, { rejectWithValue }) => {
                 try {
-                    const response = await axios.get(`${baseUrl}/products`)
+                    const response = await axios.get(`${baseUrl}products`)
 
                     return response.data
                 } catch (error) {
@@ -39,7 +39,7 @@ function createExtraAction() {
             async (_, { rejectWithValue }) => {
                 try {
                     const response = await axios.post(
-                        `${baseUrl}/products/${_id}}`,
+                        `${baseUrl}products/${_id}}`,
                         {
                             _id,
                         }

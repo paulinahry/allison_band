@@ -13,7 +13,7 @@ const initialState = createInitialState()
 const reducers = createReducers()
 const extraActions = createExtraActions()
 const slice = createSlice({ name, initialState, reducers, extraReducers })
-const baseUrl = 'http://localhost:3000/api'
+const baseUrl = 'http://localhost:3000/'
 
 axios.interceptors.response.use(
     (response) => response,
@@ -22,7 +22,7 @@ axios.interceptors.response.use(
         console.log(error.response.status)
         if (
             error.response.status === 401 &&
-            originalRequest.url === `${baseUrl}/login/refresh-token`
+            originalRequest.url === `${baseUrl}api/login/refresh-token`
         ) {
             store.dispatch(authActions.logout())
             return Promise.reject(error)
@@ -30,11 +30,13 @@ axios.interceptors.response.use(
 
         if (error.response.status === 403 && !originalRequest._retry) {
             originalRequest._retry = true
-            return axios.post(`${baseUrl}/login/refresh-token`).then((res) => {
-                if (res.status === 200) {
-                    return axios(originalRequest)
-                }
-            })
+            return axios
+                .post(`${baseUrl}api/login/refresh-token`)
+                .then((res) => {
+                    if (res.status === 200) {
+                        return axios(originalRequest)
+                    }
+                })
         }
         return Promise.reject(error)
     }
@@ -70,7 +72,7 @@ function createExtraActions() {
             `${name}/login`,
             async ({ email, password }, { dispatch, rejectWithValue }) => {
                 try {
-                    const response = await axios.post(`${baseUrl}/login`, {
+                    const response = await axios.post(`${baseUrl}api/login`, {
                         email,
                         password,
                     })
@@ -89,7 +91,7 @@ function createExtraActions() {
             `${name}/logout`,
             async (_, { rejectWithValue }) => {
                 try {
-                    const response = await axios.get(`${baseUrl}/logout`)
+                    const response = await axios.get(`${baseUrl}api/logout`)
                     return response.data
                 } catch (error) {
                     return rejectWithValue(error.response?.data)
@@ -103,7 +105,7 @@ function createExtraActions() {
             `${name}/ping`,
             async (_, { rejectWithValue }) => {
                 try {
-                    const response = await axios.get(`${baseUrl}/ping`)
+                    const response = await axios.get(`${baseUrl}api/ping`)
                     return response.data
                 } catch (error) {
                     return rejectWithValue(error.response?.data)
@@ -117,10 +119,13 @@ function createExtraActions() {
             `${name}/register`,
             async ({ email, password }, { rejectWithValue }) => {
                 try {
-                    const response = await axios.post(`${baseUrl}/register`, {
-                        email,
-                        password,
-                    })
+                    const response = await axios.post(
+                        `${baseUrl}api/register`,
+                        {
+                            email,
+                            password,
+                        }
+                    )
                     return response.data
                 } catch (error) {
                     return rejectWithValue(error.response?.data)
@@ -134,7 +139,7 @@ function createExtraActions() {
             `${name}/getCart`,
             async (_, { dispatch, rejectWithValue }) => {
                 try {
-                    const response = await axios.get(`${baseUrl}/cart`)
+                    const response = await axios.get(`${baseUrl}api/cart`)
                     dispatch(cartActions.setCart(response.data.cart))
 
                     return response.data
