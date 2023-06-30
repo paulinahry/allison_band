@@ -6,8 +6,7 @@ const initialState = createInitialState()
 const reducers = createReducers()
 const extraActions = createExtraActions()
 const slice = createSlice({ name, initialState, reducers, extraReducers })
-const baseUrl = 'https://allison-band.onrender.com/'
-
+const baseUrl = 'http://localhost:3000'
 function createInitialState() {
     let cart = []
     let loaded = false
