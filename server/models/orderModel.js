@@ -12,7 +12,7 @@ const orderSchema = new Schema({
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'Product',
             },
-            amout: { type: Number },
+            amount: { type: Number },
         },
     ],
     finalPrice: { type: Number },

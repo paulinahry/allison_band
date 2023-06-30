@@ -11,6 +11,7 @@ const Profil = () => {
     const authUser = useSelector((s) => s.auth.user)
     const { orders } = useSelector((s) => s.ord)
     const products = useSelector((s) => s.prod.products)
+    const authOrders = useSelector((s) => s.ord.orders)
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -20,28 +21,35 @@ const Profil = () => {
         dispatch(prodActions.getProducts())
         dispatch(orderActions.getOrders())
     }, [])
-    console.log('fff64f5r64fe654', orders)
+
+    console.log('orders', orders)
+
     const calculateTotalPrice = () => {
         let totalPrice = 0
 
         orders.forEach((order) => {
-            //order
-            const itemInOrder = orders.find((ord) => ord._id === order._id)
-            console.log('this is order', itemInOrder)
-            console.log('items ', itemInOrder.items)
-            console.log(products)
-            const productId = itemInOrder.items.map((id) => {
-                id = id.product
-                const product = products.filter((prod) => prod._id === id)
-                return product
+            order === order._id
+            console.log('this is order', order, order._id)
+            console.log('items')
+
+            order.items.forEach((item) => {
+                const product = products.find(
+                    (prod) => prod._id === item.product
+                )
+
+                const price = product.price
+                const amount = item.amount
+                totalPrice += price * amount
             })
-            // totalPrice += productId[0].price * itemInOrder.items.amount
         })
 
-        return totalPrice
+        return totalPrice.toFixed(2)
     }
-
     const totalSum = calculateTotalPrice()
+
+    const getSubtotalOfProduct = (amount, price) => {
+        return (amount * price).toFixed(2)
+    }
 
     if (!orders || orders.length === 0) {
         return <Spinner />
@@ -50,36 +58,14 @@ const Profil = () => {
         navigate('/')
         return null
     }
-    const toPay = () => {
-        let total = 0
-
-        orders.forEach((orderItem) => {
-            const product = products.find((prod) => prod._id === orderItem._id)
-            if (product && product.price) {
-                total += orderItem.amount * product.price
-            }
-        })
-        return total.toFixed(2)
-    }
-
-    const getSubtotalOfProduct = (amount, price) => {
-        return (amount * price).toFixed(2)
-    }
-
-    const getTotalofProducts = () => {
-        return orders.reduce(
-            (total, itemInOrder) => total + itemInOrder.amount,
-            0
-        )
-    }
 
     return (
         <div className="profil min-h-screen max-h-full bg-white text-main ">
             <p className="bg-white text-center p-5">Welcome {authUser.email}</p>
             {orders.length > 0 && (
-                <p className="bg-white text-center pb-1  text-xl">
+                <div className="bg-white text-center pb-1  text-xl">
                     Actuall orders: {orders.length}
-                </p>
+                </div>
             )}
 
             <div className="orders">
@@ -93,23 +79,35 @@ const Profil = () => {
                     </>
                 ) : (
                     orders.map((order) => {
-                        const itemInOrder = orders.find(
-                            (ord) => ord._id === order._id
-                        )
-
-                        const orderedProducts = itemInOrder.items.map((id) => {
-                            id = id.product
-                            const product = products.filter(
-                                (prod) => prod._id === id
+                        const orderedProducts = order.items.map((item) => {
+                            const product = products.find(
+                                (prod) => prod._id === item.product
                             )
-                            return product[0]
+                            return {
+                                ...product,
+                                amount: item.amount,
+                            }
                         })
+
+                        // const orderedProducts = itemInOrder.items.map((id) => {
+                        //     id = id.product
+                        //     const product = products.filter(
+                        //         (prod) => prod._id === id
+                        //     )
+
+                        // return product[0]
+                        // })
 
                         return (
                             <div key={order._id} className=" p-20 ">
-                                <p className="p-2 bg-details  text-main">
+                                <div className="p-2 bg-details  text-main flex justify-between">
                                     order ID: {order._id}
-                                </p>
+                                    {orders.length > 0 && (
+                                        <span className="font-bold text-greenish text-lg">
+                                            $ {totalSum}
+                                        </span>
+                                    )}
+                                </div>
                                 {orderedProducts.map((product) => (
                                     <div className="flex justify-between border-b">
                                         <img
@@ -121,29 +119,30 @@ const Profil = () => {
                                         />
                                         <div
                                             className=" text-sm
-                                     flex flex-col pl-2 justify-around"
+                                     flex flex-col "
                                         >
                                             <span className="font-extrabold">
                                                 {product.title}
                                             </span>
                                             <span>{product.description}</span>
                                             <span>${product.price}</span>
+                                            <span>{product.amount}</span>
                                         </div>
 
                                         {orders.length > 0 && (
                                             <div className="flex flex-col">
-                                                <span>
-                                                    Total products:{' '}
-                                                    {getTotalofProducts()}
-                                                </span>
                                                 <span className="font-bold text-greenish">
-                                                    $ {toPay()}
+                                                    ${' '}
+                                                    {getSubtotalOfProduct(
+                                                        product.price,
+                                                        product.amount
+                                                    )}
                                                 </span>
                                             </div>
                                         )}
                                     </div>
                                 ))}
-                                <hr />‚
+                                <hr />
                             </div>
                         )
                     })
