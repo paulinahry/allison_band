@@ -6,9 +6,8 @@ import { BsTrash3 } from 'react-icons/bs'
 import { useSelector, useDispatch } from 'react-redux'
 import { cartActions } from '../redux/slices/cart'
 import { authActions } from '../redux/slices/auth'
-import { prodActions } from '../redux/slices/products'
 import { orderActions } from '../redux/slices/orders'
-import Info from '../components/Info'
+import CardProduct from '../components/CardProduct'
 
 const ShoppingCart = () => {
     const navigate = useNavigate()
@@ -57,12 +56,13 @@ const ShoppingCart = () => {
     }
 
     const handleBuy = async () => {
-        //if cart 0 buy is  not possible
         try {
-            const response = await axios.post(`${baseUrl}/orders/buyCart`)
-            dispatch(cartActions.removeAll())
-            navigate('/profil')
-            console.log('bought')
+            if (cart.length > 0) {
+                const response = await axios.post(`${baseUrl}/orders/buyCart`)
+                dispatch(cartActions.removeAll())
+                navigate('/profil')
+                console.log('bought')
+            }
         } catch (error) {
             console.log(error)
         }
@@ -71,7 +71,14 @@ const ShoppingCart = () => {
     if (cart.length === 0 || products.length === 0 || products === null) {
         return (
             <div className="bg-white text-main">
-                <Info />
+                <p className="text-xl text-details text-center uppercase p-10">
+                    your cart is empty
+                </p>
+                <div className="flex flex-wrap justify-center bg-gray-200 p-5">
+                    {products.map((product) => (
+                        <CardProduct key={product._id} product={product} />
+                    ))}
+                </div>
             </div>
         )
     }
@@ -237,6 +244,14 @@ const ShoppingCart = () => {
                     </button>
                 </div>
             </div>
+
+            {/* <div className="flex flex-wrap justify-center p-5 bg-white">
+                {products.map((product) => (
+                    <div className="border">
+                        <CardProduct key={product._id} product={product} />
+                    </div>
+                ))}
+            </div> */}
         </div>
     )
 }
