@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Info from '../components/Info'
 import Spinner from '../components/Spinner'
@@ -11,7 +11,6 @@ const Profil = () => {
     const authUser = useSelector((s) => s.auth.user)
     const { orders } = useSelector((s) => s.ord)
     const products = useSelector((s) => s.prod.products)
-    const authOrders = useSelector((s) => s.ord.orders)
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -22,16 +21,13 @@ const Profil = () => {
         dispatch(orderActions.getOrders())
     }, [])
 
-    console.log('orders', orders)
-
-    const calculateTotalPrice = () => {
+    // CALCULATIONS
+    const calculateTotalPrice = (orderId) => {
         let totalPrice = 0
 
-        orders.forEach((order) => {
-            order === order._id
-            console.log('this is order', order, order._id)
-            console.log('items')
+        const order = orders.find((order) => order._id === orderId)
 
+        if (order) {
             order.items.forEach((item) => {
                 const product = products.find(
                     (prod) => prod._id === item.product
@@ -41,16 +37,16 @@ const Profil = () => {
                 const amount = item.amount
                 totalPrice += price * amount
             })
-        })
-
+        }
         return totalPrice.toFixed(2)
     }
-    const totalSum = calculateTotalPrice()
 
     const getSubtotalOfProduct = (amount, price) => {
         return (amount * price).toFixed(2)
     }
+    // -------------------------------------------
 
+    // WHAT IF
     if (!orders || orders.length === 0) {
         return <Spinner />
     }
@@ -58,13 +54,14 @@ const Profil = () => {
         navigate('/')
         return null
     }
+    // -------------------------------------------
 
     return (
         <div className="profil min-h-screen max-h-full bg-white text-main ">
             <p className="bg-white text-center p-5">Welcome {authUser.email}</p>
             {orders.length > 0 && (
-                <div className="bg-white text-center pb-1  text-xl">
-                    Actuall orders: {orders.length}
+                <div className="bg-white text-center text-xl uppercase ">
+                    You have {orders.length} orders:
                 </div>
             )}
 
@@ -72,7 +69,6 @@ const Profil = () => {
                 {orders.length === 0 ? (
                     <>
                         <p className="bg-details text-center p-10">
-                            You have no orders yet. Why don't you check out our
                             tour dates and store in the meanwhile?{' '}
                         </p>
                         <Info />
@@ -89,24 +85,16 @@ const Profil = () => {
                             }
                         })
 
-                        // const orderedProducts = itemInOrder.items.map((id) => {
-                        //     id = id.product
-                        //     const product = products.filter(
-                        //         (prod) => prod._id === id
-                        //     )
-
-                        // return product[0]
-                        // })
-
                         return (
-                            <div key={order._id} className=" p-20 ">
+                            <div
+                                key={order._id}
+                                className=" px-20 pt-10 pb-20 "
+                            >
                                 <div className="p-2 bg-details  text-main flex justify-between">
                                     order ID: {order._id}
-                                    {orders.length > 0 && (
-                                        <span className="font-bold text-greenish text-lg">
-                                            $ {totalSum}
-                                        </span>
-                                    )}
+                                    <span className="font-bold text-greenish text-lg">
+                                        $ {calculateTotalPrice(order._id)}
+                                    </span>
                                 </div>
                                 {orderedProducts.map((product) => (
                                     <div className="flex justify-between border-b">
@@ -129,17 +117,15 @@ const Profil = () => {
                                             <span>{product.amount}</span>
                                         </div>
 
-                                        {orders.length > 0 && (
-                                            <div className="flex flex-col">
-                                                <span className="font-bold text-greenish">
-                                                    ${' '}
-                                                    {getSubtotalOfProduct(
-                                                        product.price,
-                                                        product.amount
-                                                    )}
-                                                </span>
-                                            </div>
-                                        )}
+                                        <div className="flex flex-col">
+                                            <span className=" pr-2 ">
+                                                ${' '}
+                                                {getSubtotalOfProduct(
+                                                    product.price,
+                                                    product.amount
+                                                )}
+                                            </span>
+                                        </div>
                                     </div>
                                 ))}
                                 <hr />
