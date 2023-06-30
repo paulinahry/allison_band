@@ -88,16 +88,20 @@ const Profil = () => {
                         return (
                             <div
                                 key={order._id}
-                                className=" px-20 pt-10 pb-20 "
+                                className="  pt-10 p-5 
+                                sm:pb-20 sm:px-20"
                             >
-                                <div className="p-2 bg-details  text-main flex justify-between">
-                                    order ID: {order._id}
-                                    <span className="font-bold text-greenish text-lg">
-                                        $ {calculateTotalPrice(order._id)}
-                                    </span>
+                                <div
+                                    className=" 
+                                    flex  flex-col 
+                                    p-2 sm:flex-row
+                                    justify-between
+                                 bg-details  text-main  "
+                                >
+                                    Order ID: {order._id.toUpperCase()}
                                 </div>
                                 {orderedProducts.map((product) => (
-                                    <div className="flex justify-between border-b">
+                                    <div className="flex  justify-between border-b py-4">
                                         <img
                                             className="
                                          h-20 w-20
@@ -128,6 +132,13 @@ const Profil = () => {
                                         </div>
                                     </div>
                                 ))}
+                                <p
+                                    className="
+                                 text-right
+                                    font-bold text-greenish text-lg  pr-2"
+                                >
+                                    $ {calculateTotalPrice(order._id)}
+                                </p>
                                 <hr />
                             </div>
                         )
