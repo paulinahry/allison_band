@@ -6,7 +6,7 @@ const initialState = createInitialState()
 const reducers = createReducers()
 const extraActions = createExtraActions()
 const slice = createSlice({ name, initialState, reducers, extraReducers })
-const baseUrl = 'http://localhost:3000/'
+const baseUrl = 'https://allison-band.onrender.com/'
 
 function createInitialState() {
     let orders = []
@@ -44,26 +44,8 @@ function createExtraActions() {
         )
     }
 
-    // function addOrder(order) {
-    //     return createAsyncThunk(
-    //         `${name}/addOrder`,
-    //         async (_, { dispatch, rejectWithValue }) => {
-    //             try {
-    //                 const response = await axios.post(
-    //                     `${baseUrl}/orders/addOrder`
-    //                 )
-
-    //                 return response.data
-    //             } catch (error) {
-    //                 return rejectWithValue(error.response?.data)
-    //             }
-    //         }
-    //     )
-    // }
-
     return {
         getOrders: getOrders(),
-        // addOrder: addOrder(),
     }
 }
 
@@ -78,15 +60,6 @@ function extraReducers(builder) {
         .addCase(getOrders.rejected, (state, action) => {
             state.error = action.payload
         })
-
-    // builder
-    //     .addCase(addOrder.fulfilled, (state, action) => {
-    //         state.products = action.payload
-    //         state.loaded = true
-    //     })
-    //     .addCase(addOrder.rejected, (state, action) => {
-    //         state.error = action.payload
-    //     })
 }
 
 export const orderActions = { ...slice.actions, ...extraActions }
