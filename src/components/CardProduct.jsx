@@ -2,9 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { cartActions } from '../redux/slices/cart'
-import { Link } from 'react-router-dom'
 import { MdDone } from 'react-icons/md'
-import { prodActions } from '../redux/slices/products'
 import Spinner from '../components/Spinner'
 
 const CardProduct = ({ product, onClick }) => {

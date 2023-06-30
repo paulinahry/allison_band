@@ -1,9 +1,5 @@
-import {
-    createAsyncThunk,
-    createSlice,
-    isAsyncThunkAction,
-} from '@reduxjs/toolkit'
-import axios, { AxiosError } from 'axios'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import axios from 'axios'
 import { history } from 'src/helpers'
 import store, { authActions as storeActions } from 'src/redux/store'
 import { cartActions } from 'slices/cart'
@@ -13,7 +9,8 @@ const initialState = createInitialState()
 const reducers = createReducers()
 const extraActions = createExtraActions()
 const slice = createSlice({ name, initialState, reducers, extraReducers })
-const baseUrl = 'http://localhost:3000'
+const baseUrl = 'http://localhost:3000/'
+
 axios.interceptors.response.use(
     (response) => response,
     (error) => {

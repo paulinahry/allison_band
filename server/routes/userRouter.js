@@ -5,7 +5,6 @@ const app = express.Router()
 
 app.get('/', userController.getUser)
 app.get('/logout', userController.logout)
-//app.get('/:id', userController.getUserById)
 app.post('/login', userController.login)
 app.post('/login/refresh-token', userController.refresh)
 app.post('/register', userController.register)

@@ -3,7 +3,7 @@ import Order from '../models/orderModel.js'
 
 import jwt from 'jsonwebtoken'
 
-const tokenLifetime = 60 * 60 * 1000 //1h, than refresh function with new token
+const tokenLifetime = 60 * 60 * 1000
 const refreshTokenLifetime = 24 * 60 * 60 * 1000
 
 function generateAccessToken(data, expiresIn) {

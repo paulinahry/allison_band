@@ -244,14 +244,6 @@ const ShoppingCart = () => {
                     </button>
                 </div>
             </div>
-
-            {/* <div className="flex flex-wrap justify-center p-5 bg-white">
-                {products.map((product) => (
-                    <div className="border">
-                        <CardProduct key={product._id} product={product} />
-                    </div>
-                ))}
-            </div> */}
         </div>
     )
 }

@@ -6,7 +6,7 @@ const initialState = createInitialState()
 const reducers = createReducers()
 const extraActions = createExtraAction()
 const slice = createSlice({ name, initialState, reducers, extraReducers })
-const baseUrl = 'http://localhost:3000'
+const baseUrl = 'http://localhost:3000/'
 function createInitialState() {
     let products = []
     return { products, loaded: false }

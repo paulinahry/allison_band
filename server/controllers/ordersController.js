@@ -77,12 +77,6 @@ const buyCart = async (req, res) => {
             })),
         })
 
-        // const orderId = req.params._id
-
-        // const userOrder = await Order.find(orderId)
-        //     .populate('items')
-        //     .populate('finalPrice')
-
         await order.save()
 
         user.order = order
