@@ -14,34 +14,48 @@ const ProductDetails = () => {
 
     useEffect(() => {
         dispatch(prodActions.getProductById({ id }))
-    }, [id])
+    })
 
     const handleAddToCart = (id) => {
         dispatch(cartActions.addToCart({ id }))
     }
 
-    const myProduct = products.find((prod) => prod.id === products.id)
+    const product = products.find((prod) => prod._id === id)
 
     return (
-        <div className="min-h-screen max-h-full  bg-gray-200 text-main flex flex-col ">
-            <button onClick={() => navigate('/store')} className="mt-10">
-                <BiArrowBack className=" inline underline" />
-                store
-            </button>
-            {myProduct ? (
-                <div className="max-h-full min-h-screen ">
-                    <div className="max-w-[600px] min-w-[350px]">
-                        <img src={myProduct.image} alt={myProduct.title} />
+        <div className="min-h-screen max-h-full  lg:p-10  text-main flex flex-col ">
+            <div className="  bg-details">
+                <button
+                    onClick={() => navigate('/store')}
+                    className="mt-10 m-4 underline"
+                >
+                    <BiArrowBack className=" inline " />
+                    back to store
+                </button>
+            </div>
+            {product ? (
+                <div
+                    className="max-h-full min-h-screen shadow-2xl
+               bg-white p-10 flex flex-col   lg:flex-row"
+                >
+                    <div className="flex justify-center">
+                        <img
+                            className="max-w-[600px]  max-h-[700px]"
+                            src={product.image}
+                            alt={product.title}
+                        />
                     </div>
-                    <div className="p-5 flex justify-around">
-                        <div>
-                            <p className="extrabold text-xxl">
-                                {myProduct.title}
-                            </p>
-                            <p>{myProduct.description}</p>
-                            <p>{myProduct.price}</p>
-                        </div>
-                        <div className=" ">
+                    <div className="flex flex-col ">
+                        <div className="flex justify-around items-center">
+                            <div className="p-5  sm:flex-col ">
+                                <p className="font-extrabold text-xxl">
+                                    {product.title}
+                                </p>
+                                <p>{product.description}</p>
+                                <p className="text-greenish font-bold">
+                                    $ {product.price}
+                                </p>
+                            </div>
                             <button
                                 className=" 
                             w-20 h-7
@@ -51,10 +65,24 @@ const ProductDetails = () => {
                             text-main  bg-details font-bold 
                             hover:text-details hover:bg-main
                             cursor-pointer rounded "
-                                onClick={() => handleAddToCart(myProduct._id)}
+                                onClick={() => handleAddToCart(product._id)}
                             >
                                 add to cart
                             </button>
+                        </div>
+                        <div className="p-5">
+                            <span className="text-lg font-bold">
+                                Lorem ipsum
+                            </span>
+                            , dolor sit amet consectetur adipisicing elit.
+                            Mollitia delectus voluptatibus magni culpa vitae
+                            ipsa illum similique voluptatem necessitatibus
+                            veniam! Reiciendis, accusantium iusto quia ullam
+                            facere sapiente maiores voluptate numquam Lorem
+                            ipsum dolor sit amet, consectetur adipisicing elit.
+                            Natus veritatis enim totam quidem magni velit eos et
+                            dolorum soluta aliquid explicabo fugiat, aperiam,
+                            mollitia ipsa omnis debitis ex nisi expedita.
                         </div>
                     </div>
                 </div>
