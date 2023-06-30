@@ -239,11 +239,9 @@ const removeOne = async (req, res) => {
         const targetItem = user.cart.find((item) => item.id === productId)
         if (targetItem.amount > 1) {
             targetItem.amount--
+        } else {
+            user.cart = user.cart.filter((item) => item.amount > 1)
         }
-
-        //else {
-        //     user.cart = user.cart.filter((item) => item.amount > 1)
-        // }
 
         await user.save()
         user = await User.findOne({ _id: tokenData.id }).populate('cart').lean()
