@@ -39,7 +39,7 @@ jobs:
       - checkout
       - run:
           name: 'Say Hello'
-          command: 'echo Say Hello Required'
+          command: 'Say Hello is Required to say Hi'
 
   sayhi:
     docker:
@@ -48,4 +48,4 @@ jobs:
       - checkout
       - run:
           name: 'Say Hi'
-          command: 'echo Say Hi'
+          command: 'Say Hi after saying Hello'
