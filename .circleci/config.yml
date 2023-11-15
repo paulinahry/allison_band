@@ -23,7 +23,8 @@ jobs:
           command: npm run test
 
   sayhello:
-    docker: cimg/base:stable
+    docker:
+      - image: cimg/node:18.16
     steps:
       - checkout
       - run:
@@ -31,7 +32,8 @@ jobs:
           command: 'echo Say Hello Required'
 
   sayhi:
-    docker: cimg/base:stable
+    docker:
+      - image: cimg/node:18.16
     steps:
       - checkout
       - run:
