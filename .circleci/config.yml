@@ -1,39 +1,39 @@
 version: 2.1
 
 workflows:
-    test-deploy:
-        jobs:
-            - test
+  test-deploy:
+    jobs:
+      - test
+      - sayhello
+      - sayhi:
+          requires:
             - sayhello
-            - sayhi:
-                  requires:
-                      - sayhello
 
 jobs:
-    test:
-        docker:
-            - image: cimg/node:18.16
-        steps:
-            - checkout
-            - run:
-                  name: Install dependencies
-                  command: npm install
-            - run:
-                  name: Run Tests
-                  command: npm run test
+  test:
+    docker:
+      - image: cimg/node:18.16
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: npm install
+      - run:
+          name: Run Tests
+          command: npm run test
 
-    sayhello:
-        docker: cimg/base:stable
-        steps:
-            - checkout
-            - run:
-                  name: 'Say Hello'
-                  command: 'echo Say Hello Required'
+  sayhello:
+    docker: cimg/base:stable
+    steps:
+      - checkout
+      - run:
+          name: 'Say Hello'
+          command: 'echo Say Hello Required'
 
-    sayhi:
-        docker: cimg/base:stable
-        steps:
-            - checkout
-            - run:
-                  name: 'Say Hi'
-                  command: 'echo Say Hi'
+  sayhi:
+    docker: cimg/base:stable
+    steps:
+      - checkout
+      - run:
+          name: 'Say Hi'
+          command: 'echo Say Hi'
