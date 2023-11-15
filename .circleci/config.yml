@@ -8,7 +8,7 @@ jobs:
 jobs:
 test:
 docker:
--image: cimg/14.20
+- image: cimg/14.20
  steps: 
--checkout
--run: node --version
+- checkout
+- run: node --version
