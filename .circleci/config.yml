@@ -28,7 +28,7 @@ jobs:
             - checkout
             - run:
                   name: 'Say Hello'
-                  command: 'echo Say Hello'
+                  command: 'echo Say Hello Required'
 
     sayhi:
         docker: cimg/base:stable
