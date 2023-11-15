@@ -4,12 +4,10 @@ workflows:
   test-deploy:
     jobs:
       - test
-say-hello-workflow:
-  jobs:
-    - say-hello
-    - say-hi:
-        requires:
-          - say-hello
+      - say-hello
+      - say-hi:
+          requires:
+            - say-hello
 
 jobs:
   test:
