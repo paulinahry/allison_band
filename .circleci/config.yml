@@ -1,14 +1,12 @@
 version: 2.1
 
-
 workflow:
-  test-deploy:
-  jobs:
-  - test
+    test-deploy:
+    jobs:
+        - test
 
 jobs:
-	test:
-		- image: cimg/18.16
-	steps:
-	-checkout
-	-run: node –versiom
+test:
+    -image: cimg/14.20
+    steps: -checkout
+    -run: node --version
