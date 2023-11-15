@@ -8,9 +8,10 @@ workflows:
       - sayhi:
           requires:
             - sayhello
-            filters:
+          filters:
             branches:
-            only: main
+              only:
+                - main
 
 jobs:
   test:
@@ -19,14 +20,14 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-      key: v1-deps-{{ checksum "package-lock.json"}}
+          key: v1-deps-{{ checksum "package-lock.json"}}
       - run:
           name: Install dependencies
           command: npm install
-        - save_cache:
-        key: v1-deps-{{ checksum "package-lock.json"}}
-        path: 
-        - node_modules
+      - save_cache:
+          key: v1-deps-{{ checksum "package-lock.json"}}
+          paths:
+            - node_modules
       - run:
           name: Run Tests
           command: npm run test
