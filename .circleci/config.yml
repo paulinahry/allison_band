@@ -33,10 +33,16 @@ jobs:
       - run:
           name: un My Tests
           command: yarn jest --ci --reporters=default --reporters=jest-junit
+      - run:
+          name: Copy tests results for storing
+          command: |
+            mkdir test-results
+            cp junit.xml test-results/
+          when: always
+          
       - store_test_results:
           path: ~/test-results
-      - store_artifacts:
-          path: ~/test-results
+
   sayhello:
     docker:
       - image: cimg/node:18.16
