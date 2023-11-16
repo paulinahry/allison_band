@@ -13,6 +13,8 @@ workflows:
             - clone
             - sayhi
       - sayhi:
+          context:
+          - IS_RAINING
           requires:
             - sayhello
           filters:
