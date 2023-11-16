@@ -31,15 +31,7 @@ jobs:
       - node/install-packages:
           cache-path: node_modules
       - run:
-          name: Run My Tests
-          command: npx jest --ci --config jest.config.cjs
-      - run:
-          name: "JavaScript Linter"
-          command: yarn jest --ci --reporters=default --reporters=jest-junit
-      - run:
-          name: "JavaScript Test Suite"
-          environment:
-            JEST_JUNIT_OUTPUT: junit.xml
+          name: un My Tests
           command: yarn jest --ci --reporters=default --reporters=jest-junit
       - store_test_results:
           path: test-results
