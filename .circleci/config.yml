@@ -1,47 +1,51 @@
 version: 2.1
 
 orbs:
-    node: circleci/node@5.1.0
+  node: circleci/node@5.1.0
 
 workflows:
-    test-deploy:
-        jobs:
-            - test
+  test-deploy:
+    jobs:
+      - sayhello
+      - sayhi:
+          requires:
             - sayhello
-            - sayhi:
-                  requires:
-                      - sayhello
-                  filters:
-                      branches:
-                          only:
-                              - main
+          filters:
+            branches:
+              only:
+                - main
+      - test:
+          requires:
+            - sayhi
 
 jobs:
-    test:
-        docker:
-            - image: cimg/node:18.16
-        steps:
-            - checkout
-            - node/install-packages:
-                  cache-path: node_modules
-            - run:
-                  name: Run Tests
-                  command: npm run test
+  test:
+    docker:
+      - image: cimg/node:18.16
+    steps:
+      - checkout
+      - node/install-packages:
+          cache-path: node_modules
+      - run:
+          name: Run Tests
+          command: npx jest --ci --config jest.config.cjs
+      - store_test_results:
+          path: test-results
 
-    sayhello:
-        docker:
-            - image: cimg/node:18.16
-        steps:
-            - checkout
-            - run:
-                  name: 'Say Hello'
-                  command: 'echo Say Hello Required'
+  sayhello:
+    docker:
+      - image: cimg/node:18.16
+    steps:
+      - checkout
+      - run:
+          name: 'Say Hello'
+          command: 'echo Say Hello Required to say Hi'
 
-    sayhi:
-        docker:
-            - image: cimg/node:18.16
-        steps:
-            - checkout
-            - run:
-                  name: 'Say Hi'
-                  command: 'echo Say Hi'
+  sayhi:
+    docker:
+      - image: cimg/node:18.16
+    steps:
+      - checkout
+      - run:
+          name: 'Say Hi'
+          command: 'echo Say Hi'
