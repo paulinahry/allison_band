@@ -14,7 +14,7 @@ workflows:
             - sayhi
       - sayhi:
           context:
-          - IS_RAINING
+          - test_context
           requires:
             - sayhello
           filters:
@@ -54,7 +54,9 @@ jobs:
       - run:
           name: 'Say Hi'
           command: 'echo Say Hi'
-          
+      - run:
+          name: 'Print context value'
+          command: echo $IS_RAINING 
   clone:
     docker:
       - image: cimg/node:18.16
