@@ -35,17 +35,16 @@ jobs:
           command: npx jest --ci --config jest.config.cjs
       - run:
           name: "JavaScript Linter"
-          command: npm jest --ci --reporters=default --reporters=jest-junit
+          command: yarn jest --ci --reporters=default --reporters=jest-junit
       - run:
           name: "JavaScript Test Suite"
           environment:
             JEST_JUNIT_OUTPUT: junit.xml
-          command: npm jest --ci --reporters=default --reporters=jest-junit
+          command: yarn jest --ci --reporters=default --reporters=jest-junit
       - store_test_results:
           path: test-results
       - store_artifacts:
-          path: reports/junit
-
+          path: test-results
   sayhello:
     docker:
       - image: cimg/node:18.16
