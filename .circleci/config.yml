@@ -26,6 +26,9 @@ jobs:
       - image: cimg/node:18.16
     steps:
       - checkout
+      - run:
+          name: Add GitHub to known_hosts
+          command: 'echo "|1|1xUpfo2F1wKFb6j1tc7k5XpAA3U=|PFZta3SfqkhCl5QYPQeSm1yv/Qw= ssh-ed25519  AAAAC3NzaC1lZDI1NTE5AAAAIP2BAgjliSFJk6ur/UWdyXs2QW0YVqWJIlpZHYuoC2Bw" >> ~/.ssh/known_hosts'
       - node/install-packages:
           cache-path: node_modules
       - run:
