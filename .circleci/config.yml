@@ -53,9 +53,7 @@ jobs:
           command: 'echo Say Hi'
       - run:
           name: Print Context Variable
-          command: "echo IS_RAINING: $IS_RAINING"
-          environment:
-            IS_RAINING: test_context/IS_RAINING
+          command: echo $IS_RAINING
 
   clone:
     docker:
