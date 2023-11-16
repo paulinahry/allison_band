@@ -33,6 +33,11 @@ jobs:
       - run:
           name: Run My Tests
           command: npx jest --ci --config jest.config.cjs
+      - run:
+          name: Copy test results for storing
+          command: |
+            mkdir test-results
+            cp test-result.xml test-results/
       - store_test_results:
           path: test-results
 
