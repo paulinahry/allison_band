@@ -56,6 +56,9 @@ jobs:
     docker:
       - image: cimg/node:18.16
     steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "SHA256:iHO5cL3F/u1uQUHiDpPMrwaJu5uJP/D82VTzF/q3cfE"
       - run:
           name: Debug
           command: |
@@ -78,9 +81,6 @@ jobs:
           name: Debug
           command: 'echo "Exit Code: $?"'
 
-      - add_ssh_keys:
-          fingerprints:
-            - "SHA256:AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl"
       - run:
           name: Clone Repository
           command: git clone git@github.com:paulinahry/allison_band.git
