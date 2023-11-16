@@ -14,7 +14,7 @@ workflows:
             - sayhi
       - sayhi:
           requires:
-            - clone
+            - sayhello
           filters:
             branches:
               only:
