@@ -59,27 +59,6 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - "SHA256:iHO5cL3F/u1uQUHiDpPMrwaJu5uJP/D82VTzF/q3cfE"
-      - run:
-          name: Debug
-          command: |
-            cat ~/.ssh/known_hosts
-            echo "github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl" >> ~/.ssh/known_hosts 2>&1
-            cat ~/.ssh/known_hosts
-
-      - run:
-          name: Add GitHub to known_hosts
-          command: 'echo "github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl" >> ~/.ssh/known_hosts 2>&1'
-
-      - run:
-          name: Debug
-          command: |
-            cat ~/.ssh/known_hosts
-            echo "github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl" >> ~/.ssh/known_hosts 2>&1
-            cat ~/.ssh/known_hosts
-
-      - run:
-          name: Debug
-          command: 'echo "Exit Code: $?"'
 
       - run:
           name: Clone Repository
