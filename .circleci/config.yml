@@ -13,8 +13,6 @@ workflows:
             - clone
             - sayhi
       - sayhi:
-          contexts:
-            - test_context
           requires:
             - sayhello
           filters:
