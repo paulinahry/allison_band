@@ -18,6 +18,10 @@ workflows:
               only:
                 - main
 
+  build:
+    jobs:
+      - clone
+
 jobs:
   test:
     docker:
@@ -49,3 +53,11 @@ jobs:
       - run:
           name: 'Say Hi'
           command: 'echo Say Hi'
+  
+  clone:
+    docker:
+      - image: cimg/node:18.16
+    steps:
+      - run:
+          name: Clone Repository
+          command: git clone git@github.com:paulinahry/allison_band.git
