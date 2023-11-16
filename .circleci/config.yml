@@ -58,7 +58,7 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - "SHA256:I+YkRWUziyHMFK58PEppmxkQAeU3nSNAxRNhUvpYAgg"
+            - "SHA256:AAAAC3NzaC1lZDI1NTE5AAAAIP2BAgjliSFJk6ur/UWdyXs2QW0YVqWJIlpZHYuoC2Bw"
       - run:
           name: Clone Repository
           command: git clone git@github.com:paulinahry/allison_band.git
