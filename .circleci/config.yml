@@ -54,6 +54,8 @@ jobs:
       - run:
           name: 'Testing Context'
           command: echo $IS_RAINING
+          environment:
+            IS_RAINING: ${test_context/IS_RAINING}
 
   clone:
     docker:
