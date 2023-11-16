@@ -35,12 +35,12 @@ jobs:
           command: npx jest --ci --config jest.config.cjs
       - run:
           name: "JavaScript Linter"
-          command: jest --ci --reporters=default --reporters=jest-junit
+          command: npm jest --ci --reporters=default --reporters=jest-junit
       - run:
           name: "JavaScript Test Suite"
           environment:
             JEST_JUNIT_OUTPUT: junit.xml
-          command: jest --ci --reporters=default --reporters=jest-junit
+          command: npm jest --ci --reporters=default --reporters=jest-junit
       - store_test_results:
           path: test-results
       - store_artifacts:
