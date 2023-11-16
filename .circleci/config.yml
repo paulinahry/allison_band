@@ -7,14 +7,14 @@ workflows:
   test-deploy:
     jobs:
       - clone
+      - sayhello
       - test:
           requires:
             - clone
             - sayhi
-      - sayhello
       - sayhi:
           requires:
-            - sayhello
+            - clone
           filters:
             branches:
               only:
