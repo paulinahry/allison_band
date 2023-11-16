@@ -35,7 +35,12 @@ jobs:
           command: npx jest --ci --config jest.config.cjs
       - run:
           name: "JavaScript Linter"
-          command: yarn lint --format junit -o reports/junit/js-lint-results.xml
+          command: yarn lint -- --format junit -o reports/junit/js-lint-results.xml
+      - run:
+          name: "JavaScript Test Suite"
+          environment:
+            JEST_JUNIT_OUTPUT: reports/junit/js-test-results.xml
+          command: yarn test -- --ci --testResultsProcessor="jest-junit"
       - store_test_results:
           path: reports/junit
       - store_artifacts:
