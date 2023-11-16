@@ -57,8 +57,27 @@ jobs:
       - image: cimg/node:18.16
     steps:
       - run:
+          name: Debug
+          command: |
+            cat ~/.ssh/known_hosts
+            echo "github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl" >> ~/.ssh/known_hosts 2>&1
+            cat ~/.ssh/known_hosts
+
+      - run:
           name: Add GitHub to known_hosts
-          command: 'echo "github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl" >> ~/.ssh/known_hosts'
+          command: 'echo "github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl" >> ~/.ssh/known_hosts 2>&1'
+
+      - run:
+          name: Debug
+          command: |
+            cat ~/.ssh/known_hosts
+            echo "github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl" >> ~/.ssh/known_hosts 2>&1
+            cat ~/.ssh/known_hosts
+
+      - run:
+          name: Debug
+          command: 'echo "Exit Code: $?"'
+
       - add_ssh_keys:
           fingerprints:
             - "SHA256:AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl"
