@@ -58,7 +58,7 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - "SHA256:iHO5cL3F/u1uQUHiDpPMrwaJu5uJP/D82VTzF/q3cfE"
+            - "be:fc:d8:df:94:f8:d4:28:61:80:10:8c:6c:eb:83:b4"
 
       - run:
           name: Clone Repository
