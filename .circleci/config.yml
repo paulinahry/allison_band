@@ -37,7 +37,7 @@ jobs:
           name: Copy test results for storing
           command: |
             mkdir test-results
-            cp test-result.xml test-results/
+            cp junit.xml test-results/
       - store_test_results:
           path: test-results
 
