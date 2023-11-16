@@ -50,13 +50,11 @@ jobs:
       - image: cimg/node:18.16
     steps:
       - checkout
+      - run: echo $IS_RAINING 
       - run:
           name: 'Say Hi'
           command: 'echo Say Hi'
-      - run:
-          name: Print Context Variable
-          command: echo $IS_RAINING
-
+          
   clone:
     docker:
       - image: cimg/node:18.16
