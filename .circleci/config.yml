@@ -39,7 +39,6 @@ jobs:
             mkdir test-results
             cp junit.xml test-results/
           when: always
-          
       - store_test_results:
           path: ~/test-results
 
