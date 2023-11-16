@@ -13,6 +13,8 @@ workflows:
             - clone
             - sayhi
       - sayhi:
+          contexts:
+            - test_context
           requires:
             - sayhello
           filters:
@@ -29,7 +31,7 @@ jobs:
       - node/install-packages:
           cache-path: node_modules
       - run:
-          name: Run Tests
+          name: Run My Tests
           command: npx jest --ci --config jest.config.cjs
       - store_test_results:
           path: test-results
@@ -51,6 +53,9 @@ jobs:
       - run:
           name: 'Say Hi'
           command: 'echo Say Hi'
+      - run:
+          name: 'Testing Context'
+          command: echo $IS_RAINING
 
   clone:
     docker:
@@ -60,7 +65,6 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - "be:fc:d8:df:94:f8:d4:28:61:80:10:8c:6c:eb:83:b4"
-
       - run:
           name: Clone Repository
           command: git clone git@github.com:paulinahry/allison_band.git
