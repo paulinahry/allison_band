@@ -6,6 +6,9 @@ orbs:
 workflows:
   test-deploy:
     jobs:
+      - test:
+          requires:
+            - sayhi
       - sayhello
       - sayhi:
           requires:
@@ -14,9 +17,6 @@ workflows:
             branches:
               only:
                 - main
-      - test:
-          requires:
-            - sayhi
 
 jobs:
   test:
