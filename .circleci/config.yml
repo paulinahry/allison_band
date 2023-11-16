@@ -6,6 +6,7 @@ orbs:
 workflows:
   test-deploy:
     jobs:
+      - clone
       - test:
           requires:
             - sayhi
@@ -18,9 +19,7 @@ workflows:
               only:
                 - main
 
-  build:
-    jobs:
-      - clone
+
 
 jobs:
   test:
