@@ -60,9 +60,9 @@ jobs:
           docker_layer_caching: false
       - docker/check
       - docker/build:
-          image: $USERNAME_DOCKER/allison_band
+          image: $USERNAME_DOCKER/allison_band --password-stdin
       - docker/push:
-          image: $USERNAME_DOCKER/allison_band
+          image: $USERNAME_DOCKER/allison_band --password-stdin
 
 
   sayhello:
