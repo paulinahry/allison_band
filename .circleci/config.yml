@@ -70,6 +70,8 @@ jobs:
       - run:
           name: Push to Docker Hub
           command: docker push $USERNAME_DOCKER/$REPO_DOCKER
+      - snyk/install
+      - snyk/scan
 
   sayhello:
     docker:
