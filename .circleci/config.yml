@@ -3,6 +3,7 @@ version: 2.1
 orbs:
   node: circleci/node@5.1.0
   docker: circleci/docker@2.4.0
+  snyk: snyk/snyk@2.0.2
 
 workflows:
   test-deploy:
@@ -58,6 +59,7 @@ jobs:
       - run:
           name: Login to Docker Hub
           command: echo $PASS_DOCKER | docker login -u $USERNAME_DOCKER --password-stdin
+      - docker/check
       - run:
           name: Debug
           command: 'echo $USERNAME_DOCKER, $PASS_DOCKER'
