@@ -25,6 +25,8 @@ workflows:
       - build_image_push:
           requires:
             - build_and_test
+          context:
+            - docker_login_context
 
 jobs:
   build_and_test:
