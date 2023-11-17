@@ -30,8 +30,7 @@ workflows:
           requires:
             - build_and_test
             - snyk_scan
-          context:
-            - docker_login_context
+ 
 
 jobs:
   build_and_test:
@@ -80,9 +79,10 @@ jobs:
     steps:
     - checkout
     - node/install-packages
-    - snyk/scan:
-        fail-on-issues: false
-        monitor-on-build: false
+    - run:
+        name: Scanning
+        command: snyk test
+
   sayhello:
     docker:
       - image: cimg/node:18.16
