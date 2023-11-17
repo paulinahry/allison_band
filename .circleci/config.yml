@@ -8,7 +8,7 @@ workflows:
     jobs:
       - clone
       - sayhello
-      - test:
+      - build_and_test:
           requires:
             - clone
             - sayhi
@@ -21,9 +21,12 @@ workflows:
             branches:
               only:
                 - main
+      - build_image_push:
+          requires:
+          - build_and_test
 
 jobs:
-  test:
+  build_and_test:
     docker:
       - image: cimg/node:18.16
     steps:
@@ -42,10 +45,12 @@ jobs:
       - store_test_results:
           path: test-results
 
+    
+
   build_image_push:
-    docker:
-      - image: cimg/node:18.16
-    steps:
+      docker:
+        - image: cimg/node:18.16
+      steps:
       - checkout
 
   sayhello:
