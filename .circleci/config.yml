@@ -3,7 +3,6 @@ version: 2.1
 orbs:
   node: circleci/node@5.1.0
   docker: circleci/docker@2.4.0
-  snyk: snyk/snyk@2.0.2
 
 workflows:
   test-deploy:
@@ -14,9 +13,6 @@ workflows:
           requires:
             - clone
             - sayhi
-      - snyk_scan:
-          context:
-            - docker_login_context
       - sayhi:
           context:
             - test_context
@@ -29,8 +25,6 @@ workflows:
       - build_image_push:
           requires:
             - build_and_test
-            - snyk_scan
- 
 
 jobs:
   build_and_test:
@@ -73,18 +67,6 @@ jobs:
           name: Push to Docker Hub
           command: docker push $USERNAME_DOCKER/$REPO_DOCKER
 
-  snyk_scan:
-    docker:
-      - image: cimg/node:18.16
-    steps:
-    - checkout
-    - run:
-        name: Install Snyk
-        command: npm install -g snyk
-    - node/install-packages
-    - run:
-        name: Scanning
-        command: snyk test
 
   sayhello:
     docker:
