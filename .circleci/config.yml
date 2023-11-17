@@ -67,7 +67,6 @@ jobs:
           name: Push to Docker Hub
           command: docker push $USERNAME_DOCKER/$REPO_DOCKER
 
-
   sayhello:
     docker:
       - image: cimg/node:18.16
