@@ -48,23 +48,25 @@ jobs:
       - store_test_results:
           path: test-results
 
-build_image_push:
-  docker:
-    - image: 'cimg/node:18.16'
-  steps:
-    - checkout
-    - setup_remote_docker:
-        docker_layer_caching: false
-    - run:
-        name: Debug
-        command: 'echo $USERNAME_DOCKER, $PASS_DOCKER'
-    - run:
-        name: Build and push to Docker Hub
-        command: |
-          docker build -t $USERNAME_DOCKER/allison_band .
-          echo "$PASS_DOCKER" | docker login -u "$USERNAME_DOCKER" --password-stdin
-          docker push $USERNAME_DOCKER/allison_band
-
+  build_image_push:
+    docker:
+      - image: cimg/node:18.16
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: false
+      - run:
+          name: Login to Docker Hub
+          command: echo $PASS_DOCKER | docker login -u $USERNAME_DOCKER --password-stdin
+      - run:
+          name: Debug
+          command: 'echo $USERNAME_DOCKER, $PASS_DOCKER'
+      - run:
+          name: Build and push to Docker Hub
+          command: |
+              docker build -t $USERNAME_DOCKER/allison_band .
+              echo "$PASS_DOCKER" | docker login -u "$USERNAME_DOCKER" --password-stdin
+              docker push $USERNAME_DOCKER/allison_band
 
   sayhello:
     docker:
