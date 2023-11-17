@@ -24,10 +24,9 @@ workflows:
                 - main
       - build_image_push:
           requires:
-          - build_and_test
+            - build_and_test
           context:
           - docker_login_context
-
 
 jobs:
   build_and_test:
@@ -49,9 +48,6 @@ jobs:
       - store_test_results:
           path: test-results
 
-    
-
-
   build_image_push:
     docker:
       - image: cimg/node:18.16
@@ -62,16 +58,11 @@ jobs:
       - run:
           name: Login to Docker Hub
           command: echo $PASS_DOCKER | docker login -u $USERNAME_DOCKER --password-stdin
-      - run:
-          name: Try to login
-          command: echo $PASS_DOCKER | docker login --username $USERNAME_DOCKER --password-stdin
       - docker/check:
       - docker/build:
           image: $USERNAME_DOCKER/$REPO_DOCKER
       - docker/push:
           image: $USERNAME_DOCKER/$REPO_DOCKER
-
-
 
   sayhello:
     docker:
@@ -94,6 +85,7 @@ jobs:
       - run:
           name: 'Print context value'
           command: echo $IS_RAINING 
+
   clone:
     docker:
       - image: cimg/node:18.16
