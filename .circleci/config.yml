@@ -60,9 +60,9 @@ jobs:
       - run: 
           name: Build and push to Docker Hub
           command: |
-            docker build -t $USERNAME_DOCKER/allison_band:latest
+            docker build -t $USERNAME_DOCKER/allison_band .
             echo "$PASS_DOCKER" | docker login -u "USERNAME_DOCKER" --password-stdin
-            docker push $USERNAME_DOCKER/allison_band:latest
+            docker push $USERNAME_DOCKER/allison_band
 
   sayhello:
     docker:
