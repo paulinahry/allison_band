@@ -49,11 +49,10 @@ jobs:
           path: test-results
 
   build_image_push:
-    executor: docker/machine
+    docker:
+      - image: cimg/node:18.16
     steps:
       - checkout
-      - setup_remote_docker:
-          docker_layer_caching: false
       - run:
           name: Login to Docker Hub
           command: echo $PASS_DOCKER | docker login -u $USERNAME_DOCKER --password-stdin
