@@ -61,9 +61,9 @@ jobs:
       - docker/check
       - run:
           name: Login to Docker Hub
-          command: echo "$PASS_DOCKER" | docker login -u "$USERNAME_DOCKER" --password-stdin
+          command: echo $PASS_DOCKER | docker login -u $USERNAME_DOCKER --password-stdin
       - docker/build:
-          image: $CIRCLE_PROJECT_USERNAME/allison_band
+          image: $USERNAME_DOCKER/allison_band
 
 
 
