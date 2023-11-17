@@ -59,7 +59,7 @@ jobs:
       - docker/check
       - run:
           name: Debug
-          command: 'echo $USERNAME_DOCKER, $PASS_DOCKER'
+          command: echo $USERNAME_DOCKER, $PASS_DOCKER
       - run:
           name: Build 
           command: docker push $USERNAME_DOCKER/$REPO_DOCKER
