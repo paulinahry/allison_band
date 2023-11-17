@@ -57,15 +57,16 @@ jobs:
       - checkout
       - setup_remote_docker:
           docker_layer_caching: false
+      - run:
+          name: Debug
+          command: echo $USERNAME_DOCKER, $PASS_DOCKER
       - run: 
           name: Build and push to Docker Hub
           command: |
             docker build -t $USERNAME_DOCKER/allison_band .
-            echo "$PASS_DOCKER" | docker login -u "USERNAME_DOCKER" --password-stdin
+            echo "$PASS_DOCKER" | docker login -u "$USERNAME_DOCKER" --password-stdin
             docker push $USERNAME_DOCKER/allison_band
-          environment:
-            USERNAME_DOCKER: $USERNAME_DOCKER
-            PASS_DOCKER: $PASS_DOCKER
+
 
   sayhello:
     docker:
