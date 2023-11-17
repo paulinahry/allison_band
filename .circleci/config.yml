@@ -61,13 +61,12 @@ jobs:
       - run:
           name: Debug
           command: 'echo $USERNAME_DOCKER, $PASS_DOCKER'
-      - run:
-          name: Build and push to Docker Hub
-          command: |
-            docker build -t $USERNAME_DOCKER/allison_band .
-            echo "$PASS_DOCKER" | docker login -u "$USERNAME_DOCKER"
-            --password-stdin
-            docker push $USERNAME_DOCKER/allison_band
+      - docker/check
+      - docker/build:
+          image: $USERNAME_DOCKER/$REPO_DOCKER
+      - docker/push:
+          image: $USERNAME_DOCKER/$REPO_DOCKER
+
   sayhello:
     docker:
       - image: cimg/node:18.16
