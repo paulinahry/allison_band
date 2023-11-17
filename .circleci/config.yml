@@ -63,9 +63,9 @@ jobs:
           command: echo $PASS_DOCKER | docker login -u $USERNAME_DOCKER --password-stdin
       - docker/check
       - docker/build:
-          image: $USERNAME_DOCKER/$REPO_DOCKER
+          image: $USERNAME_DOCKER/$REPO_DOCKER:latest
       - docker/push:
-          image: $USERNAME_DOCKER/$REPO_DOCKER
+          image: $USERNAME_DOCKER/$REPO_DOCKER:latest
 
 
 
