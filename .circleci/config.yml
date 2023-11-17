@@ -49,8 +49,7 @@ jobs:
           path: test-results
 
   build_image_push:
-    docker:
-      - image: cimg/node:18.16
+    executor: docker/machine
     steps:
       - checkout
       - setup_remote_docker:
