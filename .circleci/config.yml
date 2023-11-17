@@ -60,7 +60,7 @@ jobs:
       - run: 
           name: Build and push to Docker Hub
           command: |
-            docker build -t $USERNAME_DOCKER/imagepush
+            docker build -t allison_band
             echo "$PASS_DOCKER" | docker login -u "USERNAME_DOCKER" --password-stdin
             docker push $USERNAME_DOCKER/imagepush
 
