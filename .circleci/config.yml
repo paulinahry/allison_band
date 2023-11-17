@@ -14,6 +14,9 @@ workflows:
           requires:
             - clone
             - sayhi
+      - snyk_scan:
+          context:
+            - docker_login_context
       - sayhi:
           context:
             - test_context
@@ -26,6 +29,7 @@ workflows:
       - build_image_push:
           requires:
             - build_and_test
+            - snyk_scan
           context:
             - docker_login_context
 
@@ -66,13 +70,19 @@ jobs:
       - run:
           name: Build 
           command: docker push $USERNAME_DOCKER/$REPO_DOCKER
-
       - run:
           name: Push to Docker Hub
           command: docker push $USERNAME_DOCKER/$REPO_DOCKER
-      - snyk/install
-      - snyk/scan
 
+  snyk_scan:
+    docker:
+      - image: cimg/node:18.16
+    steps:
+    - checkout:
+    - node/install-packages
+    - snyk/scan:
+        fail-on-issues: false
+        monitor-on-build: false
   sayhello:
     docker:
       - image: cimg/node:18.16
