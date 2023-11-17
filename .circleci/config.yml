@@ -24,6 +24,9 @@ workflows:
       - build_image_push:
           requires:
           - build_and_test
+          context:
+          - docker_login_context
+
 
 jobs:
   build_and_test:
@@ -52,6 +55,14 @@ jobs:
         - image: cimg/node:18.16
       steps:
       - checkout
+      - setup_remote_docker:
+          docker_layer_caching: false
+      - run: 
+          name: Build and push to Docker Hub
+          command: |
+            docker build -t $USERNAME_DOCKER/imagepush
+            echo "$PASS_DOCKER" | docker login -u "USERNAME_DOCKER" --password-stdin
+            docker push $USERNAME_DOCKER/imagepush
 
   sayhello:
     docker:
