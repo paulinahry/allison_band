@@ -59,11 +59,11 @@ jobs:
       - setup_remote_docker:
           docker_layer_caching: false
       - docker/check
-      - docker/build:
-          image: $USERNAME_DOCKER/allison_band --password-stdin
       - run:
           name: Login to Docker Hub
           command: echo "$PASS_DOCKER" | docker login -u "$USERNAME_DOCKER" --password-stdin
+      - docker/build:
+          image: $USERNAME_DOCKER/allison_band --password-stdin
       - docker/push:
           image: $USERNAME_DOCKER/allison_band
 
