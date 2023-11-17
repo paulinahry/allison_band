@@ -78,6 +78,9 @@ jobs:
       - image: cimg/node:18.16
     steps:
     - checkout
+    - run:
+        name: Install Snyk
+        command: npm install -g snyk
     - node/install-packages
     - run:
         name: Scanning
