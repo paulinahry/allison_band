@@ -78,7 +78,7 @@ jobs:
     docker:
       - image: cimg/node:18.16
     steps:
-    - checkout:
+    - checkout
     - node/install-packages
     - snyk/scan:
         fail-on-issues: false
