@@ -5,12 +5,6 @@ orbs:
   docker: circleci/docker@2.4.0
 
 workflows:
-  testing:
-    jobs:
-      - runner-test
-  build-workflow:
-    jobs:
-      - build
   test-deploy:
     jobs:
       - clone
@@ -35,18 +29,6 @@ workflows:
             - docker_login_context
 
 jobs:
-  runner-test:
-    machine: true
-    resource_class: paulinahry/allison_band
-    steps:
-      - run: echo "Hi I'm on Runners!"
-  build:
-    docker:
-      - image: cimg/base:current
-    resource_class: paulinahry/allison_band
-    steps:
-      - run: echo "Hi I'm on a Container Runner!"
-
   build_and_test:
     docker:
       - image: cimg/node:18.16
