@@ -13,6 +13,10 @@ workflows:
           requires:
             - clone
             - sayhi
+          filters:
+            branches:
+              only:
+                - circleci-testing
       - sayhi:
           context:
             - test_context
