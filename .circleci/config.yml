@@ -10,7 +10,6 @@ workflows:
       - runner-test
   test-deploy:
     jobs:
-      - build
       - clone
       - sayhello
       - build_and_test:
