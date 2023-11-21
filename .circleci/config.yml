@@ -5,8 +5,12 @@ orbs:
   docker: circleci/docker@2.4.0
 
 workflows:
+  testing:
+    jobs:
+      - runner-test
   test-deploy:
     jobs:
+      - build
       - clone
       - sayhello
       - build_and_test:
@@ -29,6 +33,12 @@ workflows:
             - docker_login_context
 
 jobs:
+  runner-test:
+    machine: true
+    resource_class: paulinahry/allison_band
+    steps:
+      - run: echo "Hi I'm on Runners!"
+
   build_and_test:
     docker:
       - image: cimg/node:18.16
