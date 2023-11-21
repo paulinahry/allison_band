@@ -21,7 +21,7 @@ workflows:
           filters:
             branches:
               only:
-                - staging
+                - circleci-testing
       - build_image_push:
           requires:
             - build_and_test
