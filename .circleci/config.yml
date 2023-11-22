@@ -9,19 +9,19 @@ workflows:
     jobs:
       - clone
       - sayhello
-      - build_and_test:
-          requires:
-            - clone
-            - sayhi
-          filters:
-            branches:
-              only:
-                - circleci-testing
       - sayhi:
           context:
             - test_context
           requires:
             - sayhello
+          filters:
+            branches:
+              only:
+                - circleci-testing
+      - build_and_test:
+          requires:
+            - clone
+            - sayhi
           filters:
             branches:
               only:
@@ -32,7 +32,42 @@ workflows:
           context:
             - docker_login_context
 
+
 jobs:
+  sayhello:
+    docker:
+      - image: cimg/node:18.16
+    steps:
+      - checkout
+      - run:
+          name: 'Say Hello'
+          command: 'echo Say Hello Required to say Hi'
+
+  sayhi:
+    docker:
+      - image: cimg/node:18.16
+    steps:
+      - checkout
+      - run: echo $IS_RAINING 
+      - run:
+          name: 'Say Hi'
+          command: 'echo Say Hi'
+      - run:
+          name: 'Print context value'
+          command: echo $IS_RAINING 
+
+  clone:
+    docker:
+      - image: cimg/node:18.16
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - "be:fc:d8:df:94:f8:d4:28:61:80:10:8c:6c:eb:83:b4"
+      - run:
+          name: Clone Repository
+          command: git clone git@github.com:paulinahry/allison_band.git
+
   build_and_test:
     docker:
       - image: cimg/node:18.16
@@ -73,36 +108,3 @@ jobs:
       #     name: Push to Docker Hub
       #     command: docker push $USERNAME_DOCKER/$REPO_DOCKER
 
-  sayhello:
-    docker:
-      - image: cimg/node:18.16
-    steps:
-      - checkout
-      - run:
-          name: 'Say Hello'
-          command: 'echo Say Hello Required to say Hi'
-
-  sayhi:
-    docker:
-      - image: cimg/node:18.16
-    steps:
-      - checkout
-      - run: echo $IS_RAINING 
-      - run:
-          name: 'Say Hi'
-          command: 'echo Say Hi'
-      - run:
-          name: 'Print context value'
-          command: echo $IS_RAINING 
-
-  clone:
-    docker:
-      - image: cimg/node:18.16
-    steps:
-      - checkout
-      - add_ssh_keys:
-          fingerprints:
-            - "be:fc:d8:df:94:f8:d4:28:61:80:10:8c:6c:eb:83:b4"
-      - run:
-          name: Clone Repository
-          command: git clone git@github.com:paulinahry/allison_band.git
