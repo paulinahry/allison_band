@@ -26,11 +26,11 @@ workflows:
             branches:
               only:
                 - circleci-testing
-      # - build_image_push:
-      #     requires:
-      #       - build_and_test
-      #     context:
-      #       - docker_login_context
+      - build_image_push:
+          requires:
+            - build_and_test
+          context:
+            - docker_login_context
 
 jobs:
   build_and_test:
@@ -66,12 +66,12 @@ jobs:
       - run:
           name: Debug
           command: echo $USERNAME_DOCKER, $PASS_DOCKER
-      - run:
-          name: Build 
-          command: docker push $USERNAME_DOCKER/$REPO_DOCKER
-      - run:
-          name: Push to Docker Hub
-          command: docker push $USERNAME_DOCKER/$REPO_DOCKER
+      # - run:
+      #     name: Build 
+      #     command: docker push $USERNAME_DOCKER/$REPO_DOCKER
+      # - run:
+      #     name: Push to Docker Hub
+      #     command: docker push $USERNAME_DOCKER/$REPO_DOCKER
 
   sayhello:
     docker:
