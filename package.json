@@ -16,7 +16,7 @@
         "@reduxjs/toolkit": "^2.0.0-beta.0",
         "axios": "^1.4.0",
         "image-tools": "^1.4.0",
-        "imagetools-core": "^4.0.3",
+        "imagetools-core": "^6.0.3",
         "mongoose": "^7.2.2",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
@@ -24,7 +24,7 @@
         "react-image": "^4.1.0",
         "react-loader-spinner": "^5.3.4",
         "react-router-dom": "^6.11.2",
-        "sharp": "^0.32.1"
+        "sharp": "^0.33.0"
     },
     "devDependencies": {
         "@types/react": "^18.0.37",
